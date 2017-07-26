@@ -2,211 +2,211 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Topics on Hacking Management</title>
-    <link>http://coldwalker.github.io/topics/</link>
+    <link>http://coldwalker.com/topics/</link>
     <description>Recent content in Topics on Hacking Management</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright (c) 2008 - 2014, Steve Francia; all rights reserved.</copyright>
     <lastBuildDate>Mon, 29 Oct 2012 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://coldwalker.github.io/topics/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://coldwalker.com/topics/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Architecture</title>
-      <link>http://coldwalker.github.io/topics/architecture/</link>
+      <link>http://coldwalker.com/topics/architecture/</link>
       <pubDate>Mon, 29 Oct 2012 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/architecture/</guid>
+      <guid>http://coldwalker.com/topics/architecture/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Blogging</title>
-      <link>http://coldwalker.github.io/topics/blogging/</link>
+      <link>http://coldwalker.com/topics/blogging/</link>
       <pubDate>Thu, 04 Jul 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/blogging/</guid>
+      <guid>http://coldwalker.com/topics/blogging/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Community</title>
-      <link>http://coldwalker.github.io/topics/community/</link>
+      <link>http://coldwalker.com/topics/community/</link>
       <pubDate>Tue, 17 Mar 2015 15:24:07 -0500</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/community/</guid>
+      <guid>http://coldwalker.com/topics/community/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Developer Advocacy</title>
-      <link>http://coldwalker.github.io/topics/developer-advocacy/</link>
+      <link>http://coldwalker.com/topics/developer-advocacy/</link>
       <pubDate>Wed, 24 Sep 2014 13:17:48 -0400</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/developer-advocacy/</guid>
+      <guid>http://coldwalker.com/topics/developer-advocacy/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Development</title>
-      <link>http://coldwalker.github.io/topics/development/</link>
+      <link>http://coldwalker.com/topics/development/</link>
       <pubDate>Fri, 07 Oct 2016 10:56:02 -0400</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/development/</guid>
+      <guid>http://coldwalker.com/topics/development/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Docker</title>
-      <link>http://coldwalker.github.io/topics/docker/</link>
+      <link>http://coldwalker.com/topics/docker/</link>
       <pubDate>Fri, 05 Jun 2015 10:43:50 +0900</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/docker/</guid>
+      <guid>http://coldwalker.com/topics/docker/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ecommerce</title>
-      <link>http://coldwalker.github.io/topics/ecommerce/</link>
+      <link>http://coldwalker.com/topics/ecommerce/</link>
       <pubDate>Fri, 06 Jan 2012 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/ecommerce/</guid>
+      <guid>http://coldwalker.com/topics/ecommerce/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Golang</title>
-      <link>http://coldwalker.github.io/topics/golang/</link>
+      <link>http://coldwalker.com/topics/golang/</link>
       <pubDate>Fri, 07 Oct 2016 10:56:02 -0400</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/golang/</guid>
+      <guid>http://coldwalker.com/topics/golang/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Leadership</title>
-      <link>http://coldwalker.github.io/topics/leadership/</link>
+      <link>http://coldwalker.com/topics/leadership/</link>
       <pubDate>Thu, 05 May 2011 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/leadership/</guid>
+      <guid>http://coldwalker.com/topics/leadership/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Linux</title>
-      <link>http://coldwalker.github.io/topics/linux/</link>
+      <link>http://coldwalker.com/topics/linux/</link>
       <pubDate>Fri, 05 Jun 2015 10:43:50 +0900</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/linux/</guid>
+      <guid>http://coldwalker.com/topics/linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Mongodb</title>
-      <link>http://coldwalker.github.io/topics/mongodb/</link>
+      <link>http://coldwalker.com/topics/mongodb/</link>
       <pubDate>Wed, 23 Jul 2014 09:48:46 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/mongodb/</guid>
+      <guid>http://coldwalker.com/topics/mongodb/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Open Source</title>
-      <link>http://coldwalker.github.io/topics/open-source/</link>
+      <link>http://coldwalker.com/topics/open-source/</link>
       <pubDate>Fri, 20 Mar 2015 18:00:02 -0400</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/open-source/</guid>
+      <guid>http://coldwalker.com/topics/open-source/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Personal</title>
-      <link>http://coldwalker.github.io/topics/personal/</link>
+      <link>http://coldwalker.com/topics/personal/</link>
       <pubDate>Mon, 17 Jun 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/personal/</guid>
+      <guid>http://coldwalker.com/topics/personal/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Php</title>
-      <link>http://coldwalker.github.io/topics/php/</link>
+      <link>http://coldwalker.com/topics/php/</link>
       <pubDate>Tue, 01 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/php/</guid>
+      <guid>http://coldwalker.com/topics/php/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Presentations</title>
-      <link>http://coldwalker.github.io/topics/presentations/</link>
+      <link>http://coldwalker.com/topics/presentations/</link>
       <pubDate>Mon, 23 Sep 2013 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/presentations/</guid>
+      <guid>http://coldwalker.com/topics/presentations/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Python</title>
-      <link>http://coldwalker.github.io/topics/python/</link>
+      <link>http://coldwalker.com/topics/python/</link>
       <pubDate>Tue, 01 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/python/</guid>
+      <guid>http://coldwalker.com/topics/python/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ruby</title>
-      <link>http://coldwalker.github.io/topics/ruby/</link>
+      <link>http://coldwalker.com/topics/ruby/</link>
       <pubDate>Tue, 01 Jul 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/ruby/</guid>
+      <guid>http://coldwalker.com/topics/ruby/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Scalability</title>
-      <link>http://coldwalker.github.io/topics/scalability/</link>
+      <link>http://coldwalker.com/topics/scalability/</link>
       <pubDate>Mon, 29 Oct 2012 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/scalability/</guid>
+      <guid>http://coldwalker.com/topics/scalability/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Social Media</title>
-      <link>http://coldwalker.github.io/topics/social-media/</link>
+      <link>http://coldwalker.com/topics/social-media/</link>
       <pubDate>Sun, 11 Jul 2010 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/social-media/</guid>
+      <guid>http://coldwalker.com/topics/social-media/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Systems</title>
-      <link>http://coldwalker.github.io/topics/systems/</link>
+      <link>http://coldwalker.com/topics/systems/</link>
       <pubDate>Mon, 29 Oct 2012 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/systems/</guid>
+      <guid>http://coldwalker.com/topics/systems/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tech Industry</title>
-      <link>http://coldwalker.github.io/topics/tech-industry/</link>
+      <link>http://coldwalker.com/topics/tech-industry/</link>
       <pubDate>Mon, 29 Oct 2012 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/tech-industry/</guid>
+      <guid>http://coldwalker.com/topics/tech-industry/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Vim</title>
-      <link>http://coldwalker.github.io/topics/vim/</link>
+      <link>http://coldwalker.com/topics/vim/</link>
       <pubDate>Fri, 17 Jan 2014 00:00:00 +0000</pubDate>
       
-      <guid>http://coldwalker.github.io/topics/vim/</guid>
+      <guid>http://coldwalker.com/topics/vim/</guid>
       <description></description>
     </item>
     
