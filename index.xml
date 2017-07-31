@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ColdWalker&#39;s Blog</title>
+    <link>http://coldwalker.com/</link>
+    <description>Recent content on ColdWalker&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 31 Jul 2017 15:36:39 +0800</lastBuildDate>
+    
+	<atom:link href="http://coldwalker.com/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>关于我</title>
+      <link>http://coldwalker.com/about/</link>
+      <pubDate>Mon, 31 Jul 2017 15:36:39 +0800</pubDate>
+      
+      <guid>http://coldwalker.com/about/</guid>
+      <description> 关于我  互联网庄稼汉一枚，好吃懒做，偶尔也思考人生！ 我的微博驻唱地址： V武林  </description>
+    </item>
+    
+  </channel>
+</rss>
