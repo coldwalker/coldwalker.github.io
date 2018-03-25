@@ -3,18 +3,23 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://coldwalker.com/troubleshooter_stackoverflowerror/</loc>
+    <loc>https://coldwalker.com/2018/03//troubleshooter_stackoverflowerror/</loc>
     <lastmod>2018-03-21T16:51:44+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://coldwalker.com/robust-service_hystrix/</loc>
+    <loc>https://coldwalker.com/2018/03//robust-service_hystrix/</loc>
     <lastmod>2018-03-21T15:43:14+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://coldwalker.com/troubleshooter_btrace01/</loc>
+    <loc>https://coldwalker.com/2018/03//troubleshooter_btrace01/</loc>
     <lastmod>2018-03-20T14:18:25+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://coldwalker.com/2018/03//about/</loc>
+    <lastmod>2018-03-10T15:05:30+08:00</lastmod>
   </url>
   
   <url>
@@ -41,6 +46,12 @@
   </url>
   
   <url>
+    <loc>https://coldwalker.com/post/</loc>
+    <lastmod>2018-03-21T16:51:44+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://coldwalker.com/tags/</loc>
     <lastmod>2018-03-21T16:51:44+08:00</lastmod>
     <priority>0</priority>
@@ -60,7 +71,7 @@
   
   <url>
     <loc>https://coldwalker.com/categories/%E6%84%9F%E6%82%9F/</loc>
-    <lastmod>2018-03-21T15:43:14+08:00</lastmod>
+    <lastmod>2018-03-10T15:05:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -78,7 +89,7 @@
   
   <url>
     <loc>https://coldwalker.com/categories/%E7%94%9F%E6%B4%BB/</loc>
-    <lastmod>2018-03-21T15:43:14+08:00</lastmod>
+    <lastmod>2018-03-10T15:05:30+08:00</lastmod>
     <priority>0</priority>
   </url>
   

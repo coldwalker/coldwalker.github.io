@@ -5,7 +5,7 @@
     <link>https://coldwalker.com/tags/jvm/</link>
     <description>Recent content in Jvm on 凛冬夜行</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
+    <language>zh-CN</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
     <lastBuildDate>Wed, 21 Mar 2018 16:51:44 +0800</lastBuildDate>
     
@@ -14,11 +14,13 @@
     
     <item>
       <title>一个StackOverFlowError问题引出的JVM栈内存管理</title>
-      <link>https://coldwalker.com/troubleshooter_stackoverflowerror/</link>
+      <link>https://coldwalker.com/2018/03//troubleshooter_stackoverflowerror/</link>
       <pubDate>Wed, 21 Mar 2018 16:51:44 +0800</pubDate>
       
-      <guid>https://coldwalker.com/troubleshooter_stackoverflowerror/</guid>
-      <description>最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最</description>
+      <guid>https://coldwalker.com/2018/03//troubleshooter_stackoverflowerror/</guid>
+      <description>&lt;p&gt;最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最大栈内存Xss的大小不够，从而导致线程栈溢出。&lt;br /&gt;
+从-Xss256k调整为-Xss1m后问题解决。&lt;br /&gt;
+&lt;em&gt;注意： JDK1.5开始，xss 64位默认1M, 32为默认512K。&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     
   </channel>

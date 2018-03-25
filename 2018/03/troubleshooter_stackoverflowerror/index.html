@@ -8,7 +8,7 @@
 
 
 
-<link rel="canonical" href="https://coldwalker.com/troubleshooter_stackoverflowerror/">
+<link rel="canonical" href="https://coldwalker.com/2018/03//troubleshooter_stackoverflowerror/">
 
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
@@ -16,21 +16,21 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
     <title>一个StackOverFlowError问题引出的JVM栈内存管理 - 凛冬夜行</title>
     
-<meta name="description" content="最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最">
+<meta name="description" content="&lt;p&gt;最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最大栈内存Xss的大小不够，从而导致线程栈溢出。&lt;br /&gt;从-Xss256k调整为-Xss1m后问题解决。&lt;br /&gt;&lt;em&gt;注意： JDK1.5开始，xss 64位默认1M, 32为默认512K。&lt;/em&gt;&lt;/p&gt;">
 
 <meta property="og:title" content="一个StackOverFlowError问题引出的JVM栈内存管理 - 凛冬夜行">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://coldwalker.com/troubleshooter_stackoverflowerror/">
+<meta property="og:url" content="https://coldwalker.com/2018/03//troubleshooter_stackoverflowerror/">
 <meta property="og:image" content="https://coldwalker.com/images/yalaxueshan.jpg">
 <meta property="og:site_name" content="凛冬夜行">
-<meta property="og:description" content="最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最">
+<meta property="og:description" content="&lt;p&gt;最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最大栈内存Xss的大小不够，从而导致线程栈溢出。&lt;br /&gt;从-Xss256k调整为-Xss1m后问题解决。&lt;br /&gt;&lt;em&gt;注意： JDK1.5开始，xss 64位默认1M, 32为默认512K。&lt;/em&gt;&lt;/p&gt;">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="凛冬夜行">
-<meta name="twitter:url" content="https://coldwalker.com/troubleshooter_stackoverflowerror/">
+<meta name="twitter:url" content="https://coldwalker.com/2018/03//troubleshooter_stackoverflowerror/">
 <meta name="twitter:title" content="一个StackOverFlowError问题引出的JVM栈内存管理 - 凛冬夜行">
-<meta name="twitter:description" content="最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最">
+<meta name="twitter:description" content="&lt;p&gt;最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最大栈内存Xss的大小不够，从而导致线程栈溢出。&lt;br /&gt;从-Xss256k调整为-Xss1m后问题解决。&lt;br /&gt;&lt;em&gt;注意： JDK1.5开始，xss 64位默认1M, 32为默认512K。&lt;/em&gt;&lt;/p&gt;">
 <meta name="twitter:image" content="https://coldwalker.com/images/yalaxueshan.jpg">
 
 
@@ -65,7 +65,9 @@
         "height": 60
       }
     },
-    "description": "最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最"
+    "description": "<p>最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最大栈内存Xss的大小不够，从而导致线程栈溢出。<br />
+从-Xss256k调整为-Xss1m后问题解决。<br />
+<em>注意： JDK1.5开始，xss 64位默认1M, 32为默认512K。</em></p>"
   }
 </script>
 
@@ -120,7 +122,7 @@ ga('send', 'pageview');
             <ul class="nav navbar-nav navbar-right">
               
               
-              <li><a href="/about/">about Me</a></li>
+              <li><a href="https://coldwalker.com/2018/03/about/">about Me</a></li>
               
               
             </ul>
@@ -142,6 +144,8 @@ ga('send', 'pageview');
       <ol class="breadcrumb">
         <li><a href="https://coldwalker.com/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://coldwalker.com/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+        
         <li class="active">一个StackOverFlowError问题引出的JVM栈内存管理</li>
       </ol>
     </nav>
@@ -149,8 +153,8 @@ ga('send', 'pageview');
     <article class="single">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-03-21T16:51:44JST">Mar 21, 2018</time></li>
-      
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-03-21T16:51:44JST">2018-03-21</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://coldwalker.com/post/">post</a></li>
       
     </ul>
 
@@ -159,9 +163,8 @@ ga('send', 'pageview');
 
   <div class="thumb" style="background-image: url(https://coldwalker.com/images/yalaxueshan.jpg);"></div>
 
-  <div class="article-body">
-
-<p>最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最大栈内存Xss的大小不够，从而导致线程栈溢出。从-Xss256k调整为-Xss1m后问题解决。<br />
+  <div class="article-body"><p>最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最大栈内存Xss的大小不够，从而导致线程栈溢出。<br />
+从-Xss256k调整为-Xss1m后问题解决。<br />
 <em>注意： JDK1.5开始，xss 64位默认1M, 32为默认512K。</em></p>
 
 <h2 id="科普一下jvm栈内存的相关知识">科普一下JVM栈内存的相关知识：</h2>
@@ -203,7 +206,7 @@ JVM规范规定：<br />
 <li><p>常量池解析存的是一个引用，这个引用指向栈帧当前运行方法所在类的常量池，通过这个引用支持动态链接。</p></li>
 
 <li><p>除了处理常量池解析外，帧里的数据还要处理Java方法的正常结束和异常终止。如果一个方法有定义 try-catch 或者 try-finally 异常处理器，那么就会创建一个异常表，每个异常表入口包含四个信息：<br />
-<img src="/images/stack_data_area.png" alt="stack_data_area" />￼</p>
+<img src="https://coldwalker.com/images/stack_data_area.png" alt="stack_data_area" />￼</p>
 
 <ol>
 <li>JVM 在 try 住的代码区间内如有异常抛出的话，就会在当前栈桢的异常表中，找到匹配类型的异常记录的入口指令号，然后跳到该指令处执行。异常指令块执行完后，再回来继续执行后面的代码。JVM 按照每个入口在表中出现的顺序进行检索，如果没有发现匹配的项，JVM 将当前栈帧从栈中弹出，再次抛出同样的异常。<br /></li>
@@ -232,8 +235,7 @@ JVM规范规定：<br />
 
 <p>Resource：<br />
 <a href="http://www.importnew.com/17770.html">http://www.importnew.com/17770.html</a><br />
-<a href="https://github.com/bytedeco/javacpp-presets/wiki/Debugging-UnsatisfiedLinkError-and-StackOverflowError-on-Linux">https://github.com/bytedeco/javacpp-presets/wiki/Debugging-UnsatisfiedLinkError-and-StackOverflowError-on-Linux</a></p>
-</div>
+<a href="https://github.com/bytedeco/javacpp-presets/wiki/Debugging-UnsatisfiedLinkError-and-StackOverflowError-on-Linux">https://github.com/bytedeco/javacpp-presets/wiki/Debugging-UnsatisfiedLinkError-and-StackOverflowError-on-Linux</a></p></div>
 
   <footer class="article-footer">
     
@@ -281,7 +283,7 @@ JVM规范规定：<br />
       <div id="cyReward" role="cylabs" data-use="reward"></div>
       <script src="//changyan.itc.cn/js/lib/jquery.js"></script>
       <script src="//changyan.sohu.com/js/changyan.labs.https.js?appid=cytwFfxww"></script>
-      <div id="SOHUCS" sid="/troubleshooter_stackoverflowerror/" ></div>
+      <div id="SOHUCS" sid="/2018/03//troubleshooter_stackoverflowerror/" ></div>
       <script>
       (function(){
       var appid = 'cytwFfxww';
@@ -339,7 +341,20 @@ JVM规范规定：<br />
     </div>
   </section>
   
-
+ 
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">Archive</div>
+    </div>
+    
+      
+    <div class="list-group">
+      <a href="https://coldwalker.com/post/#2018-03" class="list-group-item">2018-03(4)</a>
+    
+    </div>
+  </section>
+  
 </aside>
 
 

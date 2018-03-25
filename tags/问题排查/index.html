@@ -66,7 +66,7 @@ ga('send', 'pageview');
             <ul class="nav navbar-nav navbar-right">
               
               
-              <li><a href="/about/">about Me</a></li>
+              <li><a href="https://coldwalker.com/2018/03/about/">about Me</a></li>
               
               
             </ul>
@@ -95,19 +95,21 @@ ga('send', 'pageview');
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-03-21T16:51:44JST">Mar 21, 2018</time></li>
-      
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-03-21T16:51:44JST">2018-03-21</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://coldwalker.com/post/">post</a></li>
       
     </ul>
-    <h2 class="title"><a href="https://coldwalker.com/troubleshooter_stackoverflowerror/">一个StackOverFlowError问题引出的JVM栈内存管理</a></h2>
+    <h2 class="title"><a href="https://coldwalker.com/2018/03//troubleshooter_stackoverflowerror/">一个StackOverFlowError问题引出的JVM栈内存管理</a></h2>
   </header>
 
-  <a href="https://coldwalker.com/troubleshooter_stackoverflowerror/" class="thumb" title="一个StackOverFlowError问题引出的JVM栈内存管理" style="background-image: url(https://coldwalker.com/images/yalaxueshan.jpg);"></a>
-  <div class="summary">最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最</div>
+  <a href="https://coldwalker.com/2018/03//troubleshooter_stackoverflowerror/" class="thumb" title="一个StackOverFlowError问题引出的JVM栈内存管理" style="background-image: url(https://coldwalker.com/images/yalaxueshan.jpg);"></a>
+  <div class="summary"><p>最近项目中在使用javacv时在加载jar中的so共享链接库时出现了StackOverFlowError，最终原因是由于jvm启动时指定的最大栈内存Xss的大小不够，从而导致线程栈溢出。<br />
+从-Xss256k调整为-Xss1m后问题解决。<br />
+<em>注意： JDK1.5开始，xss 64位默认1M, 32为默认512K。</em></p></div>
 
   
   <footer>
-    <a href="https://coldwalker.com/troubleshooter_stackoverflowerror/" title="一个StackOverFlowError问题引出的JVM栈内存管理">Read More…</a>
+    <a href="https://coldwalker.com/2018/03//troubleshooter_stackoverflowerror/" title="一个StackOverFlowError问题引出的JVM栈内存管理">Read More…</a>
   </footer>
   
 </article>
@@ -116,19 +118,19 @@ ga('send', 'pageview');
       <li><article class="li">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-03-20T14:18:25JST">Mar 20, 2018</time></li>
-      
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-03-20T14:18:25JST">2018-03-20</time></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://coldwalker.com/post/">post</a></li>
       
     </ul>
-    <h2 class="title"><a href="https://coldwalker.com/troubleshooter_btrace01/">问题排查利器之-JVM动态追踪工具BTrace</a></h2>
+    <h2 class="title"><a href="https://coldwalker.com/2018/03//troubleshooter_btrace01/">问题排查利器之-JVM动态追踪工具BTrace</a></h2>
   </header>
 
-  <a href="https://coldwalker.com/troubleshooter_btrace01/" class="thumb" title="问题排查利器之-JVM动态追踪工具BTrace" style="background-image: url(https://coldwalker.com/images/xiaodongjiangchenwu.jpg);"></a>
+  <a href="https://coldwalker.com/2018/03//troubleshooter_btrace01/" class="thumb" title="问题排查利器之-JVM动态追踪工具BTrace" style="background-image: url(https://coldwalker.com/images/xiaodongjiangchenwu.jpg);"></a>
   <div class="summary"><p>很多时候怀疑线上运行的代码有问题但又苦于日志打的不够详细的时候，BTrace作为基于ASM实现的代码动态跟踪工具能很快排上用场，在不需要重启java进程的情况下，通过脚本动态切入到嫌疑代码块，快速定位问题。</p></div>
 
   
   <footer>
-    <a href="https://coldwalker.com/troubleshooter_btrace01/" title="问题排查利器之-JVM动态追踪工具BTrace">Read More…</a>
+    <a href="https://coldwalker.com/2018/03//troubleshooter_btrace01/" title="问题排查利器之-JVM动态追踪工具BTrace">Read More…</a>
   </footer>
   
 </article>
@@ -184,7 +186,20 @@ ga('send', 'pageview');
     </div>
   </section>
   
-
+ 
+  
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">Archive</div>
+    </div>
+    
+      
+    <div class="list-group">
+      <a href="https://coldwalker.com/post/#2018-03" class="list-group-item">2018-03(4)</a>
+    
+    </div>
+  </section>
+  
 </aside>
 
 
