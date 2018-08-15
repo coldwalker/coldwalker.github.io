@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://coldwalker.com/2018/08//troubleshooter_native_memory_increase/</loc>
+    <lastmod>2018-08-15T16:30:00+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://coldwalker.com/2018/03//troubleshooter_stackoverflowerror/</loc>
     <lastmod>2018-03-21T16:51:44+08:00</lastmod>
   </url>
@@ -29,13 +34,13 @@
   
   <url>
     <loc>https://coldwalker.com/tags/java/</loc>
-    <lastmod>2018-03-21T16:51:44+08:00</lastmod>
+    <lastmod>2018-08-15T16:30:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://coldwalker.com/tags/jvm/</loc>
-    <lastmod>2018-03-21T16:51:44+08:00</lastmod>
+    <lastmod>2018-08-15T16:30:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -47,19 +52,19 @@
   
   <url>
     <loc>https://coldwalker.com/post/</loc>
-    <lastmod>2018-03-21T16:51:44+08:00</lastmod>
+    <lastmod>2018-08-15T16:30:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://coldwalker.com/tags/</loc>
-    <lastmod>2018-03-21T16:51:44+08:00</lastmod>
+    <lastmod>2018-08-15T16:30:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://coldwalker.com/</loc>
-    <lastmod>2018-03-21T16:51:44+08:00</lastmod>
+    <lastmod>2018-08-15T16:30:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -77,7 +82,7 @@
   
   <url>
     <loc>https://coldwalker.com/categories/%E6%8A%80%E6%9C%AF/</loc>
-    <lastmod>2018-03-21T16:51:44+08:00</lastmod>
+    <lastmod>2018-08-15T16:30:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -95,7 +100,7 @@
   
   <url>
     <loc>https://coldwalker.com/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/</loc>
-    <lastmod>2018-03-21T16:51:44+08:00</lastmod>
+    <lastmod>2018-08-15T16:30:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   

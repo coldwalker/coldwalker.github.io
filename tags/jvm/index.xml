@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
-    <lastBuildDate>Wed, 21 Mar 2018 16:51:44 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 15 Aug 2018 16:30:00 +0800</lastBuildDate>
     
 	<atom:link href="https://coldwalker.com/tags/jvm/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java堆外内存增长问题排查Case</title>
+      <link>https://coldwalker.com/2018/08//troubleshooter_native_memory_increase/</link>
+      <pubDate>Wed, 15 Aug 2018 16:30:00 +0800</pubDate>
+      
+      <guid>https://coldwalker.com/2018/08//troubleshooter_native_memory_increase/</guid>
+      <description>最近排查一个线上java服务常驻内存异常高的问题，大概现象是：java堆Xmx配置了8G，但运行一段时间后常驻内存RES从5G逐渐增长到13</description>
+    </item>
     
     <item>
       <title>一个StackOverFlowError问题引出的JVM栈内存管理</title>
