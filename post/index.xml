@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
-    <lastBuildDate>Wed, 15 Aug 2018 16:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 03 Dec 2018 11:30:00 +0800</lastBuildDate>
     
 	<atom:link href="https://coldwalker.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>DirectByteBuffer堆外内存溢出问题排查</title>
+      <link>https://coldwalker.com/2018/12//troubleshooter_directbytebuffer_memory_issue/</link>
+      <pubDate>Mon, 03 Dec 2018 11:30:00 +0800</pubDate>
+      
+      <guid>https://coldwalker.com/2018/12//troubleshooter_directbytebuffer_memory_issue/</guid>
+      <description>前情提要 最近线上一个图片服务在使用ehcache的diskcache替代旧版“自实现”的磁盘缓存时，发生了java进程常驻内存暴涨导致部署机</description>
+    </item>
     
     <item>
       <title>Java堆外内存增长问题排查Case</title>
