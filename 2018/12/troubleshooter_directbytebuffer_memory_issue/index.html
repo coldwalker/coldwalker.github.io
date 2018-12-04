@@ -919,7 +919,7 @@ public class TraceDirectAlloc {
 
 <p><em>那么除了减少直接调用ehcache读写的线程数有没有其他办法能解决这个问题？并发比较高的场景下一味减少业务线程数不是一个好办法。答案是有的！</em></p>
 
-<p><em><font color=grey>在Java1.8_102版本开始，官方提供一个参数jdk.nio.maxCachedBufferSize，这个参数用于限制可以被缓存的DirectByteBuffer的大小，对于超过这个限制的DirectByteBuffer不会被缓存到ThreadLocal的bufferCache中，这样就能被GC正常回收掉。唯一的tradeoff是读写的性能会稍差一些，毕竟创建一个新的DirectByteBuffer的代价也不小，当然如上面列出的，性能也没有数量级的差别。我们业务就是调整了-Djdk.nio.maxCachedBufferSize=500k之后，运行几天整体DirectByteBuffer稳定控制在300m左右，性能也几乎没有衰减。</font></em></p>
+<p><em><font color=grey>在Java1.8_102版本开始，官方提供一个参数jdk.nio.maxCachedBufferSize，这个参数用于限制可以被缓存的DirectByteBuffer的大小，对于超过这个限制的DirectByteBuffer不会被缓存到ThreadLocal的bufferCache中，这样就能被GC正常回收掉。唯一的tradeoff是读写的性能会稍差一些，毕竟创建一个新的DirectByteBuffer的代价也不小，当然如上面列出的，性能也没有数量级的差别。我们业务就是调整了-Djdk.nio.maxCachedBufferSize=500000（注意这里是字节数，不能用m、k、g）之后，运行几天整体DirectByteBuffer稳定控制在300m左右，性能也几乎没有衰减。</font></em></p>
 
 <p><em>搞定收工 ！</em></p>
 
