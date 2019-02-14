@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://coldwalker.com/2019/02//gc_object_alloc_process/</loc>
+    <lastmod>2019-02-14T15:40:00+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://coldwalker.com/2018/12//troubleshooter_directbytebuffer_memory_issue/</loc>
     <lastmod>2018-12-03T11:30:00+08:00</lastmod>
   </url>
@@ -38,8 +43,14 @@
   </url>
   
   <url>
+    <loc>https://coldwalker.com/tags/gc/</loc>
+    <lastmod>2019-02-14T15:40:00+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>https://coldwalker.com/tags/java/</loc>
-    <lastmod>2018-12-03T11:30:00+08:00</lastmod>
+    <lastmod>2019-02-14T15:40:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -57,19 +68,19 @@
   
   <url>
     <loc>https://coldwalker.com/post/</loc>
-    <lastmod>2018-12-03T11:30:00+08:00</lastmod>
+    <lastmod>2019-02-14T15:40:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://coldwalker.com/tags/</loc>
-    <lastmod>2018-12-03T11:30:00+08:00</lastmod>
+    <lastmod>2019-02-14T15:40:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://coldwalker.com/</loc>
-    <lastmod>2018-12-03T11:30:00+08:00</lastmod>
+    <lastmod>2019-02-14T15:40:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -87,7 +98,7 @@
   
   <url>
     <loc>https://coldwalker.com/categories/%E6%8A%80%E6%9C%AF/</loc>
-    <lastmod>2018-12-03T11:30:00+08:00</lastmod>
+    <lastmod>2019-02-14T15:40:00+08:00</lastmod>
     <priority>0</priority>
   </url>
   

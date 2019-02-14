@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
-    <lastBuildDate>Mon, 03 Dec 2018 11:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 14 Feb 2019 15:40:00 +0800</lastBuildDate>
     
 	<atom:link href="https://coldwalker.com/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java垃圾回收浅析-对象内存申请</title>
+      <link>https://coldwalker.com/2019/02//gc_object_alloc_process/</link>
+      <pubDate>Thu, 14 Feb 2019 15:40:00 +0800</pubDate>
+      
+      <guid>https://coldwalker.com/2019/02//gc_object_alloc_process/</guid>
+      <description>Java虚拟机内存管理 和C/C++语言不同，Java通过虚拟机来对内存进行自动管理，避免了手动申请和释放内存的繁琐以及容易出错的问题，Jav</description>
+    </item>
     
     <item>
       <title>DirectByteBuffer堆外内存溢出问题排查</title>
