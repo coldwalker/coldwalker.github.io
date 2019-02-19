@@ -50,8 +50,8 @@
       "height": 800,
       "width": 800
     },
-    "datePublished": "2019-02-15T10:40:00JST",
-    "dateModified": "2019-02-15T10:40:00JST",
+    "datePublished": "2019-02-19T17:00:00JST",
+    "dateModified": "2019-02-19T17:00:00JST",
     "author": {
       "@type": "Person",
       "name": "凛冬夜行"
@@ -207,7 +207,7 @@ autocomplete('#aa-search-input',
     <article class="single">
   <header>
     <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-02-15T10:40:00JST">2019-02-15</time></li>
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-02-19T17:00:00JST">2019-02-19</time></li>
       <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://coldwalker.com/post/">post</a></li>
       
     </ul>
@@ -227,7 +227,7 @@ autocomplete('#aa-search-input',
 1. GC只负责回收内存中的对象，不回收物理资源（如文件流、socket等）。<br />
 2. 程序无法精确控制GC的运行，GC只会在合适的时候进行。</p>
 
-<p><font color=grey>PS：1其实也是由于2的GC的不确定性导致的，比如一个socket占用了某个端口，当使用完后GC并不会立刻回收这个socket，当需要再用到这个端口的socket时，就会报错。</font></p>
+<p><i>PS：1其实也是由于2的GC的不确定性导致的，比如一个socket占用了某个端口，当使用完后GC并不会立刻回收这个socket，当需要再用到这个端口的socket时，就会报错。</i></p>
 
 <h3 id="gc实现的两种常见方式">GC实现的两种常见方式</h3>
 
@@ -255,31 +255,13 @@ autocomplete('#aa-search-input',
 <br /></li>
 </ol>
 
-<blockquote>
-<p>以上可知，基于引用计数的GC在实时性和执行效率方面有较大优势，类似 python、perl、swift等语言都使用引用计数算法来实现GC。但由于引用计数GC存在高并发时的性能较低等问题，因此，对性能要求较高的系统在实现时一般不会采用引用计数算法，而是使用和应用隔离的“跟踪回收”方式来实现GC。</p>
-</blockquote>
+<p><i>以上可知，基于引用计数的GC在实时性和执行效率方面有较大优势，类似 python、perl、swift等语言都使用引用计数算法来实现GC。但由于引用计数GC存在高并发时的性能较低等问题，因此，对性能要求较高的系统在实现时一般不会采用引用计数算法，而是使用和应用隔离的“跟踪回收”方式来实现GC。</i></p>
 
 <h4 id="跟踪回收">跟踪回收</h4>
 
 <p>跟踪回收是一种独立于应用程序外的GC方式，定期运行来检查垃圾。跟踪回收通过被称为“GC ROOTS”的对象开始，不断通过深度或者广度遍历的方式来跟踪标记所有”可达的对象“，然后其他“GC ROOTS不可达对象”的未标记对象就被视为垃圾，会被统一回收。跟踪回收是目前被广泛使用的技术，如：Java、Go、.net等都使用跟踪的方式来进行垃圾回收。</p>
 
-<h5 id="哪些对象可以作为-gc-roots-对象呢">哪些对象可以作为 GC Roots 对象呢？</h5>
-
-<ol>
-<li>虚拟机栈（栈帧中的本地变量表）中引用的对象。<br /></li>
-<li>方法区中类静态属性引用的对象。<br /></li>
-<li>方法区中常量引用的对象。<br /></li>
-<li>本地方法栈中 JNI （即 native 方法）引用的对象。<br /></li>
-<li>分代回收算法中非当前GC年代的其他对象。<br />
-<br />
-<br /></li>
-</ol>
-
-<hr />
-
-<h5 id="垃圾回收算法">垃圾回收算法</h5>
-
-<p><em>跟踪回收的GC方式在具体的算法实现上，主要包括以下几种算法：</em></p>
+<p><em>跟踪回收的GC方式在具体的算法实现上，主要包括以下几种垃圾回收算法：</em></p>
 
 <h5 id="标记-清除-mark-sweep">标记-清除（mark-sweep)</h5>
 
@@ -341,7 +323,7 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 <p>由“复制-收集”算法的实现可知，虽然这种算法比较简单高效，而且没有碎片问题。但一个比较明显的代价就是：应用程序实际可用的内存会被减半。另外，“复制-收集”算法很大一部分工作在于将存活对象移动到to space，因此它的时间开销和存活对象的数量成正比。</p>
 </blockquote>
 
-<p><em>上面介绍了主流几种“跟踪回收”类GC的具体实现算法，每一种算法都有其擅长和不足的地方，因此在实际的GC算法选择中，会根据不同的场景和特性选择不同的算法实现，从而将每种算法“扬长避短”。后面我会再继续分析现代化的GC如何进一步优化这些算法过程。</em></p>
+<p><i>上面介绍了主流几种“跟踪回收”类GC的具体实现算法，每一种算法都有其擅长和不足的地方，因此在实际的GC算法选择中，会根据不同的场景和特性选择不同的算法实现，从而将每种算法“扬长避短”。后面我会再继续分析现代化的GC如何进一步优化这些算法过程。</i></p>
 
 <hr />
 
@@ -356,7 +338,8 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 <p>Serial收集器是最古老、最基本的一种垃圾回收器，采用单线程来进行垃圾回收。新生代回收采用复制算法，回收的整个过程会暂停业务线程（STW）。</p>
 
 <blockquote>
-<p>收集过程：暂停所有线程<br />
+<p><em>Serial收集器的特性总结：</em><br />
+收集过程：暂停所有线程<br />
 算法：复制算法<br />
 优点：简单高效，拥有很高的单线程收集效率<br />
 应用：Client模式下的默认新生代收集器<br />
@@ -367,14 +350,18 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 
 <h6 id="parnew收集器">ParNew收集器</h6>
 
-<p>ParNew收集器也是一个新生代垃圾回收器，可以看成是Serial收集器的多线程版本，也是采用复制算法来进行收集，回收整个过程也是暂停业务线程（STW）的，但由于是多线程并行执行的，所以在多CPU机器上一般会比Serial收集器快很多。<br />
-&gt;收集过程：暂停所有线程<br />
+<p>ParNew收集器也是一个新生代垃圾回收器，可以看成是Serial收集器的多线程版本，也是采用复制算法来进行收集，回收整个过程也是暂停业务线程（STW）的，但由于是多线程并行执行的，所以在多CPU机器上一般会比Serial收集器快很多。</p>
+
+<blockquote>
+<p><em>ParNew收集器的特性总结：</em><br />
+收集过程：暂停所有线程<br />
 算法：复制算法<br />
 优点：在CPU多的情况下，拥有比Serial更好的效果。单CPU环境下Serial效果更好<br />
 应用：许多运行在Server模式下的虚拟机中首选的新生代收集器<br />
 参数控制：<br />
 -XX:+UseParNewGC<br />
 -XX:ParallelGCThreads (限制线程数量)</p>
+</blockquote>
 
 <p><img src="https://coldwalker.com/images/gc_intro/img_97ff89bcbbc18cd50ba5287850435f43.png" alt="97ff89bcbbc18cd50ba5287850435f43.png" /></p>
 
@@ -398,13 +385,12 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 开启动态自适应调节策略，虚拟机会根据当前系统的运行情况收集性能监控信息，动态调整上面两个参数以提供最合适的停顿时间或者最大吞吐量。</p>
 
 <blockquote>
-<blockquote>
-<p>收集过程：暂停所有线程<br />
+<p><em>Parallel Scavenge收集器的特性总结：</em><br />
+收集过程：暂停所有线程<br />
 算法：复制算法<br />
 优点：在CPU多的情况下，拥有比Serial更好的效果；对暂停时间和吞吐量能精细化控制。<br />
 应用：指定使用<br />
 参数控制：-XX:+UseParallelGC</p>
-</blockquote>
 </blockquote>
 
 <h6 id="serial-old收集器">Serial Old收集器</h6>
@@ -432,13 +418,13 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 并发重置（CMS concurrent-reset）</p>
 </blockquote>
 
-<p><img src="https://coldwalker.com/images/gc_intro/cms_process.png" alt="cms_process.png" /></p>
+<p><img src="https://coldwalker.com/images/gc_intro/cms_process.jpg" alt="cms_process.png" /></p>
 
-<p><em>值得注意的是：这个盗的图稍微有点问题，从jdk 1.8开始，initial mark阶段也是多线程并行执行的，可以通过-XX:+CMSParallelInitialMarkEnabled参数控制。</em></p>
+<p><i>PS：这个盗的图稍微有点问题，从jdk 1.8开始，initial mark阶段也是多线程并行执行的，可以通过-XX:+CMSParallelInitialMarkEnabled参数控制。</i></p>
 
 <blockquote>
-<blockquote>
-<p>收集过程：部分阶段和业务线程并发执行，部分阶段暂停所有业务线程<br />
+<p><em>CMS收集器的特性总结：</em><br />
+收集过程：部分阶段和业务线程并发执行，部分阶段暂停所有业务线程<br />
 算法：标记-清除算法<br />
 优点：并发收集、低停顿<br />
 缺点：清除算法会产生空间碎片、并发阶段会降低吞吐量、无法即时处理并发阶段产生的“浮动垃圾”<br />
@@ -458,7 +444,6 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
   -XX:+CMSScavengeBeforeRemark （CMS重新标记阶段之前是否尝试对年轻代进行一次回收，能有效降低remark的时间）<br />
   -XX:+CMSIncrementalMode （增量模式，基本不开启，cpu资源少时可尝试）<br />
   -XX:+ExplicitGCInvokesConcurrentAndUnloadsClasses （当有系统GC调用时，永久代也被包括进CMS垃圾回收的范围内）</p>
-</blockquote>
 </blockquote>
 
 <h6 id="g1收集器">G1收集器</h6>
@@ -482,10 +467,14 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 <p>G1收集器有三种GC模式：</p>
 
 <ul>
-<li><p>Young GC：发生在年轻代的Region，所有eden类型的Region被分配完时，触发Young GC，将存活对象从eden的Region拷贝到survior类型的Region或者晋升到old Region，然后根据历史统计信息和用户定义的暂停时间来动态调整eden Region和survivor Region的个数，从而尽量让下一次GC的回收时间满足用户期望。</p></li>
+<li><p>Young GC：发生在年轻代的Region，所有eden类型的Region被分配完时，触发Young GC，将存活对象从eden的Region拷贝到survior类型的Region或者晋升到old Region，然后根据历史统计信息和用户定义的暂停时间来动态调整eden Region和survivor Region的个数，从而尽量让下一次GC的回收时间满足用户期望。和ParNew一样YGC采用的“复制-收集”算法。</p></li>
 
-<li><p>Mixed GC：类似CMS一样当old类型的Region占用达到一定阈值的时候，G1会触发一次Mixed GC，但这次GC并不仅仅是一次老年代GC，而是一次混合GC。这类GC会回收整个young区，然后会选择部分old Region也进行回收。包括 “标记”和“回收”两部分。</p></li>
+<li><p>Mixed GC：STW阶段，类似CMS一样当old类型的Region占用达到一定阈值的时候，G1会触发一次全局“标记”动作，统计得出收集收益高的老年代Region。“标记”工作完成后，在每次YGC之后或者再次发生Mixed GC前，JVM会检查整个堆的垃圾占比是否达到G1HeapWastePercent的阈值，如果达到了，下次就会触发一次Mixed GC（<i>一次标记后可能会分多次进行Mixed GC</i>）。Mixed GC并不仅仅是一次老年代GC，不仅进行正常的YGC回收整个young区，同时也会选择部分old Region也进行回收，和YGC一样，Mixed GC也是采用的“复制-收集”算法作为清除策略，因此整个G1垃圾回收不会存在和CMS一样的内存碎片问题。Mixed GC步骤包括 “标记”和“回收”两部分。</p></li>
+
+<li><p>Full gc：如果对象内存分配速度过快，mixed gc来不及回收，导致老年代被填满，就会触发一次full gc，G1的full gc算法就是单线程执行的serial old gc，会导致异常长时间的暂停时间，需要进行不断的调优，尽可能的避免full gc。</p></li>
 </ul>
+
+<p>其中YGC和ParNew等回收器的过程类似，比较简单，采用的是&raquo;复制-收集&raquo;算法，Mixed GC部分过程和CMS也比较相似，略有不同，Mixed GC分为&raquo;标记&raquo;和&raquo;回收&raquo;两大阶段。</p>
 
 <p>Mixed GC的“标记”过程如下：</p>
 
@@ -501,14 +490,10 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 <p>Mixed GC的“回收”过程如下：</p>
 
 <ol>
-<li>回收之前标记出来的老年代的垃圾最多的部分区块，每次回收的Region数和用户“期望”的GC Pause耗时相关，可能会分多次执行。混合垃圾回收周期会持续进行，直到几乎所有的被标记出来的分区（垃圾占比大的分区）都得到回收，然后恢复到常规的年轻代垃圾收集，最终再次启动并发周期。<br />
+<li>根据历史数据和“用户期望暂停时间”预测本次收集需要选择的年轻代的Region数量并进行年轻代回收。<br /></li>
+<li>选取标记阶段之前标记出来的老年代的垃圾最多的部分区块，结合用户“期望”的GC Pause耗时相关，选取部分Region进行回收，整个老年代标记完后可能会分多次Mixed GC执行，直到标记后的垃圾分区占比低于“堆废物占比”，之后再恢复到常规的年轻代垃圾收集，然后当堆的使用满足“触发标记周期阈值”会最终再次启动并发周期，进行下一轮循环。<br />
 <br /></li>
 </ol>
-
-<ul>
-<li>Full gc：如果对象内存分配速度过快，mixed gc来不及回收，导致老年代被填满，就会触发一次full gc，G1的full gc算法就是单线程执行的serial old gc，会导致异常长时间的暂停时间，需要进行不断的调优，尽可能的避免full gc。<br />
-<br /></li>
-</ul>
 
 <p><em><em>G1常用参数</em></em></p>
 
@@ -565,11 +550,197 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 
 <hr />
 
-<h5 id="延伸知识点1-如何识别-垃圾对象">延伸知识点1：如何识别“垃圾对象”？</h5>
+<h4 id="延伸知识点1-哪些对象可以作为-gc-roots-对象呢">延伸知识点1：哪些对象可以作为 GC Roots 对象呢？</h4>
+
+<ol>
+<li>虚拟机栈（栈帧中的本地变量表）中引用的对象。<br /></li>
+<li>方法区中类静态属性引用的对象。<br /></li>
+<li>方法区中常量引用的对象。<br /></li>
+<li>本地方法栈中 JNI （即 native 方法）引用的对象。<br /></li>
+<li>分代回收算法中非当前GC年代的其他对象。<br />
+<br />
+<br /></li>
+</ol>
+
+<h4 id="延伸知识点2-如何识别-垃圾对象">延伸知识点2：如何识别“垃圾对象”？</h4>
+
+<h5 id="引用"><em>引用</em></h5>
 
 <p>在JVM里，使用的“跟踪回收”算法从GC ROOTS出发，按照广度或者深度方式遍历所有与GC ROOTS可达的对象，根据引用类型和GC类型（是否Full GC），将某些对象标记为“使用中”，然后回收其他不在“使用中”的对象。<br />
-Java中，所有对象引用都被标识为四种类型：强引用（StrongReference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference）。<br />
+Java中，所有对象引用都被标识为五种类型：强引用（StrongReference）、软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference）、Final引用（FinalReference）。<br />
 <img src="https://coldwalker.com/images/gc_intro/1119937-20190130111221088-1473128563.png" alt="a5b1bd167692a29a29d2e09a75211e0c.png" /></p>
+
+<h5 id="gc如何识别和处理引用">GC如何识别和处理引用？</h5>
+
+<p>JVM垃圾回收器硬编码识别SoftReference，WeakReference，PhantomReference等这些具体的类，GC过程中，识别查找到引用对象没有被其他强引用使用的Reference，然后添加到一个pending列表，这个pending列表由GC来维护，通过Reference类的一个静态的pending变量（链表头）和一个实例变量discovered（链表下一节点）来实现；Reference有一个高优先级的ReferenceHandler线程，这个线程不停的从pending列表中取出待处理的Reference进行处理：有的放到Reference各自的ReferenceQueue队列里供使用者进行处理（如：PhantomReference和WeakReference）、有的直接调用固定的处理方法进行清理（如：Cleaner）。</p>
+
+<p><em>先看下Reference类的重要部分：</em></p>
+
+<pre><code>public abstract class Reference&lt;T&gt; {
+    private T referent; // 引用所指向的真实对象
+    volatile ReferenceQueue&lt;? super T&gt; queue; //引用处理列表
+    /* When active:   next element in a discovered reference list maintained by GC (or this if last)
+     *     pending:   next element in the pending list (or null if last)
+     *   otherwise:   NULL
+     */
+    transient private Reference&lt;T&gt; discovered;  /* used by VM ，指向pending链表下一个节点*/ 
+      * References to this list, while the Reference-handler thread removes
+     * them.  This list is protected by the above lock object. The
+     * list uses the discovered field to link its elements.
+     */
+    private static Reference&lt;Object&gt; pending = null;  //静态的链表头
+    
+    private static class ReferenceHandler extends Thread {
+
+        private static void ensureClassInitialized(Class&lt;?&gt; clazz) {
+            try {
+                Class.forName(clazz.getName(), true, clazz.getClassLoader());
+            } catch (ClassNotFoundException e) {
+                throw (Error) new NoClassDefFoundError(e.getMessage()).initCause(e);
+            }
+        }
+
+        static {
+            // pre-load and initialize InterruptedException and Cleaner classes
+            // so that we don't get into trouble later in the run loop if there's
+            // memory shortage while loading/initializing them lazily.
+            ensureClassInitialized(InterruptedException.class);
+            ensureClassInitialized(Cleaner.class);
+        }
+
+        ReferenceHandler(ThreadGroup g, String name) {
+            super(g, name);
+        }
+
+        public void run() {
+            while (true) { //死循环执行
+                tryHandlePending(true);
+            }
+        }
+    }
+    
+    static boolean tryHandlePending(boolean waitForNotify) {
+        Reference&lt;Object&gt; r;
+        Cleaner c;
+        try {
+            synchronized (lock) {
+                if (pending != null) {
+                    r = pending;
+                    // 'instanceof' might throw OutOfMemoryError sometimes
+                    // so do this before un-linking 'r' from the 'pending' chain...
+                    c = r instanceof Cleaner ? (Cleaner) r : null;
+                    // unlink 'r' from 'pending' chain
+                    pending = r.discovered;
+                    r.discovered = null;
+                } else {
+                    // The waiting on the lock may cause an OutOfMemoryError
+                    // because it may try to allocate exception objects.
+                    if (waitForNotify) {
+                        lock.wait();
+                    }
+                    // retry if waited
+                    return waitForNotify;
+                }
+            }
+        } catch (OutOfMemoryError x) {
+            // Give other threads CPU time so they hopefully drop some live references
+            // and GC reclaims some space.
+            // Also prevent CPU intensive spinning in case 'r instanceof Cleaner' above
+            // persistently throws OOME for some time...
+            Thread.yield();
+            // retry
+            return true;
+        } catch (InterruptedException x) {
+            // retry
+            return true;
+        }
+
+        // Fast path for cleaners
+        if (c != null) {
+            c.clean();
+            return true;
+        }
+
+        ReferenceQueue&lt;? super Object&gt; q = r.queue;
+        if (q != ReferenceQueue.NULL) q.enqueue(r);
+        return true;
+    }
+
+   //类加载完就起好最高优先级的ReferenceHandler
+   static {
+        ThreadGroup tg = Thread.currentThread().getThreadGroup();
+        for (ThreadGroup tgn = tg;
+             tgn != null;
+             tg = tgn, tgn = tg.getParent());
+        Thread handler = new ReferenceHandler(tg, &quot;Reference Handler&quot;);
+        /* If there were a special system-only priority greater than
+         * MAX_PRIORITY, it would be used here
+         */
+        handler.setPriority(Thread.MAX_PRIORITY);
+        handler.setDaemon(true);
+        handler.start();
+
+        // provide access in SharedSecrets
+        SharedSecrets.setJavaLangRefAccess(new JavaLangRefAccess() {
+            @Override
+            public boolean tryHandlePendingReference() {
+                return tryHandlePending(false);
+            }
+        });
+    }
+    // ...
+}
+</code></pre>
+
+<p>ReferenceQueue可以由使用方通过Reference的构造方法指定传入，如果没有指定，从pending链表取出的Reference都enqueue到全局的一个ENQUEUED队列中。</p>
+
+<p><em>ReferenceQueue的实现：</em></p>
+
+<pre><code>public class ReferenceQueue&lt;T&gt; {
+
+    /**
+     * Constructs a new reference-object queue.
+     */
+    public ReferenceQueue() { }
+
+    private static class Null&lt;S&gt; extends ReferenceQueue&lt;S&gt; {
+        boolean enqueue(Reference&lt;? extends S&gt; r) {
+            return false;
+        }
+    }
+
+    static ReferenceQueue&lt;Object&gt; NULL = new Null&lt;&gt;();
+    static ReferenceQueue&lt;Object&gt; ENQUEUED = new Null&lt;&gt;();
+
+    static private class Lock { };
+    private Lock lock = new Lock();
+    private volatile Reference&lt;? extends T&gt; head = null;
+    private long queueLength = 0;
+
+    boolean enqueue(Reference&lt;? extends T&gt; r) { /* Called only by Reference class */
+        synchronized (lock) {
+            // Check that since getting the lock this reference hasn't already been
+            // enqueued (and even then removed)
+            ReferenceQueue&lt;?&gt; queue = r.queue;
+            if ((queue == NULL) || (queue == ENQUEUED)) {
+                return false;
+            }
+            assert queue == this;
+            r.queue = ENQUEUED;
+            r.next = (head == null) ? r : head;
+            head = r;
+            queueLength++;
+            if (r instanceof FinalReference) {
+                sun.misc.VM.addFinalRefCount(1);
+            }
+            lock.notifyAll();
+            return true;
+        }
+    }
+}
+</code></pre>
+
+<h5 id="引用种类"><em>引用种类</em></h5>
 
 <h6 id="强引用">强引用</h6>
 
@@ -582,7 +753,7 @@ Java中，所有对象引用都被标识为四种类型：强引用（StrongRefe
 强引用如果有到GC ROOTS的路径，那么这个引用指向的对象在GC时不能被回收。</p>
 
 <blockquote>
-<p>在实际使用中，除了强引用，可能还需要一些其他特殊类型的引用，比如有些缓存对象，是可以在内存不足时来回收的，这样通过丰富的引用类型，能让内存在实际使用时更灵活，整体业务稳定性更好。jdk 1.2后，对引用概念进行了扩充，增加了其他3种类型的引用，在java.lang.ref包下，分别为：SoftReference、WeakReference、PhantomReference。</p>
+<p>在实际使用中，除了强引用，可能还需要一些其他特殊类型的引用，比如有些缓存对象，是可以在内存不足时来回收的，这样通过丰富的引用类型，能让内存在实际使用时更灵活，整体业务稳定性更好。jdk 1.2后，对引用概念进行了扩充，增加了其他4种类型的引用，在java.lang.ref包下，分别为：SoftReference、WeakReference、PhantomReference、FinalReference。</p>
 </blockquote>
 
 <h6 id="软引用-softreference">软引用（SoftReference）</h6>
@@ -690,13 +861,107 @@ GC时，高优先级的ReferenceHandler线程将这个PhantomReference放到它�
 <p><em>DirectByteBuffer使用PhantomReference管理堆外内存释放的过程如下：</em><br />
 &gt;每个DirectByteBuffer在生成时会绑定一个Cleaner对象，这个Cleaner对象是一个PhantomReference，当JVM GC时发现那些除了Cleaner幻象引用外已没有其他引用的DirectByteBuffer时，就会把这些Cleaner对象放到Reference这个类的pending列表里，Reference类维护了一条ReferenceHandler的高优先级线程，这条线程会不断去轮询待处理的pending列表，如果是Cleaner对象就调用这个对象的clean方法进行清理（_这里需要注意的是：Cleaner是一种特殊的PhantomReference，它实际的清理工作是由ReferenceHandler线程直接执行的，不需要自己再维护一个清理的线程_），clean方法里其实是调用初始化Cleaner时绑定的Deallocator间接使用unsafe.freeMemory来进行堆外内存的释放和Bits里全局堆外内存使用量的更新。</p>
 
-<h5 id="延伸知识点2-gc过程对引用的处理">延伸知识点2：GC过程对引用的处理</h5>
+<h6 id="final引用-phantomreference">Final引用（PhantomReference）</h6>
 
-<p><em>GC时，各垃圾收集器都会在过程中，先通过ReferenceProcessor的process_discovered_references来对标记过的所有类型的Reference（soft、weak、phantom、final）重新判断是否需要标记，如果这些引用指向的referent已经没有其他引用了，就会通过ReferenceProcessor的enqueue_discovered_references方法来进行各种引用的入队或者clean处理。</em></p>
+<ul>
+<li>FinalReference &amp; Finalizer<br />
+在java.lang.ref包下，除了上面四种引用，还有一个非公开的FinalReference引用以及它的一个子类Finalizer。实际上，FinalReference 代表的正是 Java 中的强引用，如这样的代码 :<br />
+<code>
+Bean bean = new Bean();
+</code><br />
+在虚拟机的实现过程中，实际采用了 FinalReference 类对其进行引用。而 Finalizer，除了作为一个实现类外，更是在虚拟机中实现一个 FinalizerThread，以使虚拟机能够在所有的强引用被解除后实现内存清理。<br />
+<br /></li>
+</ul>
 
-<p>如ParNew垃圾回收器中的Ref处理：<br />
-parNewGeneration.cpp<br />
-&gt;先处理roots触发，引用到的对象都拷贝到to space，然后通过par_scan_state.evacuate_followers_closure().do_void()在to space里遍历全部年轻代存活对象。</p>
+<p>Finalizer的工作过程：<br />
+GC过程中，当一个强引用对象bean没有了引用被标记为可回收时，如果这个bean对象的类定义了finalize方法，那么这个对象被绑定到一个Finalizer引用上，这个Finalizer引用会被前面讲过的ReferenceHandler线程将引用自身加入到Finalizer静态的ReferenceQueue中，同时Finalizer对象自带的静态的优先级为8（比普通线程优先级高但比ReferenceHandler优先级低）的FinalizerThread线程会轮询这个ReferenceQueue中的Finalizer引用，然后调用它的runFinalizer方法，最终调到了绑定的那个bean对象的finalize方法，当finalize方法的逻辑都执行完后，这个bean对象才会在下次GC时被回收。</p>
+
+<p><em>这里有几个需要注意的点：</em><br />
+1. 在CPU资源比较紧张的情况下，由于FinalizerThread线程优先级较低，可能由于得不到时间片而导致finalize的方法执行延迟或者缓慢。最终可能导致bean对象真正占用的资源释放不确定性提高，另外也可能会导致由于bean对象无法回收导致Full GC甚至OOM。<br />
+2. 底层的bean对象至少需要2次GC才会被回收。第一次GC只是标记后将处理任务提交给FinalizerThread线程去执行，当FinalizerThread执行完finalize方法后才会在下次GC时回收bean对象，FinalizerThread执行期间可能经历多次GC。<br />
+3. 和PhantomReference不同，由于Finalizer引用最终的释放依赖对象的finalize方法的实现，在finalize里实际上可以访问到引用的对象本身，所以如果在finalize方法里让其他对象又引用了当前对象，这样会导致这个本应该被回收的对象复活。</p>
+
+<blockquote>
+<p>高优先级的ReferenceHandler线程将Finalizer引用加入到Finalizer类的静态ReferenceQueue中</p>
+
+<pre><code>static boolean tryHandlePending(boolean waitForNotify) {
+    ...
+    ReferenceQueue&lt;? super Object&gt; q = r.queue;
+    if (q != ReferenceQueue.NULL) q.enqueue(r);
+}
+</code></pre>
+
+<p>FinalizerThread线程处理：<br />
+1. 将当前Finalizer引用从ReferenceQueue里删除<br />
+2. 执行Finalizer引用的runFinalizer来触发bean对象的清除操作</p>
+
+<pre><code>private static class FinalizerThread extends Thread {
+...
+public void run() {
+    if (running) return;
+    for (;;) {
+                try {
+                    Finalizer f = (Finalizer)queue.remove();
+                    f.runFinalizer(jla);
+                } catch (InterruptedException x) {
+                    // ignore and continue
+                }
+            }
+}
+</code></pre>
+
+<p>jla.invokeFinalize实际调用了bean对象的finalize方法</p>
+</blockquote>
+
+<pre><code>private void runFinalizer(JavaLangAccess jla) {
+        synchronized (this) {
+            if (hasBeenFinalized()) return;
+            remove();
+        }
+        try {
+            Object finalizee = this.get();
+            if (finalizee != null &amp;&amp; !(finalizee instanceof java.lang.Enum)) {
+                jla.invokeFinalize(finalizee);
+
+                /* Clear stack slot containing this variable, to decrease
+                   the chances of false retention with a conservative GC */
+                finalizee = null;
+            }
+        } catch (Throwable x) { }
+        super.clear();
+    }
+</code></pre>
+
+<blockquote>
+<p>finalize方法里将其他引用指向bean对象本身，导致bean对象复活</p>
+
+<pre><code>public void finalize() {
+    Other.ref = this;
+}
+</code></pre>
+
+<p>而在PhantomReference实现中，由于get方法默认返回null，因此PhantomReference创建后就不能再访问它的referent，因此不存在死对象复活的问题。所以，尽量使用PhantomReference来替代原来Finalizer的功能。</p>
+
+<pre><code>public class PhantomReference&lt;T&gt; extends Reference&lt;T&gt; {
+    public T get() {
+        return null;
+    }
+}
+</code></pre>
+</blockquote>
+
+<h5 id="gc过程是如何具体处理引用">GC过程是如何具体处理引用?</h5>
+
+<p>GC时，各垃圾收集器都会在过程中，先找到当前回收代中那些”指向的referent除了当前引用外没有其他强引用使用了”的引用，然后对所有类型的Reference（soft、weak、phantom、final）进行进一步筛选和排除处理，最后，在GC的最后阶段，将待处理的Reference入队到Reference的pendingList等待ReferHandler线程来善后。</p>
+
+<h6 id="发现引用">发现引用</h6>
+
+<p>_“引用发现”这个过程的主要工作：<em>找出当前回收代中的这些引用：“指向的referent没有被其它强引用所使用”。</em><br />
+如ParNew垃圾回收器中的Ref&raquo;发现-标记&raquo;过程（parNewGeneration.cpp）：</p>
+
+<blockquote>
+<p>先处理roots触发，引用到的对象都拷贝到to space，然后通过par_scan_state.evacuate_followers_closure().do_void()在to space里遍历全部年轻代存活对象。</i></p>
+</blockquote>
 
 <pre><code>gch-&gt;gen_process_roots(_gen-&gt;level(),
                          true,  // Process younger gens, if any,
@@ -714,7 +979,9 @@ parNewGeneration.cpp<br />
   par_scan_state.evacuate_followers_closure().do_void();
 </code></pre>
 
+<blockquote>
 <p>EvacuateFollowersClosureGeneral::do_void方法主要执行父类DefNewGeneration的oop_since_save_marks_iterate方法。</p>
+</blockquote>
 
 <pre><code>void DefNewGeneration::                                         \
 oop_since_save_marks_iterate##nv_suffix(OopClosureType* cl) {   \
@@ -727,6 +994,7 @@ oop_since_save_marks_iterate##nv_suffix(OopClosureType* cl) {   \
 }
 </code></pre>
 
+<blockquote>
 <p>.space的oop_since_save_marks_iterate会调用每一个对象的oop_iterate</p>
 
 <pre><code>void ContiguousSpace::                                                    \
@@ -775,12 +1043,56 @@ oop_oop_iterate##nv_suffix(oop obj, OopClosureType* closure) {                  
 }
 </code></pre>
 
-<p>在InstanceRefKlass_SPECIALIZED_OOP_ITERATE这个语句块中，就是具体操作Reference的discovered字段来实现“引用发现”了。</p>
+<p>在InstanceRefKlass_SPECIALIZED_OOP_ITERATE这个语句块中，这里会执行最终的&raquo;引用发现&raquo;discover_reference方法。</p>
 
 <pre><code>#define InstanceRefKlass_SPECIALIZED_OOP_ITERATE(T, nv_suffix, contains)        \
-  T* disc_addr = (T*)java_lang_ref_Reference::discovered_addr(obj); 
+  ...
+  if (!referent-&gt;is_gc_marked() &amp;&amp; (rp != NULL) &amp;&amp;                            \
+      rp-&gt;discover_reference(obj, reference_type())) {                        \
+      return size;                                                              \
+  } 
   ...
 </code></pre>
+
+<p>discover_reference方法中，对&raquo;发现&raquo;的各种引用，会真正操作Reference的discovered字段来维护&raquo;发现&raquo;的引用链表。</p>
+
+<pre><code>bool ReferenceProcessor::discover_reference(oop obj, ReferenceType rt) {
+...
+//只收集那些“指向的referent没有被其它强引用所使用的引用”
+// We only discover references whose referents are not (yet)
+  // known to be strongly reachable.
+  if (is_alive_non_header() != NULL) {
+    verify_referent(obj);
+    if (is_alive_non_header()-&gt;do_object_b(java_lang_ref_Reference::referent(obj))) {
+      return false;  // referent is reachable
+    }
+  }
+...
+//将找到的各种引用加入到收集的引用列表
+if (_discovery_is_mt) {
+    add_to_discovered_list_mt(*list, obj, discovered_addr);
+  } else {
+    // We do a raw store here: the field will be visited later when processing
+    // the discovered references.
+    oop current_head = list-&gt;head();
+    // The last ref must have its discovered field pointing to itself.
+    oop next_discovered = (current_head != NULL) ? current_head : obj;
+
+    assert(discovered == NULL, &quot;control point invariant&quot;);
+    oop_store_raw(discovered_addr, next_discovered);
+    list-&gt;set_head(obj);
+    list-&gt;inc_length(1);
+
+    if (TraceReferenceGC) {
+      gclog_or_tty-&gt;print_cr(&quot;Discovered reference (&quot; INTPTR_FORMAT &quot;: %s)&quot;,
+                                (void *)obj, obj-&gt;klass()-&gt;internal_name());
+    }
+</code></pre>
+
+<h6 id="处理引用">处理引用</h6>
+
+<p>针对之前&raquo;发现&raquo;的引用，GC过程还会通过ReferenceProcessor的process_discovered_references来对所有类型的Reference（soft、weak、phantom、final）进行处理，处理步骤分成3个阶段，主要工作：过滤软引用、过滤referent存活的引用 、</p>
+</blockquote>
 
 <p>还是是ParNew回收器为例，GC时，在完成“引用发现”后，会通过process_discovered_references方法对引用进行处理，最后GC完成内存回收后再将Reference加入到pending列表中以便后续处理。</p>
 
@@ -804,7 +1116,7 @@ oop_oop_iterate##nv_suffix(oop obj, OopClosureType* closure) {                  
                                                   _gc_timer, gc_tracer.gc_id());
       }
    ...
-   //通过入pending链表以便触发ReferenceHandler线程的善后处理
+   //通过将当前引用列表附到原来的pending链表以便ReferenceHandler线程的善后处理
     rp-&gt;set_enqueuing_is_done(true);
       if (rp-&gt;processing_is_mt()) {
         ParNewRefProcTaskExecutor task_executor(*this, thread_state_set);
@@ -816,38 +1128,11 @@ oop_oop_iterate##nv_suffix(oop obj, OopClosureType* closure) {                  
     }
 </code></pre>
 
-<h6 id="问题-process-discovered-references处理的引用是什么时候标记的">问题：process_discovered_references处理的引用是什么时候标记的？</h6>
-
-<blockquote>
-<p>Reference类有两个字段：discovered和pending。<br />
-* discovered：GC过程中，被GC线程维护的被”发现“的引用列表。<br />
-* pending：等待入ReferenceQueue队列的引用列表。</p>
-</blockquote>
-
-<p>普通Java对象的类型信息都是用instanceKlass记录的，如果当前创建对象是以下引用类型（soft、weak、phantom、final）时，用的是特殊的instanceRefKlass，GC时，在oop_iterate对该代内存空间遍历时，会通过instanceRefKlass的oop_follow_contents来给Reference类的discovered字段赋值（引用发现），维护一个”被发现“的引用链表；在process_discovered_references阶段筛选”referent不存活“的引用对链表进行更新维护；最后在enqueue_discovered_references阶段，ReferenceHandler从pending链表不停的enqueue引用到它自身的ReferenceQueue队列（此时discovered为pending集合中的下一个元素）。</p>
-
-<p>discovered和pending两个链表</p>
-
-<pre><code>/* When active:   next element in a discovered reference list maintained by GC (or this if last)
-     *     pending:   next element in the pending list (or null if last)
-     *   otherwise:   NULL
-     */
-    transient private Reference&lt;T&gt; discovered;  /* used by VM */
-</code></pre>
-
-<pre><code> /* List of References waiting to be enqueued.  The collector adds
-     * References to this list, while the Reference-handler thread removes
-     * them.  This list is protected by the above lock object. The
-     * list uses the discovered field to link its elements.
-     */
-private static Reference&lt;Object&gt; pending = null;
-</code></pre>
-
 <blockquote>
 <p>处理”被发现“的引用的方法process_discovered_references主要实现在referenceProcessor.cpp的process_discovered_reflist中，包括三个阶段。<br />
 1. 第一个阶段只处理软引用：因为软引用普通GC时是不能回收处理的，所以需要从discovered链表中移除所有不存活但是还不能被回收的软引用；<br />
 2. 第二阶段处理所有引用：移除所有那些referent还存活的引用。<br />
-3. 第三阶段处理剩下引用的referent：根据clear_referent的值决定是否将不存活对象回收（比如Final和Phantom是先不回收referent的）。</p>
+3. 第三阶段处理剩下引用的referent：根据clear_referent的值决定是否将对referent的引用解除，方便下一次GC时回收referent。 （比如Final和Phantom是先不解除引用的，因为后续还要用；Weak是可以解除的）。</p>
 
 <pre><code>ReferenceProcessor::process_discovered_reflist(
   DiscoveredList               refs_lists[],
@@ -961,112 +1246,9 @@ private static Reference&lt;Object&gt; pending = null;
     }
 </code></pre>
 
-<p>ReferenceHandler真正的处理逻辑</p>
+<h6 id="整个引用大致的处理流程-懒得画-盗个图">整个引用大致的处理流程（懒得画，盗个图）</h6>
 
-<pre><code>static boolean tryHandlePending(boolean waitForNotify) {
-    ...
-    c = r instanceof Cleaner ? (Cleaner) r : null;
-    ...
-     if (c != null) {
-        c.clean();
-        return true;
-    }
-
-    ReferenceQueue&lt;? super Object&gt; q = r.queue;
-    if (q != ReferenceQueue.NULL) q.enqueue(r);
-}
-</code></pre>
-</blockquote>
-
-<ul>
-<li>FinalReference &amp; Finalizer<br />
-在java.lang.ref包下，除了上面四种引用，还有一个非公开的FinalReference引用以及它的一个子类Finalizer。实际上，FinalReference 代表的正是 Java 中的强引用，如这样的代码 :<br />
-<code>
-Bean bean = new Bean();
-</code><br />
-在虚拟机的实现过程中，实际采用了 FinalReference 类对其进行引用。而 Finalizer，除了作为一个实现类外，更是在虚拟机中实现一个 FinalizerThread，以使虚拟机能够在所有的强引用被解除后实现内存清理。<br />
-<br /></li>
-</ul>
-
-<p>Finalizer的工作过程：<br />
-GC过程中，当一个强引用对象bean没有了引用被标记为可回收时，如果这个bean对象的类定义了finalize方法，那么这个对象被绑定到一个Finalizer引用上，这个Finalizer引用会被前面讲过的ReferenceHandler线程将引用自身加入到Finalizer静态的ReferenceQueue中，同时Finalizer对象自带的静态的优先级为8（比普通线程优先级高但比ReferenceHandler优先级低）的FinalizerThread线程会轮询这个ReferenceQueue中的Finalizer引用，然后调用它的runFinalizer方法，最终调到了绑定的那个bean对象的finalize方法，当finalize方法的逻辑都执行完后，这个bean对象才会在下次GC时被回收。</p>
-
-<p><em>这里有几个需要注意的点：</em></p>
-
-<ol>
-<li>在CPU资源比较紧张的情况下，由于FinalizerThread线程优先级较低，可能由于得不到时间片而导致finalize的方法执行延迟或者缓慢。最终可能导致bean对象真正占用的资源释放不确定性提高，另外也可能会导致由于bean对象无法回收导致Full GC甚至OOM。<br /></li>
-<li>底层的bean对象至少需要2次GC才会被回收。第一次GC只是标记后将处理任务提交给FinalizerThread线程去执行，当FinalizerThread执行完finalize方法后才会在下次GC时回收bean对象，FinalizerThread执行期间可能经历多次GC。<br /></li>
-<li>和PhantomReference不同，由于Finalizer引用最终的释放依赖对象的finalize方法的实现，在finalize里实际上可以访问到引用的对象本身，所以如果在finalize方法里让其他对象又引用了当前对象，这样会导致这个本应该被回收的对象复活。<br />
-<br /></li>
-</ol>
-
-<blockquote>
-<p>高优先级的ReferenceHandler线程将Finalizer引用加入到Finalizer类的静态ReferenceQueue中</p>
-
-<pre><code>static boolean tryHandlePending(boolean waitForNotify) {
-    ...
-    ReferenceQueue&lt;? super Object&gt; q = r.queue;
-    if (q != ReferenceQueue.NULL) q.enqueue(r);
-}
-</code></pre>
-
-<p>FinalizerThread线程处理：<br />
-1. 将当前Finalizer引用从ReferenceQueue里删除<br />
-2. 执行Finalizer引用的runFinalizer来触发bean对象的清除操作</p>
-
-<pre><code>private static class FinalizerThread extends Thread {
-...
-public void run() {
-    if (running) return;
-    for (;;) {
-                try {
-                    Finalizer f = (Finalizer)queue.remove();
-                    f.runFinalizer(jla);
-                } catch (InterruptedException x) {
-                    // ignore and continue
-                }
-            }
-}
-</code></pre>
-
-<p>jla.invokeFinalize实际调用了bean对象的finalize方法</p>
-</blockquote>
-
-<pre><code>private void runFinalizer(JavaLangAccess jla) {
-        synchronized (this) {
-            if (hasBeenFinalized()) return;
-            remove();
-        }
-        try {
-            Object finalizee = this.get();
-            if (finalizee != null &amp;&amp; !(finalizee instanceof java.lang.Enum)) {
-                jla.invokeFinalize(finalizee);
-
-                /* Clear stack slot containing this variable, to decrease
-                   the chances of false retention with a conservative GC */
-                finalizee = null;
-            }
-        } catch (Throwable x) { }
-        super.clear();
-    }
-</code></pre>
-
-<blockquote>
-<p>finalize方法里将其他引用指向bean对象本身，导致bean对象复活</p>
-
-<pre><code>public void finalize() {
-    Other.ref = this;
-}
-</code></pre>
-
-<p>而在PhantomReference实现中，由于get方法默认返回null，因此PhantomReference创建后就不能再访问它的referent，因此不存在死对象复活的问题。所以，尽量使用PhantomReference来替代原来Finalizer的功能。</p>
-
-<pre><code>public class PhantomReference&lt;T&gt; extends Reference&lt;T&gt; {
-    public T get() {
-        return null;
-    }
-}
-</code></pre>
+<p><img src="https://coldwalker.com/images/gc_intro/image-20180819185503111.png" alt="04dd63008299487f05620952f0bd5dff.png" /></p>
 </blockquote>
 
 <hr />
@@ -1077,7 +1259,8 @@ public void run() {
 <a href="https://hllvm-group.iteye.com/group/topic/38223"> R大：并发垃圾收集器（CMS）为什么没有采用标记-整理算法来实现？</a><br />
 <a href="https://hllvm-group.iteye.com/group/topic/39402">R大：请教Weak Reference及其在HotSpot GC中的行为</a><br />
 <a href="https://www.oracle.com/technetwork/cn/articles/java/g1gc-1984535-zhs.html">垃圾优先型垃圾回收器调优</a><br />
-<a href="https://www.infoq.com/articles/G1-One-Garbage-Collector-To-Rule-Them-All">G1: One Garbage Collector To Rule Them All</a></p>
+<a href="https://www.infoq.com/articles/G1-One-Garbage-Collector-To-Rule-Them-All">G1: One Garbage Collector To Rule Them All</a><br />
+<a href="http://imushan.com/2018/08/19/java/language/JDK源码阅读-Reference/">JDK源码阅读-Reference</a></p>
 </div>
 
   <footer class="article-footer">
