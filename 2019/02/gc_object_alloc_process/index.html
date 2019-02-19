@@ -22,7 +22,7 @@
 <meta property="og:title" content="Java垃圾回收浅析-对象内存申请 - 凛冬夜行">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://coldwalker.com/2019/02//gc_object_alloc_process/">
-<meta property="og:image" content="https://coldwalker.com/images/gc_object_alloc_process/IMG_20190211_133657.jpg">
+<meta property="og:image" content="https://coldwalker.com/images/gc_object_alloc_process/yurenmatou.jpg">
 <meta property="og:site_name" content="凛冬夜行">
 <meta property="og:description" content="Java虚拟机内存管理 和C/C&#43;&#43;语言不同，Java通过虚拟机来对内存进行自动管理，避免了手动申请和释放内存的繁琐以及容易出错的问题，Jav">
 <meta property="og:locale" content="ja_JP">
@@ -32,7 +32,7 @@
 <meta name="twitter:url" content="https://coldwalker.com/2019/02//gc_object_alloc_process/">
 <meta name="twitter:title" content="Java垃圾回收浅析-对象内存申请 - 凛冬夜行">
 <meta name="twitter:description" content="Java虚拟机内存管理 和C/C&#43;&#43;语言不同，Java通过虚拟机来对内存进行自动管理，避免了手动申请和释放内存的繁琐以及容易出错的问题，Jav">
-<meta name="twitter:image" content="https://coldwalker.com/images/gc_object_alloc_process/IMG_20190211_133657.jpg">
+<meta name="twitter:image" content="https://coldwalker.com/images/gc_object_alloc_process/yurenmatou.jpg">
 
 
 <script type="application/ld+json">
@@ -46,7 +46,7 @@
     "headline": "Java垃圾回收浅析-对象内存申请 - 凛冬夜行",
     "image": {
       "@type": "ImageObject",
-      "url": "https://coldwalker.com/images/gc_object_alloc_process/IMG_20190211_133657.jpg",
+      "url": "https://coldwalker.com/images/gc_object_alloc_process/yurenmatou.jpg",
       "height": 800,
       "width": 800
     },
@@ -215,7 +215,7 @@ autocomplete('#aa-search-input',
     <h1 class="title">Java垃圾回收浅析-对象内存申请</h1>
   </header>
 
-  <div class="thumb" style="background-image: url(https://coldwalker.com/images/gc_object_alloc_process/IMG_20190211_133657.jpg);"></div>
+  <div class="thumb" style="background-image: url(https://coldwalker.com/images/gc_object_alloc_process/yurenmatou.jpg);"></div>
 
   <div class="article-body">
 
@@ -326,47 +326,68 @@ autocomplete('#aa-search-input',
 
 <p>内存中Eden的结构大体为：<br />
 <img src="https://coldwalker.com/images/gc_object_alloc_process/java7-1539155057.jpg" alt="1c03f28f3bf5c70d42c8f9fbe551cfc4.jpeg" /><br />
-TLAB中分配规则（开启UseTLAB情况下）：<br />
-1. TLAB剩余空间大于待分配对象大小，直接在TLAB上分配返回。<br />
-2. 如果TLAB剩余空间放不下对象，同时TLAB剩余空间大小 大于允许的浪费阈值（refill_waste），那么本次放弃在TLAB上分配，直接在eden区进行慢分配，TLAB剩余空间留着下次继续使用。<br />
-3. 如果TLAB剩余空间放不下对象，同时TLAB剩余空间大小 小于允许的浪费阈值，那么进入到“慢分配”过程：<br />
-    a. 丢弃当前TLAB。<br />
-    b. 从eden区裸空间重新分配一个新TLAB，然后对象再在新TLAB上分配。（这里从eden区新申请TLAB时，如果eden区空间不够，会触发YGC。）</p>
+TLAB中分配规则（开启UseTLAB情况下）：</p>
+
+<ol>
+<li>TLAB剩余空间大于待分配对象大小，直接在TLAB上分配返回。<br /></li>
+<li>如果TLAB剩余空间放不下对象，同时TLAB剩余空间大小 大于允许的浪费阈值（refill_waste），那么本次放弃在TLAB上分配，直接在eden区进行慢分配，TLAB剩余空间留着下次继续使用。<br /></li>
+<li>如果TLAB剩余空间放不下对象，同时TLAB剩余空间大小 小于允许的浪费阈值，那么进入到“慢分配”过程：<br />
+a. 丢弃当前TLAB。<br />
+b. 从eden区裸空间重新分配一个新TLAB，然后对象再在新TLAB上分配。（这里从eden区新申请TLAB时，如果eden区空间不够，会触发YGC。）<br />
+<br /></li>
+</ol>
 
 <p><img src="https://coldwalker.com/images/gc_object_alloc_process/tlab_alloc.jpg" alt="4f6219eb1a004554135484c442fcb12f.jpeg" /></p>
 
-<p><em>几点需要注意的地方：</em><br />
-1. 开启TLAB情况下，TLAB占用eden区空间比较小，默认只有Eden空间的1%，可以通过 _-XX:TLABWasteTargetPercent_来调整。<br />
-2. 默认情况下，TLAB大小和refill_waste阈值都是由JVM在运行时根据“历史统计信息”动态计算出来的，比如一个线程内存分配申请很频繁，可能该线程的TLAB就会更大。如果不想让系统自动调整，可以通过JVM参数来控制：<br />
-    * -XX:-ResizeTLAB （禁用TLAB size的动态调整策略）<br />
-    * -XX:TLABSize （指定固定的TLAB size）<br />
-    * TLABRefillWasteFraction （可浪费阈值，默认是64：可浪费1/64的TLAB空间)</p>
+<p><em>几点需要注意的地方：</em></p>
+
+<ol>
+<li>开启TLAB情况下，TLAB占用eden区空间比较小，默认只有Eden空间的1%，可以通过 _-XX:TLABWasteTargetPercent_来调整。<br /></li>
+
+<li><p>默认情况下，TLAB大小和refill_waste阈值都是由JVM在运行时根据“历史统计信息”动态计算出来的，比如一个线程内存分配申请很频繁，可能该线程的TLAB就会更大。如果不想让系统自动调整，可以通过JVM参数来控制：</p>
+
+<ul>
+<li>-XX:-ResizeTLAB （禁用TLAB size的动态调整策略）<br /></li>
+<li>-XX:TLABSize （指定固定的TLAB size）<br /></li>
+<li>TLABRefillWasteFraction （可浪费阈值，默认是64：可浪费1/64的TLAB空间)<br />
+<br /></li>
+</ul></li>
+</ol>
 
 <h3 id="栈上分配">栈上分配</h3>
 
 <p>以上可知，一般情况下JVM中对象都是在堆中进行内存分配，但是在堆中分配内存虽然有TLAB类似的技术能降低同步带来的开销，但还是存在较多在TLAB上分配不了的情况，另外，堆中分配的对象在生命周期结束后需要专门的垃圾回收器来清理，和栈中内存“方法退出即可销毁”的分配回收相比效率较低。</p>
 
-<p>_在Java的编译体系中，一个Java的源代码文件变成计算机可执行的机器指令的过程中，需要经过两段编译，第一段是把.java文件转换成.class文件。第二段编译是把.class转换成机器指令的过程。为提升第二阶段的执行速度，引入了JIT技术（Just-in-time Compilation），JIT其中主要的工作包括：<br />
-* “热点代码检测”；<br />
-* 热点代码编译优化（逃逸分析、锁消除、锁膨胀、方法内联、空值检查消除等）；<br />
-* 缓存热点代码编译后的机器指令；</p>
+<p>在Java的编译体系中，一个Java的源代码文件变成计算机可执行的机器指令的过程中，需要经过两段编译，第一段是把.java文件转换成.class文件。第二段编译是把.class转换成机器指令的过程。为提升第二阶段的执行速度，引入了JIT技术（Just-in-time Compilation），JIT其中主要的工作包括：</p>
+
+<ul>
+<li>“热点代码检测”；<br /></li>
+<li>热点代码编译优化（逃逸分析、锁消除、锁膨胀、方法内联、空值检查消除等）；<br /></li>
+<li>缓存热点代码编译后的机器指令；<br />
+<br /></li>
+</ul>
 
 <p><em>其中编译优化中采用的一种重要技术“逃逸分析”就是优化部分堆上分配为“栈上分配”的基础优化。</em></p>
 
 <h4 id="逃逸分析">逃逸分析</h4>
 
-<p>逃逸分析(Escape Analysis)是一种代码分析，通过动态分析对象的作用域，可以分析出某个对象是否永远只在某个方法、线程的范围内，并没有“逃逸”出这个范围，为其它优化手段如栈上分配、标量替换和同步消除等提供依据，发生逃逸行为的情况有两种：方法逃逸和线程逃逸。<br />
-* 方法逃逸 方法中定义的对象被外部方法引用（如：作为调用参数或者返回值被其他方法引用到）；<br />
-* 线程逃逸 对象可以被其他线程访问到（如：实例变量、类变量等）</p>
+<p>逃逸分析(Escape Analysis)是一种代码分析，通过动态分析对象的作用域，可以分析出某个对象是否永远只在某个方法、线程的范围内，并没有“逃逸”出这个范围，为其它优化手段如栈上分配、标量替换和同步消除等提供依据，发生逃逸行为的情况有两种：方法逃逸和线程逃逸。</p>
 
-<p><em>通过 -XX:+DoEscapeAnalysis 参数来控制“逃逸分析”是否开启，jdk 1.8下默认开启。</em></p>
+<ul>
+<li>方法逃逸 方法中定义的对象被外部方法引用（如：作为调用参数或者返回值被其他方法引用到）；<br /></li>
+<li>线程逃逸 对象可以被其他线程访问到（如：实例变量、类变量等）<br />
+<br /></li>
+</ul>
+
+<p>通过 -XX:+DoEscapeAnalysis 参数来控制“逃逸分析”是否开启，jdk 1.8下默认开启。</p>
 
 <p><em>对于“无法逃逸”的对象，JIT编译器可以对代码进行优化，主要有以下几种优化方式：</em></p>
 
 <h5 id="同步消除">同步消除</h5>
 
-<p>线程同步的消耗较大，通过“逃逸分析”，如果确定一个对象不会被其他线程访问到，那对这个对象的读写就不会存在并发问题，因此可以清除该对象的同步锁。<br />
-<em>如下示例：该对象的同步锁在编译优化阶段去掉了，提升执行性能。</em></p>
+<p>线程同步的消耗较大，通过“逃逸分析”，如果确定一个对象不会被其他线程访问到，那对这个对象的读写就不会存在并发问题，因此可以清除该对象的同步锁。</p>
+
+<p><em>如下示例：该对象的同步锁在编译优化阶段去掉了，提升执行性能。</em></p>
 
 <pre><code>public void sample() {
     Object lock = new Object();
