@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <copyright>© This post is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License，please give source if you wish to quote or reproduce.</copyright>
-    <lastBuildDate>Mon, 03 Dec 2018 11:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jan 2020 12:00:00 +0800</lastBuildDate>
     
 	<atom:link href="https://coldwalker.com/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>记log4j打印异常日志导致线程阻塞的问题排查</title>
+      <link>https://coldwalker.com/2020/01//log4j-thread-blocked-issue/</link>
+      <pubDate>Wed, 22 Jan 2020 12:00:00 +0800</pubDate>
+      
+      <guid>https://coldwalker.com/2020/01//log4j-thread-blocked-issue/</guid>
+      <description>最近线上一个服务偶发单机接口耗时飙升的现象，伴随着内存使用增长并出现吃swap的情况，16核的系统load也飙升到50以上，IOUtil接近</description>
+    </item>
     
     <item>
       <title>DirectByteBuffer堆外内存溢出问题排查</title>
