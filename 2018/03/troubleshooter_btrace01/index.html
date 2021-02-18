@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.80.0" />
+<meta name="generator" content="Hugo 0.56.3" />
 
 
 
@@ -66,7 +66,7 @@
         "height": 60
       }
     },
-    "description": "\u003cp\u003e很多时候怀疑线上运行的代码有问题但又苦于日志打的不够详细的时候，BTrace作为基于ASM实现的代码动态跟踪工具能很快排上用场，在不需要重启java进程的情况下，通过脚本动态切入到嫌疑代码块，快速定位问题。\u003c\/p\u003e"
+    "description": "\x3cp\x3e很多时候怀疑线上运行的代码有问题但又苦于日志打的不够详细的时候，BTrace作为基于ASM实现的代码动态跟踪工具能很快排上用场，在不需要重启java进程的情况下，通过脚本动态切入到嫌疑代码块，快速定位问题。\x3c\/p\x3e"
   }
 </script>
 
@@ -222,49 +222,78 @@ autocomplete('#aa-search-input',
   <div class="thumb" style="background-image: url(https://coldwalker.github.io/images/xiaodongjiangchenwu.jpg);"></div>
 
   <div class="article-body"><p>很多时候怀疑线上运行的代码有问题但又苦于日志打的不够详细的时候，BTrace作为基于ASM实现的代码动态跟踪工具能很快排上用场，在不需要重启java进程的情况下，通过脚本动态切入到嫌疑代码块，快速定位问题。</p>
+
 <h4 id="实现原理">实现原理：</h4>
+
 <p>Attach API + BTrace脚本解析引擎 + ASM + JDK Instumentation。</p>
+
 <h4 id="使用btrace的典型场景">使用BTrace的典型场景：</h4>
+
 <ol>
-<li>没打日志，想知道我这个方法的调用参数和返回结果？</li>
-<li>某个方法变慢，想知道该接口方法调用的耗时或者该方法内调用的多个子方法的耗时？</li>
-<li>某个方法抛异常时的传入参数？</li>
-<li>谁调用了某个方法，具体调用链？</li>
+<li>没打日志，想知道我这个方法的调用参数和返回结果？<br /></li>
+<li>某个方法变慢，想知道该接口方法调用的耗时或者该方法内调用的多个子方法的耗时？<br /></li>
+<li>某个方法抛异常时的传入参数？<br /></li>
+<li>谁调用了某个方法，具体调用链？<br />
+<br /></li>
 </ol>
+
 <h4 id="btrace下载地址">BTrace下载地址：</h4>
+
 <p><a href="http://github.com/btraceio/btrace">http://github.com/btraceio/btrace</a> 可以直接下载它的release包，开箱即用。</p>
+
 <h4 id="btrace简单用法">BTrace简单用法：</h4>
+
 <pre><code>sh ../bin/btrace -u java进程ID XXX.java
-</code></pre><p>如果要把输出结果写到文件，可以：</p>
+</code></pre>
+
+<p>如果要把输出结果写到文件，可以：</p>
+
 <pre><code>sh ../bin/btrace -u -o btrace.log java进程ID XXX.java
-</code></pre><p>-o 这个参数会把文件输出到被trace的java进程的启动目录，而不是当前目录。而且更坑的是：执行过一次-o之后，再执行btrace不加-o 也不会再输出回console，直到应用重启。所以还不如直接重定向到文件：</p>
+</code></pre>
+
+<p>-o 这个参数会把文件输出到被trace的java进程的启动目录，而不是当前目录。而且更坑的是：执行过一次-o之后，再执行btrace不加-o 也不会再输出回console，直到应用重启。所以还不如直接重定向到文件：</p>
+
 <pre><code>sh ../bin/btrace -u java进程ID XXX.java &gt; btrace.log
-</code></pre><p>如果脚本里使用到了jdk外的类，需要通过classpath传入依赖，注意这里的cp只是供BTrace编译时使用，真正运行的时候由于已经Attach到JVM里，所以用的是目标JVM的classpath：</p>
+</code></pre>
+
+<p>如果脚本里使用到了jdk外的类，需要通过classpath传入依赖，注意这里的cp只是供BTrace编译时使用，真正运行的时候由于已经Attach到JVM里，所以用的是目标JVM的classpath：</p>
+
 <pre><code>sh ../bin/btrace -u -o btrace.log -cp .:guava-18.0.jar java进程ID XXX.java
-</code></pre><h4 id="知识点-拦截时机">知识点-拦截时机：</h4>
-<p>Btrace里拦截时机以下几种，通过Location关键字来定义：具体是：
-Kind.Entry：默认是Entry，就是方法刚进入时拦截。
-Kind.Return：如果想获得函数的返回结果或执行时间，需要定义为：Kind.Return
-Kind.CALL：分析方法中调用其它方法的执行情况，有类似分布耗时的功效
-Kind.LINE：设置line，监控代码是否执行到指定行的位置
-Kind.Throw：异常抛出时拦截。
-Kind.Catch：异常被捕获时拦截。
-Kind.Error:异常没被捕获被抛出方法外时拦截。
-在拦截函数的参数定义里注入一个Throwable的参数，代表异常。
+</code></pre>
+
+<h4 id="知识点-拦截时机">知识点-拦截时机：</h4>
+
+<p>Btrace里拦截时机以下几种，通过Location关键字来定义：具体是：<br />
+Kind.Entry：默认是Entry，就是方法刚进入时拦截。<br />
+Kind.Return：如果想获得函数的返回结果或执行时间，需要定义为：Kind.Return<br />
+Kind.CALL：分析方法中调用其它方法的执行情况，有类似分布耗时的功效<br />
+Kind.LINE：设置line，监控代码是否执行到指定行的位置<br />
+Kind.Throw：异常抛出时拦截。<br />
+Kind.Catch：异常被捕获时拦截。<br />
+Kind.Error:异常没被捕获被抛出方法外时拦截。<br />
+在拦截函数的参数定义里注入一个Throwable的参数，代表异常。<br />
 public static void onBind(Throwable exception, @Duration long duration)</p>
+
 <h4 id="知识点-预编译">知识点-预编译：</h4>
+
 <p>BTrace可以实时编译.java的脚本文件，但可以通过btacec预编译来避免执行时才发现有问题。</p>
+
 <pre><code>sh ../bin/btracec XXX.java
-</code></pre><h4 id="特别注意">特别注意：</h4>
-<p>BTrace为了安全考虑，trace脚本诸多限制，比如：</p>
-<ol>
-<li>不允许调用任何类的任何方法。只能调用BTraceUtils 里的工具方法和脚本里定义的static方法</li>
-<li>不允许创建对象</li>
-<li>不允许for循环</li>
-</ol>
+</code></pre>
+
+<h4 id="特别注意">特别注意：</h4>
+
+<p>BTrace为了安全考虑，trace脚本诸多限制，比如：<br />
+1. 不允许调用任何类的任何方法。只能调用BTraceUtils 里的工具方法和脚本里定义的static方法<br />
+2. 不允许创建对象<br />
+3. 不允许for循环</p>
+
 <p>除非在脚本注解里使用 @BTrace(unsafe=true)，同时运行时使用 -u 参数 来规避限制。</p>
-<h4 id="font-colorgreen示例查看某个方法的调用耗时font"><!-- raw HTML omitted -->示例：查看某个方法的调用耗时：<!-- raw HTML omitted --></h4>
+
+<h4 id="font-color-green-示例-查看某个方法的调用耗时-font"><font color=green>示例：查看某个方法的调用耗时：</font></h4>
+
 <p>注意：这里的Duration是纳秒，需要转换一下比较好看。另外，可以用fqn参数打印出方法全路径名。</p>
+
 <pre><code>import com.sun.btrace.annotations.*;
 import static com.sun.btrace.BTraceUtils.*;
 
@@ -275,7 +304,10 @@ public class GetImageCost {
         println(&quot;=======ProbeClass:&quot; + probeClass +  &quot;,probeMethod:&quot; + probeMethod + &quot;,duration:&quot; + (duration / 100000) + &quot;ms&quot;);
     }
 }
-</code></pre><h4 id="font-colorgreen示例获取某个方法里所有调用子方法里耗时大于100ms的font"><!-- raw HTML omitted -->示例：获取某个方法里所有调用子方法里耗时大于100ms的：<!-- raw HTML omitted --></h4>
+</code></pre>
+
+<h4 id="font-color-green-示例-获取某个方法里所有调用子方法里耗时大于100ms的-font"><font color=green>示例：获取某个方法里所有调用子方法里耗时大于100ms的：</font></h4>
+
 <pre><code>import com.sun.btrace.annotations.*;
 import static com.sun.btrace.BTraceUtils.*;
 
@@ -288,7 +320,10 @@ public class PrintGenerateThumbPicCost {
         }
     }
 }
-</code></pre><h4 id="font-colorgreen示例获取某个方法执行时的线程栈font"><!-- raw HTML omitted -->示例：获取某个方法执行时的线程栈：<!-- raw HTML omitted --></h4>
+</code></pre>
+
+<h4 id="font-color-green-示例-获取某个方法执行时的线程栈-font"><font color=green>示例：获取某个方法执行时的线程栈：</font></h4>
+
 <pre><code>import com.sun.btrace.annotations.*;
 import static com.sun.btrace.BTraceUtils.*;
 
@@ -300,9 +335,13 @@ public class PrintThreadStack {
         jstack();
     }
 }
-</code></pre><h4 id="font-colorgreen示例获取某个方法的入参和返回font"><!-- raw HTML omitted -->示例：获取某个方法的入参和返回<!-- raw HTML omitted --></h4>
-<p>sh ../bin/btrace -u -cp .:attachment-common-1.1.16.jar 9 PrintParamAndReturn.java
+</code></pre>
+
+<h4 id="font-color-green-示例-获取某个方法的入参和返回-font"><font color=green>示例：获取某个方法的入参和返回</font></h4>
+
+<p>sh ../bin/btrace -u -cp .:attachment-common-1.1.16.jar 9 PrintParamAndReturn.java<br />
 当前对象的引用，参数列表，返回值，这3个是按顺序定义用@Self 注释的this， 完整的参数列表，以及用@Return 注释的返回值。</p>
+
 <pre><code>import com.sun.btrace.annotations.*;
 import static com.sun.btrace.BTraceUtils.*;
 import java.lang.reflect.Field;
@@ -323,9 +362,12 @@ public class PrintParamAndReturn {
         println(&quot;method return: &quot; + str(get(field(&quot;cn.sina.as.model.AttachStorage&quot;, &quot;filename&quot;), result)));
     }
 }
-</code></pre><p>注意：参数列表要么都不要，要么都不能缺，否则会进入静默状态。
-另外，某些场景下，我们只需要追踪某一两个简单的参数，不需要其他非JDK类型的参数，这是可以使用AnyType来定义非JDK类型的参数，从而不需要引入其他第三方依赖。（另外，不同参数的多个同名方法可以用AnyType[] 数组来匹配和打印出具体参数值，不过不知道哪里有问题没调通。)
+</code></pre>
+
+<p>注意：参数列表要么都不要，要么都不能缺，否则会进入静默状态。<br />
+另外，某些场景下，我们只需要追踪某一两个简单的参数，不需要其他非JDK类型的参数，这是可以使用AnyType来定义非JDK类型的参数，从而不需要引入其他第三方依赖。（另外，不同参数的多个同名方法可以用AnyType[] 数组来匹配和打印出具体参数值，不过不知道哪里有问题没调通。)<br />
 sh ../bin/btrace 9 PrintParamAndReturn.java</p>
+
 <pre><code>import com.sun.btrace.annotations.*;
 import static com.sun.btrace.BTraceUtils.*;
 import java.lang.reflect.Field;
@@ -340,8 +382,12 @@ public class PrintParamAndReturn {
         printFields(result);
     }
 }
-</code></pre><h4 id="font-colorgreen示例每10s打印一次某个方法被调用的总次数和慢查询次数font"><!-- raw HTML omitted -->示例：每10s打印一次某个方法被调用的总次数和慢查询次数。<!-- raw HTML omitted --></h4>
+</code></pre>
+
+<h4 id="font-color-green-示例-每10s打印一次某个方法被调用的总次数和慢查询次数-font"><font color=green>示例：每10s打印一次某个方法被调用的总次数和慢查询次数。</font></h4>
+
 <p>使用@OnTimer来定时触发，结合一些工具类。sh ../bin/btrace 9 PrintPerfCount.java</p>
+
 <pre><code>import com.sun.btrace.annotations.*;
 import static com.sun.btrace.BTraceUtils.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -380,26 +426,37 @@ public class PrintPerfCount {
         }
     }
 }
-</code></pre><h4 id="其他用法">其他用法：</h4>
-<p>按接口，父类，Annotation定位：
-比如我想匹配所有的Filter类，在接口或基类的名称前面，加个+ 就行
-@OnMethod(clazz=&quot;+com.vip.demo.Filter&quot;, method=&ldquo;doFilter&rdquo;)</p>
+</code></pre>
+
+<h4 id="其他用法">其他用法：</h4>
+
+<p>按接口，父类，Annotation定位：<br />
+比如我想匹配所有的Filter类，在接口或基类的名称前面，加个+ 就行<br />
+@OnMethod(clazz=&laquo;+com.vip.demo.Filter&raquo;, method=&laquo;doFilter&raquo;)</p>
+
 <h4 id="其他用法-1">其他用法：</h4>
-<p>也可以按类或方法上的annotaiton匹配，前面加上@就行
-@OnMethod(clazz=&quot;@javax.jws.WebService&quot;, method=&quot;@javax.jws.WebMethod&quot;)</p>
+
+<p>也可以按类或方法上的annotaiton匹配，前面加上@就行<br />
+@OnMethod(clazz=&laquo;@javax.jws.WebService&raquo;, method=&laquo;@javax.jws.WebMethod&raquo;)</p>
+
 <h4 id="其他用法-2">其他用法：</h4>
-<p>拦截构造函数，构造函数的名字是 <!-- raw HTML omitted -->
-@OnMethod(clazz=&ldquo;java.net.ServerSocket&rdquo;, method=&quot;<!-- raw HTML omitted -->&quot;)</p>
+
+<p>拦截构造函数，构造函数的名字是 <init><br />
+@OnMethod(clazz=&laquo;java.net.ServerSocket&raquo;, method=&raquo;<init>&raquo;)</p>
+
 <h4 id="其他用法-3">其他用法：</h4>
-<p>拦截静态内部类的写法，是在类与内部类之间加上&quot;$&quot;，​静态函数中，instance的值为空。如果想获得执行时间，必须把Where定义成AFTER。如果想获得执行时间，必须 把Where定义成AFTER。
-@OnMethod(clazz=&ldquo;com.vip.MyServer$MyInnerClass&rdquo;, method=&ldquo;hello&rdquo;)</p>
-<hr>
-<p><!-- raw HTML omitted -->参考：
-白衣大大的详细介绍：http://calvin1978.blogcn.com/articles/btrace1.html
-Instrumentation介绍： <a href="http://www.ibm.com/developerworks/cn/java/j-lo-jse61/">http://www.ibm.com/developerworks/cn/java/j-lo-jse61/</a>
-BTrace使用小结：https://lfckop.github.io/btrace/
-阿里出品的类似工具greys-anatomy：https://github.com/oldmanpushcart/greys-anatomy
-<!-- raw HTML omitted --></p></div>
+
+<p>拦截静态内部类的写法，是在类与内部类之间加上&raquo;$&laquo;，​静态函数中，instance的值为空。如果想获得执行时间，必须把Where定义成AFTER。如果想获得执行时间，必须 把Where定义成AFTER。<br />
+@OnMethod(clazz=&laquo;com.vip.MyServer$MyInnerClass&raquo;, method=&laquo;hello&raquo;)</p>
+
+<hr />
+
+<p><font color=gray>参考：<br />
+白衣大大的详细介绍：<a href="http://calvin1978.blogcn.com/articles/btrace1.html">http://calvin1978.blogcn.com/articles/btrace1.html</a><br />
+Instrumentation介绍： <a href="http://www.ibm.com/developerworks/cn/java/j-lo-jse61/">http://www.ibm.com/developerworks/cn/java/j-lo-jse61/</a><br />
+BTrace使用小结：<a href="https://lfckop.github.io/btrace/">https://lfckop.github.io/btrace/</a><br />
+阿里出品的类似工具greys-anatomy：<a href="https://github.com/oldmanpushcart/greys-anatomy">https://github.com/oldmanpushcart/greys-anatomy</a><br />
+</font></p></div>
 
   <footer class="article-footer">
     
