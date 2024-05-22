@@ -4,13 +4,7 @@
     <meta charset="utf-8">
 <meta name="pinterest" content="nopin">
 <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-<meta name="generator" content="Hugo 0.56.3" />
-
-
-
-<link rel="canonical" href="https://coldwalker.github.io/2018/03//robust-service_hystrix/">
-
-
+<meta name="generator" content="Hugo 0.124.1">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
@@ -21,7 +15,7 @@
 
 <meta property="og:title" content="服务稳定性提升之-熔断组件Hystrix - 凛冬夜行">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://coldwalker.github.io/2018/03//robust-service_hystrix/">
+<meta property="og:url" content="https://coldwalker.github.io/2018/03/robust-service_hystrix/">
 <meta property="og:image" content="https://coldwalker.github.io/images/qieyifengjing.jpg">
 <meta property="og:site_name" content="凛冬夜行">
 <meta property="og:description" content="&lt;p&gt;Hystrix是netflix公司开源的一个通用系统保护框架，提供服务对远程依赖的快速失败机制、requestCache支持、请求合并能力等。目前通讯这边已经大范围使用，并结合profile日志进行了一些简单的定制化，目前使用情况看，实用性和稳定性比较出色，接入成本也较低。有兴趣的组可以参考以下范例尝试接入使用。&lt;/p&gt;">
@@ -29,7 +23,7 @@
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="凛冬夜行">
-<meta name="twitter:url" content="https://coldwalker.github.io/2018/03//robust-service_hystrix/">
+<meta name="twitter:url" content="https://coldwalker.github.io/2018/03/robust-service_hystrix/">
 <meta name="twitter:title" content="服务稳定性提升之-熔断组件Hystrix - 凛冬夜行">
 <meta name="twitter:description" content="&lt;p&gt;Hystrix是netflix公司开源的一个通用系统保护框架，提供服务对远程依赖的快速失败机制、requestCache支持、请求合并能力等。目前通讯这边已经大范围使用，并结合profile日志进行了一些简单的定制化，目前使用情况看，实用性和稳定性比较出色，接入成本也较低。有兴趣的组可以参考以下范例尝试接入使用。&lt;/p&gt;">
 <meta name="twitter:image" content="https://coldwalker.github.io/images/qieyifengjing.jpg">
@@ -66,7 +60,7 @@
         "height": 60
       }
     },
-    "description": "\x3cp\x3eHystrix是netflix公司开源的一个通用系统保护框架，提供服务对远程依赖的快速失败机制、requestCache支持、请求合并能力等。目前通讯这边已经大范围使用，并结合profile日志进行了一些简单的定制化，目前使用情况看，实用性和稳定性比较出色，接入成本也较低。有兴趣的组可以参考以下范例尝试接入使用。\x3c\/p\x3e"
+    "description": "\u003cp\u003eHystrix是netflix公司开源的一个通用系统保护框架，提供服务对远程依赖的快速失败机制、requestCache支持、请求合并能力等。目前通讯这边已经大范围使用，并结合profile日志进行了一些简单的定制化，目前使用情况看，实用性和稳定性比较出色，接入成本也较低。有兴趣的组可以参考以下范例尝试接入使用。\u003c\/p\u003e"
   }
 </script>
 
@@ -80,7 +74,7 @@
     
         
             
-<script type="application/javascript">
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
 	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
@@ -196,7 +190,7 @@ autocomplete('#aa-search-input',
       <div class="container">
         
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-9">
 
     <nav class="p-crumb">
       <ol class="breadcrumb">
@@ -222,113 +216,101 @@ autocomplete('#aa-search-input',
   <div class="thumb" style="background-image: url(https://coldwalker.github.io/images/qieyifengjing.jpg);"></div>
 
   <div class="article-body"><p>Hystrix是netflix公司开源的一个通用系统保护框架，提供服务对远程依赖的快速失败机制、requestCache支持、请求合并能力等。目前通讯这边已经大范围使用，并结合profile日志进行了一些简单的定制化，目前使用情况看，实用性和稳定性比较出色，接入成本也较低。有兴趣的组可以参考以下范例尝试接入使用。</p>
-
 <h3 id="hystrix的主要能力栈如下">Hystrix的主要能力栈如下：</h3>
-
 <ul>
-<li>提供方法级别的Fail Fast的自动短路保护机制,设置时间内频繁出错或超时会自动短路该方法的调用。<br /></li>
-<li>提供熔断机制触发后的备选方法切入。例如rpc不可用时可自动切换成jar方式等。<br /></li>
-<li>提供并发访问控制。<br /></li>
-<li>提供超时控制。<br /></li>
-<li>提供平均访问耗时、qps、p99等详细的metrics数据，并已接入平台profile日志。<br /></li>
-<li>提供一定程度的requestCache支持，可酌情作为LocalCache使用。<br /></li>
-<li>提供有限的自动合并请求能力的支持，可根据业务场景酌情使用。<br />
-<br /></li>
+<li>提供方法级别的Fail Fast的自动短路保护机制,设置时间内频繁出错或超时会自动短路该方法的调用。</li>
+<li>提供熔断机制触发后的备选方法切入。例如rpc不可用时可自动切换成jar方式等。</li>
+<li>提供并发访问控制。</li>
+<li>提供超时控制。</li>
+<li>提供平均访问耗时、qps、p99等详细的metrics数据，并已接入平台profile日志。</li>
+<li>提供一定程度的requestCache支持，可酌情作为LocalCache使用。</li>
+<li>提供有限的自动合并请求能力的支持，可根据业务场景酌情使用。</li>
 </ul>
-
 <h3 id="how-it-work">How It Work?</h3>
-
 <ul>
-<li>如果在一定的窗口时间内(默认500ms)，出错比例达到多少(默认50%，前提还有需要满足一次的访问次数【默认20】才行)，该方法就进入短路状态。<br /></li>
-<li>短路状态下，所有访问都会立即返回或者走配置的对应的降级方法，不会真正访问远程资源。保护窗口期(默认5秒)过了之后，会再尝试放一次请求进入，如果依然错误，则继续保护状态，如果成功则放入请求。<br /></li>
-<li>独立线程池模式和信号量模式都支持超时控制，超时默认为1秒，超时立刻返回异常并算入异常计数。<font color=red>但需要注意，由于信号量模式下的超时控制是通过Hystrix本身提供的Timer来实现的，所以超时控制并不是很精确。</font>线程池大小默认为10，如果满了，同样立刻返回错误并记入异常计数。<br />
-<em>详细请参考：<a href="https://github.com/Netflix/Hystrix/wiki/How-it-Works#flow-chart">Hystrix工作方式</a></em><br />
-<br /></li>
+<li>如果在一定的窗口时间内(默认500ms)，出错比例达到多少(默认50%，前提还有需要满足一次的访问次数【默认20】才行)，该方法就进入短路状态。</li>
+<li>短路状态下，所有访问都会立即返回或者走配置的对应的降级方法，不会真正访问远程资源。保护窗口期(默认5秒)过了之后，会再尝试放一次请求进入，如果依然错误，则继续保护状态，如果成功则放入请求。</li>
+<li>独立线程池模式和信号量模式都支持超时控制，超时默认为1秒，超时立刻返回异常并算入异常计数。<!-- raw HTML omitted -->但需要注意，由于信号量模式下的超时控制是通过Hystrix本身提供的Timer来实现的，所以超时控制并不是很精确。<!-- raw HTML omitted -->线程池大小默认为10，如果满了，同样立刻返回错误并记入异常计数。
+<em>详细请参考：<a href="https://github.com/Netflix/Hystrix/wiki/How-it-Works#flow-chart">Hystrix工作方式</a></em></li>
 </ul>
-
 <h3 id="演示示例">演示示例</h3>
-
-<p>最佳实践中提供了hystrix的多种使用场景的演示，见failfast-hystrix模块。<br />
-该模块是一个基于spring boot搭建的restful风格的应用，模拟一个查询消息的服务。通过模块源码根目录下的Main可以启动服务，启动完毕后，通过本机8080端口配合apache benchmark进行演示。<br />
-service层的MessageService增加了基于注解@HystrixCommand方式的保护机制；<br />
+<p>最佳实践中提供了hystrix的多种使用场景的演示，见failfast-hystrix模块。
+该模块是一个基于spring boot搭建的restful风格的应用，模拟一个查询消息的服务。通过模块源码根目录下的Main可以启动服务，启动完毕后，通过本机8080端口配合apache benchmark进行演示。
+service层的MessageService增加了基于注解@HystrixCommand方式的保护机制；
 controller层MessageController作为请求入口，完成了多种调用示例的实现;</p>
-
 <h4 id="具体详见代码">具体详见代码。</h4>
-
 <ul>
-<li><p>Demo1： ab -c 1 -n 100 &laquo;<a href="http://localhost:8080/msg/1/timeout&quot;">http://localhost:8080/msg/1/timeout&quot;</a><br />
-模拟多并发访问消息ID为1的请求，该接口内部通过sleep超时响应，可以观察到所以请求在1s超时后进入熔断状态，其他后续请求直接进入fallback降级。</p></li>
-
-<li><p>Demo2： ab -c 1 -n 100 &laquo;<a href="http://localhost:8080/msg/2/exception&quot;">http://localhost:8080/msg/2/exception&quot;</a>   ab -c 1 -n 100 &laquo;<a href="http://localhost:8080/msg/1/exception&quot;">http://localhost:8080/msg/1/exception&quot;</a><br />
-模拟两种请求，访问ID为1的请求,内部会抛出&raquo;非法参数异常&raquo;,该异常在&raquo;屏蔽的白名单&raquo;中,因此不会进入熔断异常计数;<br />
-第二种请求,访问ID为2的消息,内部会抛出&raquo;运行时异常&raquo;,该异常会计入熔断计数, 可以观察到所以请求在经过大概默认的500ms健康检查期后进入熔断状态。*</p></li>
-
-<li><p>Demo3： curl -s &laquo;<a href="http://localhost:8080/msg/1,2/ratelimiter&quot;">http://localhost:8080/msg/1,2/ratelimiter&quot;</a><br />
-模拟访问消息ID为1，2的请求，该接口限制了并发访问限制为1，可以观察到该请求只有一个可以成功，另一个进入fallback。*</p></li>
-
-<li><p>Demo4： curl -s &laquo;<a href="http://localhost:8080/msg/1/async&quot;">http://localhost:8080/msg/1/async&quot;</a><br />
-模拟访问消息ID为1的请求，该接口内部为异步模式，适用于某些已经是异步访问的调用方式。*</p></li>
-
-<li><p>Demo5： curl -s &laquo;<a href="http://localhost:8080/msg/1/cache&quot;">http://localhost:8080/msg/1/cache&quot;</a><br />
-模拟访问消息ID为1的请求，在同一http请求对同一ID访问两次，实际底层是调用了一次。*</p></li>
-
-<li><p>Demo6： curl -s &laquo;<a href="http://localhost:8080/msg/1,2/collapse&quot;">http://localhost:8080/msg/1,2/collapse&quot;</a><br />
-模拟合并请求的场景，该请求通过单查询接口逐条查询消息，在service层通过hystrix合并两个请求成一个多查询接口请求，只需要访问db一次。*</p></li>
+<li>
+<p>Demo1： ab -c 1 -n 100 &ldquo;http://localhost:8080/msg/1/timeout&rdquo;
+模拟多并发访问消息ID为1的请求，该接口内部通过sleep超时响应，可以观察到所以请求在1s超时后进入熔断状态，其他后续请求直接进入fallback降级。</p>
+</li>
+<li>
+<p>Demo2： ab -c 1 -n 100 &ldquo;http://localhost:8080/msg/2/exception&rdquo;   ab -c 1 -n 100 &ldquo;http://localhost:8080/msg/1/exception&rdquo;
+模拟两种请求，访问ID为1的请求,内部会抛出&quot;非法参数异常&quot;,该异常在&quot;屏蔽的白名单&quot;中,因此不会进入熔断异常计数;
+第二种请求,访问ID为2的消息,内部会抛出&quot;运行时异常&quot;,该异常会计入熔断计数, 可以观察到所以请求在经过大概默认的500ms健康检查期后进入熔断状态。*</p>
+</li>
+<li>
+<p>Demo3： curl -s &ldquo;http://localhost:8080/msg/1,2/ratelimiter&rdquo;
+模拟访问消息ID为1，2的请求，该接口限制了并发访问限制为1，可以观察到该请求只有一个可以成功，另一个进入fallback。*</p>
+</li>
+<li>
+<p>Demo4： curl -s &ldquo;http://localhost:8080/msg/1/async&rdquo;
+模拟访问消息ID为1的请求，该接口内部为异步模式，适用于某些已经是异步访问的调用方式。*</p>
+</li>
+<li>
+<p>Demo5： curl -s &ldquo;http://localhost:8080/msg/1/cache&rdquo;
+模拟访问消息ID为1的请求，在同一http请求对同一ID访问两次，实际底层是调用了一次。*</p>
+</li>
+<li>
+<p>Demo6： curl -s &ldquo;http://localhost:8080/msg/1,2/collapse&rdquo;
+模拟合并请求的场景，该请求通过单查询接口逐条查询消息，在service层通过hystrix合并两个请求成一个多查询接口请求，只需要访问db一次。*</p>
+</li>
 </ul>
-
 <h3 id="日志信息和实时监控dashboard">日志信息和实时监控dashboard</h3>
-
 <ul>
-<li>对于实时metrics数据，hystrix本身提供良好的访问接口，本模块中只是进行了简单的提取和封装并打印到日志文件中，目前默认是存放在profile日志中。通过将profile日志推送到平台日志系统，可以随时查看被hystrix保护的接口的历史和实时情况等。<br /></li>
-<li>hystrix本身提供一个实时的监控dashboard，这是一个独立的war，需要单独部署，可实时展示被保护的方法的访问情况、熔断与否等。<br />
-
+<li>对于实时metrics数据，hystrix本身提供良好的访问接口，本模块中只是进行了简单的提取和封装并打印到日志文件中，目前默认是存放在profile日志中。通过将profile日志推送到平台日志系统，可以随时查看被hystrix保护的接口的历史和实时情况等。</li>
+<li>hystrix本身提供一个实时的监控dashboard，这是一个独立的war，需要单独部署，可实时展示被保护的方法的访问情况、熔断与否等。
 <ul>
-<li>如果需要连接多台机器的实时数据，还需要通过turbine来进行聚合。<br /></li>
-<li>实时dashboard需要在每台服务机上开启一个servlet( <a href="https://github.com/Netflix/Hystrix/tree/master/hystrix-contrib/hystrix-metrics-event-stream">hystrix-metrics-event-stream</a>)用于提供给dashboard程序定时拉取metrics数据。<br />
-<br /></li>
-</ul></li>
+<li>如果需要连接多台机器的实时数据，还需要通过turbine来进行聚合。</li>
+<li>实时dashboard需要在每台服务机上开启一个servlet( <a href="https://github.com/Netflix/Hystrix/tree/master/hystrix-contrib/hystrix-metrics-event-stream">hystrix-metrics-event-stream</a>)用于提供给dashboard程序定时拉取metrics数据。</li>
 </ul>
-
-<p><img src="https://github.com/Netflix/Hystrix/wiki/images/dashboard-annoted-circuit-640.png" alt="" /></p>
-
+</li>
+</ul>
+<p><img src="https://github.com/Netflix/Hystrix/wiki/images/dashboard-annoted-circuit-640.png" alt=""></p>
 <p><em>具体使用情况请移步：<a href="https://github.com/Netflix/Hystrix/wiki/Dashboard">Hystrix实时dashboard</a></em></p>
-
 <h3 id="一些坑">一些坑</h3>
-
 <ul>
-<li><p>@HystrixCommand注解的一些约束:<br />
-@HystrixCommand does NOT work, if the original call is made to the service method without direct @HystrixCommand. For example: the original call =&gt; service() =&gt; doSomething(). Here, service() does NOT has @HystrixCommand, but it calls another method doSomething(), which has @HystrixCommand.</p>
-
-<pre><code>public class A {
-
-public void service() {
-    ...
-    doSomething();
-    ...
-}
-
-@HystrixCommand
-public void doSomething() {
-    ...
-}
-}
-</code></pre></li>
+<li>@HystrixCommand注解的一些约束:
+@HystrixCommand does NOT work, if the original call is made to the service method without direct @HystrixCommand. For example: the original call =&gt; service() =&gt; doSomething(). Here, service() does NOT has @HystrixCommand, but it calls another method doSomething(), which has @HystrixCommand.</li>
 </ul>
+<pre tabindex="0"><code>public class A {
 
-<p>On the other side, if the original call invokes doSomething() directly, then @HystrixCommand works well.</p>
+    public void service() {
+        ...
+        doSomething();
+        ...
+    }
 
-<p>I believe @spencergibb gave a very good direction for this issue: it is all about AOP rather than @HystrixCommand self. I did a very quick search about AOP, and found a very good Posted on 26th July 2009 by Denis Zhdanov. Please check it out via the link:<br />
-Spring AOP top problem #1 - <a href="http://denis-zhdanov.blogspot.com/2009/07/spring-aop-top-problem-1-aspects-are.html">aspects are not applied</a><br />
+    @HystrixCommand
+    public void doSomething() {
+        ...
+    }
+}
+</code></pre><p>On the other side, if the original call invokes doSomething() directly, then @HystrixCommand works well.</p>
+<p>I believe @spencergibb gave a very good direction for this issue: it is all about AOP rather than @HystrixCommand self. I did a very quick search about AOP, and found a very good Posted on 26th July 2009 by Denis Zhdanov. Please check it out via the link:
+Spring AOP top problem #1 - <a href="http://denis-zhdanov.blogspot.com/2009/07/spring-aop-top-problem-1-aspects-are.html">aspects are not applied</a>
 相关链接：<a href="https://github.com/Netflix/Hystrix/issues/1020">Why @HystrixCommand did not work?</a></p>
-
 <h3 id="其他参考">其他参考</h3>
-
 <ul>
-<li><p>使用线程的payload。 参考：<a href="https://github.com/Netflix/Hystrix/wiki/How-it-Works#cost-of-threads">cost-of-threads</a></p></li>
-
-<li><p>为啥默认不通过AOP实现。（PS：如果想用注解AOP方式，需要用到它的子项目javanica，当前示例模块就是通过这种方式使用的，并没有使用Command模式自己写代码）。参考： <a href="https://github.com/Netflix/Hystrix/wiki/FAQ%20:%20General">why not use AOP?</a></p></li>
-
-<li><p>详细配置项，需细看。 <a href="https://github.com/Netflix/Hystrix/wiki/Configuration">详细配置</a></p></li>
+<li>
+<p>使用线程的payload。 参考：<a href="https://github.com/Netflix/Hystrix/wiki/How-it-Works#cost-of-threads">cost-of-threads</a></p>
+</li>
+<li>
+<p>为啥默认不通过AOP实现。（PS：如果想用注解AOP方式，需要用到它的子项目javanica，当前示例模块就是通过这种方式使用的，并没有使用Command模式自己写代码）。参考： <a href="https://github.com/Netflix/Hystrix/wiki/FAQ%20:%20General">why not use AOP?</a></p>
+</li>
+<li>
+<p>详细配置项，需细看。 <a href="https://github.com/Netflix/Hystrix/wiki/Configuration">详细配置</a></p>
+</li>
 </ul></div>
 
   <footer class="article-footer">
@@ -379,21 +361,21 @@ Spring AOP top problem #1 - <a href="http://denis-zhdanov.blogspot.com/2009/07/s
       <div id="cyReward" role="cylabs" data-use="reward"></div>
       <script src="//changyan.itc.cn/js/lib/jquery.js"></script>
       <script src="//changyan.sohu.com/js/changyan.labs.https.js?appid=cytwFfxww"></script>
-      <div id="SOHUCS" sid="/2018/03//robust-service_hystrix/" ></div>
+      <div id="SOHUCS" sid="https://coldwalker.github.io/2018/03/robust-service_hystrix/" ></div>
       <script>
       (function(){
       var appid = 'cytwFfxww';
       var conf = 'prod_36cf3e358f9305067d10b0652031cb07';
       var width = window.innerWidth || document.documentElement.clientWidth;
       if (width < 960) {
-      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+      window.document.write('\x3Cscript id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
       
     
 
    
   </div>
 
-  <div class="col-md-4">
+  <div class="col-md-3">
     
 <aside class="l-sidebar">
 
@@ -403,25 +385,25 @@ Spring AOP top problem #1 - <a href="http://denis-zhdanov.blogspot.com/2009/07/s
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/2020/01//log4j-thread-blocked-issue/" class="list-group-item">记log4j打印异常日志导致线程阻塞的问题排查</a>
+      <a href="https://coldwalker.github.io/2024/05/mtu_probe_details/" class="list-group-item">关于MTU探测的一些细节</a>
       
-      <a href="https://coldwalker.github.io/2019/02//gc_problem_resolve/" class="list-group-item">Java垃圾回收浅析(4)-GC常见问题分析</a>
+      <a href="https://coldwalker.github.io/2020/01/log4j-thread-blocked-issue/" class="list-group-item">记log4j打印异常日志导致线程阻塞的问题排查</a>
       
-      <a href="https://coldwalker.github.io/2019/02//gc_log_analyze/" class="list-group-item">Java垃圾回收浅析(3)-GC日志分析</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_problem_resolve/" class="list-group-item">Java垃圾回收浅析(4)-GC常见问题分析</a>
       
-      <a href="https://coldwalker.github.io/2019/02//gc_intro/" class="list-group-item">Java垃圾回收浅析(2)-GC方式介绍</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_log_analyze/" class="list-group-item">Java垃圾回收浅析(3)-GC日志分析</a>
       
-      <a href="https://coldwalker.github.io/2019/02//gc_object_alloc_process/" class="list-group-item">Java垃圾回收浅析(1)-对象内存申请</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_intro/" class="list-group-item">Java垃圾回收浅析(2)-GC方式介绍</a>
       
-      <a href="https://coldwalker.github.io/2018/12//troubleshooter_directbytebuffer_memory_issue/" class="list-group-item">DirectByteBuffer堆外内存溢出问题排查</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_object_alloc_process/" class="list-group-item">Java垃圾回收浅析(1)-对象内存申请</a>
       
-      <a href="https://coldwalker.github.io/2018/08//troubleshooter_native_memory_increase/" class="list-group-item">Java堆外内存增长问题排查Case</a>
+      <a href="https://coldwalker.github.io/2018/12/troubleshooter_directbytebuffer_memory_issue/" class="list-group-item">DirectByteBuffer堆外内存溢出问题排查</a>
       
-      <a href="https://coldwalker.github.io/2018/03//troubleshooter_stackoverflowerror/" class="list-group-item">一个StackOverFlowError问题引出的JVM栈内存管理</a>
+      <a href="https://coldwalker.github.io/2018/08/troubleshooter_native_memory_increase/" class="list-group-item">Java堆外内存增长问题排查Case</a>
       
-      <a href="https://coldwalker.github.io/2018/03//robust-service_hystrix/" class="list-group-item">服务稳定性提升之-熔断组件Hystrix</a>
+      <a href="https://coldwalker.github.io/2018/03/troubleshooter_stackoverflowerror/" class="list-group-item">StackOverFlowError问题引出的JVM栈内存管理</a>
       
-      <a href="https://coldwalker.github.io/2018/03//troubleshooter_btrace01/" class="list-group-item">问题排查利器之-JVM动态追踪工具BTrace</a>
+      <a href="https://coldwalker.github.io/2018/03/robust-service_hystrix/" class="list-group-item">服务稳定性提升之-熔断组件Hystrix</a>
       
     </div>
   </section>
@@ -433,7 +415,7 @@ Spring AOP top problem #1 - <a href="http://denis-zhdanov.blogspot.com/2009/07/s
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/categories/%E6%8A%80%E6%9C%AF" class="list-group-item">技术(10)</a>
+      <a href="https://coldwalker.github.io/categories/%E6%8A%80%E6%9C%AF" class="list-group-item">技术(11)</a>
       
       <a href="https://coldwalker.github.io/categories/%E6%84%9F%E6%82%9F" class="list-group-item">感悟(1)</a>
       
@@ -459,9 +441,13 @@ Spring AOP top problem #1 - <a href="http://denis-zhdanov.blogspot.com/2009/07/s
       
       <a href="https://coldwalker.github.io/tags/netflix" class="list-group-item">Netflix(1)</a>
       
+      <a href="https://coldwalker.github.io/tags/%E5%86%85%E6%A0%B8" class="list-group-item">内核(1)</a>
+      
       <a href="https://coldwalker.github.io/tags/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6" class="list-group-item">开源组件(1)</a>
       
       <a href="https://coldwalker.github.io/tags/%E6%9C%8D%E5%8A%A1%E7%A8%B3%E5%AE%9A%E6%80%A7" class="list-group-item">服务稳定性(1)</a>
+      
+      <a href="https://coldwalker.github.io/tags/%E7%BD%91%E7%BB%9C" class="list-group-item">网络(1)</a>
       
     </div>
   </section>
@@ -475,7 +461,11 @@ Spring AOP top problem #1 - <a href="http://denis-zhdanov.blogspot.com/2009/07/s
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/#2020-01" class="list-group-item">2020-01(2)</a>
+      <a href="https://coldwalker.github.io/post/#2024-05" class="list-group-item">2024-05(2)</a>
+    
+      
+    <div class="list-group">
+      <a href="https://coldwalker.github.io/post/#2020-01" class="list-group-item">2020-01(1)</a>
     
       
     <div class="list-group">
