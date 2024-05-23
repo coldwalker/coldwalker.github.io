@@ -8,25 +8,25 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <link rel="stylesheet" href="https://coldwalker.github.io/post/css/search.css" />
+    <link rel="stylesheet" href="https://coldwalker.github.io/css/search.css" />
     <title>关于MTU探测的一些细节 - 凛冬夜行</title>
     
 <meta name="description" content="好久没有更新博客了，由于工作内容的调整，所负责的服务更多需要面向用户侧网络来推进，由于公网链路的复杂性，各种奇怪的网络问题也陆续接触到，抽空">
 
 <meta property="og:title" content="关于MTU探测的一些细节 - 凛冬夜行">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://coldwalker.github.io/post/2024/05/mtu_probe_details/">
-<meta property="og:image" content="https://coldwalker.github.io/post/images/mtu_probe_details/sailimuhu.jpg">
+<meta property="og:url" content="https://coldwalker.github.io/2024/05/mtu_probe_details/">
+<meta property="og:image" content="https://coldwalker.github.io/images/mtu_probe_details/sailimuhu.jpg">
 <meta property="og:site_name" content="凛冬夜行">
 <meta property="og:description" content="好久没有更新博客了，由于工作内容的调整，所负责的服务更多需要面向用户侧网络来推进，由于公网链路的复杂性，各种奇怪的网络问题也陆续接触到，抽空">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="凛冬夜行">
-<meta name="twitter:url" content="https://coldwalker.github.io/post/2024/05/mtu_probe_details/">
+<meta name="twitter:url" content="https://coldwalker.github.io/2024/05/mtu_probe_details/">
 <meta name="twitter:title" content="关于MTU探测的一些细节 - 凛冬夜行">
 <meta name="twitter:description" content="好久没有更新博客了，由于工作内容的调整，所负责的服务更多需要面向用户侧网络来推进，由于公网链路的复杂性，各种奇怪的网络问题也陆续接触到，抽空">
-<meta name="twitter:image" content="https://coldwalker.github.io/post/images/mtu_probe_details/sailimuhu.jpg">
+<meta name="twitter:image" content="https://coldwalker.github.io/images/mtu_probe_details/sailimuhu.jpg">
 
 
 <script type="application/ld+json">
@@ -35,12 +35,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https:\/\/coldwalker.github.io\/post\/"
+      "@id":"https:\/\/coldwalker.github.io\/"
     },
     "headline": "关于MTU探测的一些细节 - 凛冬夜行",
     "image": {
       "@type": "ImageObject",
-      "url": "https:\/\/coldwalker.github.io\/post\/images\/mtu_probe_details\/sailimuhu.jpg",
+      "url": "https:\/\/coldwalker.github.io\/images\/mtu_probe_details\/sailimuhu.jpg",
       "height": 800,
       "width": 800
     },
@@ -55,7 +55,7 @@
       "name": "凛冬夜行",
       "logo": {
         "@type": "ImageObject",
-        "url": "https:\/\/coldwalker.github.io\/post\/images/logo.png",
+        "url": "https:\/\/coldwalker.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -65,7 +65,7 @@
 </script>
 
 
-    <link href="https://coldwalker.github.io/post/css/styles.css" rel="stylesheet">
+    <link href="https://coldwalker.github.io/css/styles.css" rel="stylesheet">
     
 
   </head>
@@ -110,7 +110,7 @@ if (!doNotTrack) {
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://coldwalker.github.io/post/">凛冬夜行</a>
+            <a class="navbar-brand" href="https://coldwalker.github.io/">凛冬夜行</a>
           </div>
 
           
@@ -119,7 +119,7 @@ if (!doNotTrack) {
             <ul class="nav navbar-nav navbar-right">
               
               
-              <li><a href="https://coldwalker.github.io/post/2018/03/about/">about Me</a></li>
+              <li><a href="https://coldwalker.github.io/2018/03/about/">about Me</a></li>
               
               
               
@@ -168,7 +168,7 @@ autocomplete('#aa-search-input',
             if(postMonth < 10)
             postMonth = "0" + postMonth;
             var title = suggestion.objectID.split("/", 2)[1];            
-            return '<span>' + '<a href="https://coldwalker.github.io/post/' + postYear + "/" + postMonth + "/" + title + '">' +
+            return '<span>' + '<a href="https://coldwalker.github.io/' + postYear + "/" + postMonth + "/" + title + '">' +
             suggestion._highlightResult.title.value + '</a></span>';
         }
     }
@@ -194,9 +194,9 @@ autocomplete('#aa-search-input',
 
     <nav class="p-crumb">
       <ol class="breadcrumb">
-        <li><a href="https://coldwalker.github.io/post/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        <li><a href="https://coldwalker.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         
-        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://coldwalker.github.io/post/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://coldwalker.github.io/post/" itemprop="url"><span itemprop="title">post</span></a></li>
         
         <li class="active">关于MTU探测的一些细节</li>
       </ol>
@@ -206,20 +206,20 @@ autocomplete('#aa-search-input',
   <header>
     <ul class="p-facts">
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2024-05-22T12:00:00JST">2024-05-22</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://coldwalker.github.io/post/post/">post</a></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://coldwalker.github.io/post/">post</a></li>
       
     </ul>
 
     <h1 class="title">关于MTU探测的一些细节</h1>
   </header>
 
-  <div class="thumb" style="background-image: url(https://coldwalker.github.io/post/images/mtu_probe_details/sailimuhu.jpg);"></div>
+  <div class="thumb" style="background-image: url(https://coldwalker.github.io/images/mtu_probe_details/sailimuhu.jpg);"></div>
 
   <div class="article-body"><p>好久没有更新博客了，由于工作内容的调整，所负责的服务更多需要面向用户侧网络来推进，由于公网链路的复杂性，各种奇怪的网络问题也陆续接触到，抽空把最近工作中碰到的一些关于mtu的问题来做个小的知识总结。</p>
 <h3 id="什么是mtu">什么是MTU</h3>
 <p>对于网络传输来说，提升数据收发效率一个关键的点就是尽量在双端网络链路允许的情况下提升每一次传输实际payload数据的发送量，那么限制每次网络传输的关键技术指标就是MTU（Maximum Transmission Unit）。在7层网络协议中，MTU是数据链路层的概念，MTU限制的是数据链路层的payload，也就是上层协议的大小（例如：IP包、ICMP包的大小）。
 标准以太网（Ethernet II）数据帧大小是1518，头信息有14字节，尾部校验和FCS占4字节，所以标准以太网数据帧实际能携带的最大的payload大小就是：1518 - 14 - 4 = 1500。
-<img src="https://coldwalker.github.io/post/images/mtu_probe_details/17153227060140.jpg" alt="17153227060140.jpg">
+<img src="https://coldwalker.github.io/images/mtu_probe_details/17153227060140.jpg" alt="17153227060140.jpg">
 以太网数据帧考虑大小限制在1518主要是考虑一次传输延迟和传输效率的折中。
 100Mbps带宽下传输时间：
 ( 1518 * 8 ) / ( 100 * 1024 * 1024 ) * 1000 = 0.11(ms)
@@ -227,12 +227,12 @@ autocomplete('#aa-search-input',
 ( 1518 * 8 ) / ( 2 * 1024 * 1024 ) * 1000 = 5.79(ms)</p>
 <h3 id="如果传输路径的mtu不准确会发生什么">如果传输路径的MTU不准确会发生什么</h3>
 <p>以IPv4为例，IP数据包的最大长度是64K字节（65535），因为在IP包头中用2个字节描述报文长度，2个字节所能表达的最大数字就是65535。然而网络中有多种不同的传输链路，每种链路的MTU都不一样。</p>
-<p><img src="https://coldwalker.github.io/post/images/mtu_probe_details/17132577209353.jpg" alt="17132577209353.jpg"></p>
+<p><img src="https://coldwalker.github.io/images/mtu_probe_details/17132577209353.jpg" alt="17132577209353.jpg"></p>
 <p>对于传输路径中的MTU如果不准确，可能会存在两种情况。</p>
 <ul>
 <li>第一种：IP包在发出时未设置DF（Dont Fragment）标志位，那么在发出后，如果链路中出现MTU比当前IP包更小的情况，那么会在该环节进行IP包分片。比如一台router从FDDI接口收到了一个大小为4352 bytes 的数据包，为了从Ethernet接口把该数据发送出去就需要在路由器进行IP包分片，将一个大的数据包切分为多个小的数据包从而满足 Ethernet 1500 bytes MTU 的要求。除了不同的传输链路的MTU不一样导致需要进行IP分片外，同一种传输链路中也可能存在MTU不一致的情况，比如以太网链路中有路由器MTU设置较小，也会导致收发双端的数据包在路由器被分片。</li>
 </ul>
-<p><img src="https://coldwalker.github.io/post/images/mtu_probe_details/17153247064890.jpg" alt="17153247064890.jpg"></p>
+<p><img src="https://coldwalker.github.io/images/mtu_probe_details/17153247064890.jpg" alt="17153247064890.jpg"></p>
 <p>对于这种在链路中被分片的情况实际上是并不被鼓励的，原因有以下几点：</p>
 <ol>
 <li>需要占用更多的 CPU 和 RAM 来进行 fragmentation 和 reassembling。Router 的 RAM 有限，进行 reassembling 的时候需要把未接收完的数据包都放在 buffer 里面排队，对系统的影响较大。</li>
@@ -258,7 +258,7 @@ autocomplete('#aa-search-input',
 net.ipv4.route.min_pmtu
 最小的路径 MTU，默认为 522
 </code></pre><p>对于开启了net.ipv4.ip_no_pmtu_disc的场景，在接收到code为4的ICMP包后，会针对该IP调整MTU：
-<img src="https://coldwalker.github.io/post/images/mtu_probe_details/17162844439285.jpg" alt="17162844439285.jpg"></p>
+<img src="https://coldwalker.github.io/images/mtu_probe_details/17162844439285.jpg" alt="17162844439285.jpg"></p>
 <pre tabindex="0"><code>sudo ip route show cache
 10.2.25.31 via 10.182.25.1 dev eth0
     cache expires 286sec mtu 1430
@@ -271,11 +271,11 @@ net.ipv4.route.min_pmtu
 <p>对于TCP协议来说，避免IP分片是通过在协议层通过MSS参数自己进行分好segment再提交给IP层，这样只要segment大小不超过PMTU就不会导致在IP层分片，通信双方会在三次握手阶段时双方互通告对方自己的MSS，最终双方会选择两端MSS的最小值作为传输的MSS。
 如下：在TCP的SYN报文通过TCP option携带了发出端的MSS（1460），如果不带的话默认通告MSS的值是536(内核依照RFC1122, RFC2581中的规定，见宏TCP_MSS_DEFAULT）。</p>
 <pre tabindex="0"><code>#define TCP_MSS_DEFAULT      536U
-</code></pre><p><img src="https://coldwalker.github.io/post/images/mtu_probe_details/17153970142414.jpg" alt="17153970142414.jpg"></p>
+</code></pre><p><img src="https://coldwalker.github.io/images/mtu_probe_details/17153970142414.jpg" alt="17153970142414.jpg"></p>
 <p>默认情况下，MSS值的计算是通过本机网络接口的默认MTU计算出来的：MSS = 网卡MTU - 20（IP头） - 20（TCP头），注意：这里通告MSS的值并不会包括IP头的option和TCP头的option，实际发送的TCP Payload还需要考虑这两个扩展项。</p>
-<p><img src="https://coldwalker.github.io/post/images/mtu_probe_details/17153988782202.jpg" alt="17153988782202.jpg"></p>
+<p><img src="https://coldwalker.github.io/images/mtu_probe_details/17153988782202.jpg" alt="17153988782202.jpg"></p>
 <p>比如这里通告的MSS是1460，最终TCP Payload是1448，因为还有12 bytes的TCP option。</p>
-<p><img src="https://coldwalker.github.io/post/images/mtu_probe_details/17153989335963.jpg" alt="17153989335963.jpg"></p>
+<p><img src="https://coldwalker.github.io/images/mtu_probe_details/17153989335963.jpg" alt="17153989335963.jpg"></p>
 <p>通告的MSS还可以显示进行指定，有3种方法：</p>
 <ul>
 <li>ip tables：</li>
@@ -1007,9 +1007,9 @@ icsk-&gt;icsk_mtup.enabled is:0, icsk-&gt;icsk_mtup.probe_size is: 0, tp-&gt;snd
 icsk-&gt;icsk_mtup.enabled is:0, icsk-&gt;icsk_mtup.probe_size is: 0, tp-&gt;snd_cwnd is: 12, tp-&gt;rx_opt.num_sacks is: 0,    tp-&gt;rx_opt.dsack is: 0, ca state:0, search_low is :1076, search_high is: 1500，tp-&gt;reordering=3, tp-&gt;mss_cache=1448, tp-&gt;seq-gap=5, size_needed=7080
 </code></pre></li>
 <li>当服务端在第一次接收到test指令回显超长内容给客户端的时候，会触发重传策略：因为根据双方协商的MSS，服务端会针对超长数据按照Clamp MSS 1460来进行分包，但是在经过路由机的时候由于路由机MTU小，超过MTU 1430的包会被丢弃掉，导致服务端收不到ACK触发重传；
-<img src="https://coldwalker.github.io/post/images/mtu_probe_details/17162641837564.jpg" alt="17162641837564.jpg"></li>
+<img src="https://coldwalker.github.io/images/mtu_probe_details/17162641837564.jpg" alt="17162641837564.jpg"></li>
 <li>由于服务端tcp_mtu_probing设置为1，此时，超时重传达到net.ipv4.tcp_retries1会触发tcp_mtu_probing，在tcp_mtu_probing函数里，会将icsk_mtup.enabled设置为1（打开），同时通过tcp_sync_mss函数，将连接初始化时tcp_mtup_init设置的mtu的search_low（1024）设置给当前的mss，因此，可以看到之前发送失败的包再次重新发出，限制在使用mss为1024对应的mtu大小范围内，如下抓包，这些显示为1090的重传包都是对应的mss为1024。
-<img src="https://coldwalker.github.io/post/images/mtu_probe_details/17162661383003.jpg" alt="17162661383003.jpg"></li>
+<img src="https://coldwalker.github.io/images/mtu_probe_details/17162661383003.jpg" alt="17162661383003.jpg"></li>
 <li>因为mss在触发重传net.ipv4.tcp_retries1后mss被调整为1024大小，同时icsk_mtup.enabled被打开（为1），为了能尽量提升发送效率避免一直运行在mss 1024的基线水平，后续有数据再次通过tcp_write_xmit发送的时候，在tcp_mtu_probe函数中，各项探测逻辑如果满足，就会进入使用应用层数据进行mtu向上探测。</li>
 </ul>
 <pre tabindex="0"><code>===tcp_mtu_probe, pid is : 3415470, return is: 1, call stack:
@@ -1025,19 +1025,19 @@ icsk-&gt;icsk_mtup.enabled is:0, icsk-&gt;icsk_mtup.probe_size is: 0, tp-&gt;snd
 </code></pre><pre tabindex="0"><code>icsk-&gt;icsk_mtup.enabled is:1, icsk-&gt;icsk_mtup.probe_size is: 0, tp-&gt;snd_cwnd is: 18, tp-&gt;rx_opt.num_sacks is: 0, tp-&gt;rx_opt.dsack is: 0, ca state:0, search_low is :1076, search_high is: 1500，tp-&gt;reordering=3, tp-&gt;mss_cache=1024, tp-&gt;seq-gap=6829, size_needed=5384
 </code></pre><ul>
 <li>可以看到，在第二次再发送test指令触发了tcp_mtu_probe的mtu向上探测流程（探测条件都满足：没有正在运行的探测、拥塞状态在初始态、发送拥塞窗口大于11，并且没有SACK、待发送队列有足够的数据用于探测），探测前的mss是1024，当时mtu的search_low是1076，search_high是1500，由代码公式可以得出，本次向上探测的mtu为 （1076 + 1500）/ 2 = 1288，并且抓包可以看到此次探测包。
-<img src="https://coldwalker.github.io/post/images/mtu_probe_details/17162726717511.jpg" alt="17162726717511.jpg">
+<img src="https://coldwalker.github.io/images/mtu_probe_details/17162726717511.jpg" alt="17162726717511.jpg">
 需要注意的是：在该探测包还没有被ACK确认时，在这个gap时间差中可以看到其他的包还是沿用旧的MSS 1024来组装数据（如上图1302包后面的那些1090大小的包）。</li>
 <li>在mtu 1288探测成功后，当前的MSS被设置为1236（1288 - 20tcp头 - 12tcp时间戳选项 - 20ip头），探测的search_low被设置为1288，服务端在下一次有符合要求的数据要发出时，会继续向上探测MTU，由公式可知：当前search_low=1288，search_high=1500，向上探测的MTU为： （1288 + 1500） / 2 = 1394。该探测包可以抓包看到如下：
-<img src="https://coldwalker.github.io/post/images/mtu_probe_details/17162734395160.jpg" alt="17162734395160.jpg"></li>
+<img src="https://coldwalker.github.io/images/mtu_probe_details/17162734395160.jpg" alt="17162734395160.jpg"></li>
 <li>同样的，本次探测包被成功ACK确认后，会将MSS设置为1342，下次探测的search_low被设置为1394，下一次向上探测的MTU为： （1394 + 1500） / 2 = 1447。该探测包可以抓包看到如下：
-<img src="https://coldwalker.github.io/post/images/mtu_probe_details/17162736593855.jpg" alt="17162736593855.jpg">
+<img src="https://coldwalker.github.io/images/mtu_probe_details/17162736593855.jpg" alt="17162736593855.jpg">
 但这一次发出的1447的探测包由于中间路由机的MTU只有1430所以被丢弃了，因此会触发tcp_mtup_probe_failed的探测失败逻辑，探测的search_high被设置为：1447 - 1 = 1446，当前1447发送失败的包（TCP payload 1395）会被拆成原来探测成功的mtu 1394大小的两个包1408（tcp payload 1342）、119（tcp payload 53），等待进入下一次向下MTU探测。</li>
 <li>当下一次通过tcp_write_xmit发送数据触发tcp_mtu_probe的时候，如果各项探测逻辑如果满足，继续进行MTU探测，此时search_low=1394，search_high=1446，本次向下探测的MTU为： （1394 + 1446） / 2 = 1420。该探测包发出后被成功ACK确认，MSS被提升到1368，如下：
-<img src="https://coldwalker.github.io/post/images/mtu_probe_details/17162745642056.jpg" alt="17162745642056.jpg"></li>
+<img src="https://coldwalker.github.io/images/mtu_probe_details/17162745642056.jpg" alt="17162745642056.jpg"></li>
 <li>继续向上探测mtu，探测的search_low被设置为1420，search_high=1446，下一次向上探测的MTU为： （1420 + 1446） / 2 = 1433，但是该包显然也无法通过路由机，发送失败后，继续触发向下探测。
-<img src="https://coldwalker.github.io/post/images/mtu_probe_details/17162788009014.jpg" alt="17162788009014.jpg"></li>
+<img src="https://coldwalker.github.io/images/mtu_probe_details/17162788009014.jpg" alt="17162788009014.jpg"></li>
 <li>1433失败后继续向下探测，search_low=1420，search_high=1433 - 1 = 1432 ，探测的MTU为 （1432 + 1420） / 2 = 1426，此次探测包被成功ACK。
-<img src="https://coldwalker.github.io/post/images/mtu_probe_details/17162789833811.jpg" alt="17162789833811.jpg">
+<img src="https://coldwalker.github.io/images/mtu_probe_details/17162789833811.jpg" alt="17162789833811.jpg">
 此时，search_low被提升至1426，search_high仍然是1432，由于 1432 - 1426 = 6，已经小于net.ipv4.tcp_probe_threshold的探测默认允许的差异值8，因此后面不再进行常规探测，在net.ipv4.tcp_probe_interval 10分钟后会触发一次reprobe，但基本上也没啥用了，所以最终该连接的MTU被锁定在1426。</li>
 <li>注意最后清理iptables的这些临时加的规则：
 <pre tabindex="0"><code>sudo iptables -t nat -D PREROUTING 1
@@ -1049,8 +1049,8 @@ sudo iptables -D INPUT 1
 </ul>
 <h3 id="plpmtud---quic的mtu探测">PLPMTUD - QUIC的MTU探测</h3>
 <p>由于UDP协议没有类似TCP协议在握手期间的MSS协商机制，不能进行MSS clamping，也没有内核自带的PLPMTUD（tcp_mtu_probing），因此需要通过MTU探测才能获取整个链路的PMTU，然后进行提前拆包，避免发出超过PMTU大小的包在IP层被分片影响传输效率和处理性能。从抓包和nginx的pmtud代码来看，chrome浏览器和cronet网络库的初始发包大小是1250，nginx的初始发包大小是1200，nginx每隔100ms进行pmtud探测，探测包使用PING frame和PADDING frame承载，先从1500开始，采用二分查找法，不断寻找pmtu的上限，直到当前确定可用的mtu和之前探测的不可用mtu的最小值的差距小于16的时候就停止。
-<img src="https://coldwalker.github.io/post/images/mtu_probe_details/17138651153102.jpg" alt="17138651153102.jpg">
-<img src="https://coldwalker.github.io/post/images/mtu_probe_details/17138683011057.jpg" alt="17138683011057.jpg"></p>
+<img src="https://coldwalker.github.io/images/mtu_probe_details/17138651153102.jpg" alt="17138651153102.jpg">
+<img src="https://coldwalker.github.io/images/mtu_probe_details/17138683011057.jpg" alt="17138683011057.jpg"></p>
 <p>如图示例，我强制将服务端mtu设置为1430，nginx的pmtud从1200大小发quic包（对应mtu是1200+20（ip头）+8（udp头）=1228，加上14bytes的Ethernet II长度，wireshark显示length为1242），然后直接尝试1500的mtu上限，由于服务端mtu被调整为1430所以会直接失败，可以发现PKN 6之后少了PKN 7的包，实际上就是1500的发包失败导致的（我这里是在服务端抓的包，如果是链路上的pmtu小于1500，而不是因为我特意调整的服务端的mtu，那么这里应该能抓到服务端发出的1500的探测包）。
 1500的探测包发出失败后，采用二分法进行下探，下一次探测包的mtu就是（1200+1500）/ 2 = 1364，对应抓包显示的就是length为1378的探测包，探测成功收到这个探测包的ack后继续往上探，100ms后下一次探测包的mtu大小为（1364+1500） / 2 = 1432，但由于服务器mtu只有1430，所以这一次探测的发包也失败了（可以看到缺了一个PKN 9的包），探测失败后继续下探，100ms后下一次探测包的mtu就是 （1364+1432）/ 2 = 1398（抓包length显示为1412），成功后继续上探，100ms后下一次探测包的mtu就是 （1398+1432）/ 2 = 1415（抓包length显示为1429），成功后继续上探，100ms后下一次探测包的mtu就是 （1415+1432）/ 2 = 1423（抓包length显示为1437），由于当前已探测到的最小的不可打达的mtu上限为1432，1432-1423=9，已经小于16的精度值了，后续就不再继续探测了。</p>
 <p>对应的nginx的代码：</p>
@@ -1119,7 +1119,7 @@ ngx_quic_discover_path_mtu(ngx_connection_t *c, ngx_quic_path_t *path)
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://coldwalker.github.io/post/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+          <li><a href="https://coldwalker.github.io/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
           
         </ul>
       </div>
@@ -1134,9 +1134,9 @@ ngx_quic_discover_path_mtu(ngx_connection_t *c, ngx_quic_path_t *path)
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://coldwalker.github.io/post/tags/%E7%BD%91%E7%BB%9C/">网络</a></li>
+          <li><a href="https://coldwalker.github.io/tags/%E7%BD%91%E7%BB%9C/">网络</a></li>
           
-          <li><a href="https://coldwalker.github.io/post/tags/%E5%86%85%E6%A0%B8/">内核</a></li>
+          <li><a href="https://coldwalker.github.io/tags/%E5%86%85%E6%A0%B8/">内核</a></li>
           
         </ul>
       </div>
@@ -1152,7 +1152,7 @@ ngx_quic_discover_path_mtu(ngx_connection_t *c, ngx_quic_path_t *path)
       <div id="cyReward" role="cylabs" data-use="reward"></div>
       <script src="//changyan.itc.cn/js/lib/jquery.js"></script>
       <script src="//changyan.sohu.com/js/changyan.labs.https.js?appid=cytwFfxww"></script>
-      <div id="SOHUCS" sid="https://coldwalker.github.io/post/2024/05/mtu_probe_details/" ></div>
+      <div id="SOHUCS" sid="https://coldwalker.github.io/2024/05/mtu_probe_details/" ></div>
       <script>
       (function(){
       var appid = 'cytwFfxww';
@@ -1176,25 +1176,25 @@ ngx_quic_discover_path_mtu(ngx_connection_t *c, ngx_quic_path_t *path)
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/post/2024/05/mtu_probe_details/" class="list-group-item">关于MTU探测的一些细节</a>
+      <a href="https://coldwalker.github.io/2024/05/mtu_probe_details/" class="list-group-item">关于MTU探测的一些细节</a>
       
-      <a href="https://coldwalker.github.io/post/2020/01/log4j-thread-blocked-issue/" class="list-group-item">记log4j打印异常日志导致线程阻塞的问题排查</a>
+      <a href="https://coldwalker.github.io/2020/01/log4j-thread-blocked-issue/" class="list-group-item">记log4j打印异常日志导致线程阻塞的问题排查</a>
       
-      <a href="https://coldwalker.github.io/post/2019/02/gc_problem_resolve/" class="list-group-item">Java垃圾回收浅析(4)-GC常见问题分析</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_problem_resolve/" class="list-group-item">Java垃圾回收浅析(4)-GC常见问题分析</a>
       
-      <a href="https://coldwalker.github.io/post/2019/02/gc_log_analyze/" class="list-group-item">Java垃圾回收浅析(3)-GC日志分析</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_log_analyze/" class="list-group-item">Java垃圾回收浅析(3)-GC日志分析</a>
       
-      <a href="https://coldwalker.github.io/post/2019/02/gc_intro/" class="list-group-item">Java垃圾回收浅析(2)-GC方式介绍</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_intro/" class="list-group-item">Java垃圾回收浅析(2)-GC方式介绍</a>
       
-      <a href="https://coldwalker.github.io/post/2019/02/gc_object_alloc_process/" class="list-group-item">Java垃圾回收浅析(1)-对象内存申请</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_object_alloc_process/" class="list-group-item">Java垃圾回收浅析(1)-对象内存申请</a>
       
-      <a href="https://coldwalker.github.io/post/2018/12/troubleshooter_directbytebuffer_memory_issue/" class="list-group-item">DirectByteBuffer堆外内存溢出问题排查</a>
+      <a href="https://coldwalker.github.io/2018/12/troubleshooter_directbytebuffer_memory_issue/" class="list-group-item">DirectByteBuffer堆外内存溢出问题排查</a>
       
-      <a href="https://coldwalker.github.io/post/2018/08/troubleshooter_native_memory_increase/" class="list-group-item">Java堆外内存增长问题排查Case</a>
+      <a href="https://coldwalker.github.io/2018/08/troubleshooter_native_memory_increase/" class="list-group-item">Java堆外内存增长问题排查Case</a>
       
-      <a href="https://coldwalker.github.io/post/2018/03/troubleshooter_stackoverflowerror/" class="list-group-item">StackOverFlowError问题引出的JVM栈内存管理</a>
+      <a href="https://coldwalker.github.io/2018/03/troubleshooter_stackoverflowerror/" class="list-group-item">StackOverFlowError问题引出的JVM栈内存管理</a>
       
-      <a href="https://coldwalker.github.io/post/2018/03/robust-service_hystrix/" class="list-group-item">服务稳定性提升之-熔断组件Hystrix</a>
+      <a href="https://coldwalker.github.io/2018/03/robust-service_hystrix/" class="list-group-item">服务稳定性提升之-熔断组件Hystrix</a>
       
     </div>
   </section>
@@ -1206,11 +1206,11 @@ ngx_quic_discover_path_mtu(ngx_connection_t *c, ngx_quic_path_t *path)
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/post/categories/%E6%8A%80%E6%9C%AF" class="list-group-item">技术(11)</a>
+      <a href="https://coldwalker.github.io/categories/%E6%8A%80%E6%9C%AF" class="list-group-item">技术(11)</a>
       
-      <a href="https://coldwalker.github.io/post/categories/%E6%84%9F%E6%82%9F" class="list-group-item">感悟(1)</a>
+      <a href="https://coldwalker.github.io/categories/%E6%84%9F%E6%82%9F" class="list-group-item">感悟(1)</a>
       
-      <a href="https://coldwalker.github.io/post/categories/%E7%94%9F%E6%B4%BB" class="list-group-item">生活(1)</a>
+      <a href="https://coldwalker.github.io/categories/%E7%94%9F%E6%B4%BB" class="list-group-item">生活(1)</a>
       
     </div>
   </section>
@@ -1222,23 +1222,23 @@ ngx_quic_discover_path_mtu(ngx_connection_t *c, ngx_quic_path_t *path)
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/post/tags/java" class="list-group-item">Java(10)</a>
+      <a href="https://coldwalker.github.io/tags/java" class="list-group-item">Java(10)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5" class="list-group-item">问题排查(5)</a>
+      <a href="https://coldwalker.github.io/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5" class="list-group-item">问题排查(5)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/gc" class="list-group-item">Gc(4)</a>
+      <a href="https://coldwalker.github.io/tags/gc" class="list-group-item">Gc(4)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/jvm" class="list-group-item">Jvm(3)</a>
+      <a href="https://coldwalker.github.io/tags/jvm" class="list-group-item">Jvm(3)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/netflix" class="list-group-item">Netflix(1)</a>
+      <a href="https://coldwalker.github.io/tags/netflix" class="list-group-item">Netflix(1)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E5%86%85%E6%A0%B8" class="list-group-item">内核(1)</a>
+      <a href="https://coldwalker.github.io/tags/%E5%86%85%E6%A0%B8" class="list-group-item">内核(1)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6" class="list-group-item">开源组件(1)</a>
+      <a href="https://coldwalker.github.io/tags/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6" class="list-group-item">开源组件(1)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E6%9C%8D%E5%8A%A1%E7%A8%B3%E5%AE%9A%E6%80%A7" class="list-group-item">服务稳定性(1)</a>
+      <a href="https://coldwalker.github.io/tags/%E6%9C%8D%E5%8A%A1%E7%A8%B3%E5%AE%9A%E6%80%A7" class="list-group-item">服务稳定性(1)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E7%BD%91%E7%BB%9C" class="list-group-item">网络(1)</a>
+      <a href="https://coldwalker.github.io/tags/%E7%BD%91%E7%BB%9C" class="list-group-item">网络(1)</a>
       
     </div>
   </section>
@@ -1252,27 +1252,27 @@ ngx_quic_discover_path_mtu(ngx_connection_t *c, ngx_quic_path_t *path)
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2024-05" class="list-group-item">2024-05(2)</a>
+      <a href="https://coldwalker.github.io/post/#2024-05" class="list-group-item">2024-05(2)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2020-01" class="list-group-item">2020-01(1)</a>
+      <a href="https://coldwalker.github.io/post/#2020-01" class="list-group-item">2020-01(1)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2019-02" class="list-group-item">2019-02(4)</a>
+      <a href="https://coldwalker.github.io/post/#2019-02" class="list-group-item">2019-02(4)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2018-12" class="list-group-item">2018-12(1)</a>
+      <a href="https://coldwalker.github.io/post/#2018-12" class="list-group-item">2018-12(1)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2018-08" class="list-group-item">2018-08(1)</a>
+      <a href="https://coldwalker.github.io/post/#2018-08" class="list-group-item">2018-08(1)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2018-03" class="list-group-item">2018-03(4)</a>
+      <a href="https://coldwalker.github.io/post/#2018-03" class="list-group-item">2018-03(4)</a>
     
     </div>
   </section>

@@ -311,3 +311,9 @@ article.li.sm>header {
   width: 100%;
 }
 
+.row {
+  margin-right: 5px;
+  margin-left: 5px;
+  width: 100%;
+}
+

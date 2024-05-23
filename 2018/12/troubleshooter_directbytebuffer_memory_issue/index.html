@@ -8,25 +8,25 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <link rel="stylesheet" href="https://coldwalker.github.io/post/css/search.css" />
+    <link rel="stylesheet" href="https://coldwalker.github.io/css/search.css" />
     <title>DirectByteBuffer堆外内存溢出问题排查 - 凛冬夜行</title>
     
 <meta name="description" content="前情提要 最近线上一个图片服务在使用ehcache的diskcache替代旧版“自实现”的磁盘缓存时，发生了java进程常驻内存暴涨导致部署机">
 
 <meta property="og:title" content="DirectByteBuffer堆外内存溢出问题排查 - 凛冬夜行">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://coldwalker.github.io/post/2018/12/troubleshooter_directbytebuffer_memory_issue/">
-<meta property="og:image" content="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/thumb.jpg">
+<meta property="og:url" content="https://coldwalker.github.io/2018/12/troubleshooter_directbytebuffer_memory_issue/">
+<meta property="og:image" content="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/thumb.jpg">
 <meta property="og:site_name" content="凛冬夜行">
 <meta property="og:description" content="前情提要 最近线上一个图片服务在使用ehcache的diskcache替代旧版“自实现”的磁盘缓存时，发生了java进程常驻内存暴涨导致部署机">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="凛冬夜行">
-<meta name="twitter:url" content="https://coldwalker.github.io/post/2018/12/troubleshooter_directbytebuffer_memory_issue/">
+<meta name="twitter:url" content="https://coldwalker.github.io/2018/12/troubleshooter_directbytebuffer_memory_issue/">
 <meta name="twitter:title" content="DirectByteBuffer堆外内存溢出问题排查 - 凛冬夜行">
 <meta name="twitter:description" content="前情提要 最近线上一个图片服务在使用ehcache的diskcache替代旧版“自实现”的磁盘缓存时，发生了java进程常驻内存暴涨导致部署机">
-<meta name="twitter:image" content="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/thumb.jpg">
+<meta name="twitter:image" content="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/thumb.jpg">
 
 
 <script type="application/ld+json">
@@ -35,12 +35,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https:\/\/coldwalker.github.io\/post\/"
+      "@id":"https:\/\/coldwalker.github.io\/"
     },
     "headline": "DirectByteBuffer堆外内存溢出问题排查 - 凛冬夜行",
     "image": {
       "@type": "ImageObject",
-      "url": "https:\/\/coldwalker.github.io\/post\/images\/troubleshooter_directbytebuffer_memory_issue\/thumb.jpg",
+      "url": "https:\/\/coldwalker.github.io\/images\/troubleshooter_directbytebuffer_memory_issue\/thumb.jpg",
       "height": 800,
       "width": 800
     },
@@ -55,7 +55,7 @@
       "name": "凛冬夜行",
       "logo": {
         "@type": "ImageObject",
-        "url": "https:\/\/coldwalker.github.io\/post\/images/logo.png",
+        "url": "https:\/\/coldwalker.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -65,7 +65,7 @@
 </script>
 
 
-    <link href="https://coldwalker.github.io/post/css/styles.css" rel="stylesheet">
+    <link href="https://coldwalker.github.io/css/styles.css" rel="stylesheet">
     
 
   </head>
@@ -110,7 +110,7 @@ if (!doNotTrack) {
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://coldwalker.github.io/post/">凛冬夜行</a>
+            <a class="navbar-brand" href="https://coldwalker.github.io/">凛冬夜行</a>
           </div>
 
           
@@ -119,7 +119,7 @@ if (!doNotTrack) {
             <ul class="nav navbar-nav navbar-right">
               
               
-              <li><a href="https://coldwalker.github.io/post/2018/03/about/">about Me</a></li>
+              <li><a href="https://coldwalker.github.io/2018/03/about/">about Me</a></li>
               
               
               
@@ -168,7 +168,7 @@ autocomplete('#aa-search-input',
             if(postMonth < 10)
             postMonth = "0" + postMonth;
             var title = suggestion.objectID.split("/", 2)[1];            
-            return '<span>' + '<a href="https://coldwalker.github.io/post/' + postYear + "/" + postMonth + "/" + title + '">' +
+            return '<span>' + '<a href="https://coldwalker.github.io/' + postYear + "/" + postMonth + "/" + title + '">' +
             suggestion._highlightResult.title.value + '</a></span>';
         }
     }
@@ -194,9 +194,9 @@ autocomplete('#aa-search-input',
 
     <nav class="p-crumb">
       <ol class="breadcrumb">
-        <li><a href="https://coldwalker.github.io/post/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        <li><a href="https://coldwalker.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         
-        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://coldwalker.github.io/post/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://coldwalker.github.io/post/" itemprop="url"><span itemprop="title">post</span></a></li>
         
         <li class="active">DirectByteBuffer堆外内存溢出问题排查</li>
       </ol>
@@ -206,33 +206,33 @@ autocomplete('#aa-search-input',
   <header>
     <ul class="p-facts">
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-12-03T11:30:00JST">2018-12-03</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://coldwalker.github.io/post/post/">post</a></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://coldwalker.github.io/post/">post</a></li>
       
     </ul>
 
     <h1 class="title">DirectByteBuffer堆外内存溢出问题排查</h1>
   </header>
 
-  <div class="thumb" style="background-image: url(https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/thumb.jpg);"></div>
+  <div class="thumb" style="background-image: url(https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/thumb.jpg);"></div>
 
   <div class="article-body"><h3 id="前情提要">前情提要</h3>
 <p>最近线上一个图片服务在使用ehcache的diskcache替代旧版“自实现”的磁盘缓存时，发生了java进程常驻内存暴涨导致部署机器内存耗尽的问题。</p>
 <p><em>具体现象是：机器内存32G，堆内存设置Xmx 20G，服务启动后发现java进程使用的常驻内存（RES）逐渐上涨，几天后整体RES达到了惊人的29G（升级ehcache前大概RES峰值在23G），导致系统开始吃swap，服务性能下降严重。</em></p>
-<p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/7F005065-9886-42D7-B474-6A221A4A20CB.png" alt="66458b4ec3bec765a54684e358df147c.png"></p>
+<p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/7F005065-9886-42D7-B474-6A221A4A20CB.png" alt="66458b4ec3bec765a54684e358df147c.png"></p>
 <p>因为以前也分析过一个“由于glibc的ptmalloc2内存分配机制缺陷”导致堆外内存溢出的问题（具体可移步<a href="https://coldwalker.github.io/2018/08//troubleshooter_native_memory_increase/">Java堆外内存增长问题排查Case</a>)，但出问题的业务已经优化过arena内存池参数，排除了这一块的嫌疑，因此具体原因还需要另做分析。</p>
 <h3 id="排查过程">排查过程</h3>
 <h4 id="1-确认堆内内存是否使用正常">1. 确认堆内内存是否使用正常</h4>
 <h5 id="gc情况分析">GC情况分析</h5>
 <p>先通过GC日志分析堆内存是否存在问题。GC日志看出现问题时年轻代的GC没有问题，很正常。
-<img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/B62D9D5E-2EC1-4694-86CC-D6E8DF28F3DE.png" alt="3ab5326dab9ac3efdae630779b77dc1f.png"></p>
+<img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/B62D9D5E-2EC1-4694-86CC-D6E8DF28F3DE.png" alt="3ab5326dab9ac3efdae630779b77dc1f.png"></p>
 <p>年老代GC除了回收频率较快（配置问题，这里暂且不表），也没有什么异常情况。
-<img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/7847C65D-20C8-4557-9E19-FF953C2292B5.png" alt="b37822d351c86f4f55234834ab9d64ff.png"></p>
+<img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/7847C65D-20C8-4557-9E19-FF953C2292B5.png" alt="b37822d351c86f4f55234834ab9d64ff.png"></p>
 <p>另外，出问题时整体也没有Full GC、提升失败（promotion failedl）、并发模式失败（concurrent mode failure）这些异常情况。</p>
 <h5 id="堆dump进一步确认">堆dump进一步确认</h5>
 <p>为进一步确认堆内存是否正常，把出问题时的堆dump下来分析。</p>
 <pre tabindex="0"><code>jmap -dump:file=199.bin 12
-</code></pre><p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/09FDB2E9-0C49-4E8C-A9CD-BA72ED78E767.png" alt="ada24ba2637eee9be1ac3a4eccfbcb9f.png"></p>
-<p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/CCA026D3-B8F1-4901-ABC6-6A48E423E91F.png" alt="bc9117edb78cf7632ff2d91a01e4dad4.png"></p>
+</code></pre><p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/09FDB2E9-0C49-4E8C-A9CD-BA72ED78E767.png" alt="ada24ba2637eee9be1ac3a4eccfbcb9f.png"></p>
+<p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/CCA026D3-B8F1-4901-ABC6-6A48E423E91F.png" alt="bc9117edb78cf7632ff2d91a01e4dad4.png"></p>
 <p>可以看到基本上都是ehcache使用的堆内存，使用量和业务里配置的也都一致，dominator_tree上看其他对象都比较小，基本没有嫌疑。</p>
 <p><em>这里基本确认了堆内存使用正常。</em></p>
 <h4 id="2-查看java进程占用内存的具体情况">2. 查看java进程占用内存的具体情况</h4>
@@ -241,9 +241,9 @@ autocomplete('#aa-search-input',
 <pre tabindex="0"><code>pmap -x 12 | sort -rn -k3 | head -30
 </code></pre><p>这里按照RES的占用大小来进行排序，取占用Top 30的内存段。</p>
 <p>发现较多的几十兆的大内存块，和正常的未灰度的机器的内存使用比，有比较大的嫌疑。
-<img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/38E28E42-7B54-4524-8F8F-0536F71E5546.png" alt="2b218f828d1a0cd49461a2460128d6e6.png"></p>
+<img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/38E28E42-7B54-4524-8F8F-0536F71E5546.png" alt="2b218f828d1a0cd49461a2460128d6e6.png"></p>
 <hr>
-<p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/FF283501-F6E0-475C-893A-4C3DAF0CC4E8.png" alt="7f6ee22f1bebde53f75449428a01c432.png"></p>
+<p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/FF283501-F6E0-475C-893A-4C3DAF0CC4E8.png" alt="7f6ee22f1bebde53f75449428a01c432.png"></p>
 <p>找一块比较有嫌疑的内存段dump下来看一下里面的具体内容，这里选取了有问题的进程的46684K的那一段。</p>
 <pre tabindex="0"><code>gdb --batch --pid 12 -ex &#34;dump memory 199.dump 0x7facdd269000 0x7facdd269000+46684000&#34;
 hexdump -C 199.dump | less
@@ -257,14 +257,14 @@ hexdump -C 199.dump | less
 <li>先建立跟踪基线，并记录当时的内存使用情况，放置一段时间。</li>
 </ul>
 <pre tabindex="0"><code>jcmd 12 VM.native_memory baseline
-</code></pre><p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/DD5CE425-29ED-4169-9B24-BE59AEE50B03.png" alt="389c8f6cf2ede156d79f0861a38094e9.png"></p>
+</code></pre><p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/DD5CE425-29ED-4169-9B24-BE59AEE50B03.png" alt="389c8f6cf2ede156d79f0861a38094e9.png"></p>
 <ul>
 <li>运行一段时间后，和基线做diff，看下堆外内存的具体变化情况。</li>
 </ul>
 <pre tabindex="0"><code>jcmd 12 VM.native_memory summary.diff
 或者
 jcmd 12 VM.native_memory detail.diff
-</code></pre><p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/7F3B2B00-0424-4358-A2C0-187143F42FFF.png" alt="8550b6c74d498cc0e75a0e2e94508968.png"></p>
+</code></pre><p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/7F3B2B00-0424-4358-A2C0-187143F42FFF.png" alt="8550b6c74d498cc0e75a0e2e94508968.png"></p>
 <p>从图可知，java堆占用增长了6.8G，整体内存（RES）增长 8.1G，非堆内存增加大概1.3G，其中绝大部分来自于Internal部分的增长，按照oracle官方的解释，Internal部分的内存主要用于：
 <em>Memory that does not fit the previous categories, such as the memory used by the command line parser, JVMTI, properties and so on.</em>
 值得注意的是，DirectByteBuffer的内存使用实际上也属于Internal的类别。因为像JVMTI和properties这些项目都没有用到，因此把重点锁定到DirectByteBuffer这个容易出问题的对象上。</p>
@@ -277,24 +277,24 @@ JVM启动时加上：</li>
 <pre tabindex="0"><code> -Dcom.sun.management.jmxremote.port=7001 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=your ip
 </code></pre><ul>
 <li>第二步，本机打开JMC工具，通过jmx远程连接，并启动JMX控制台。
-<img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/C8ECBDB8-9A35-42C4-B72E-8CA5347E7681.png" alt="dc82f4206a3d720fae11a37100096b8d.png"></li>
+<img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/C8ECBDB8-9A35-42C4-B72E-8CA5347E7681.png" alt="dc82f4206a3d720fae11a37100096b8d.png"></li>
 </ul>
 <hr>
-<p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/6D89A1ED-373C-4C61-BEFA-17A214F2D5B2.png" alt="024bfdf085aa720978b2148739f96d47.png"></p>
+<p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/6D89A1ED-373C-4C61-BEFA-17A214F2D5B2.png" alt="024bfdf085aa720978b2148739f96d47.png"></p>
 <ul>
 <li>第三步，通过MBean浏览器筛选出DirectByteBuffer的跟踪器。
-<img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/1FA50C62-9BD5-47D3-9D3C-8733654AC7B4.png" alt="9a03d2c6052c67da7fb82147b811dcd4.png"></li>
+<img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/1FA50C62-9BD5-47D3-9D3C-8733654AC7B4.png" alt="9a03d2c6052c67da7fb82147b811dcd4.png"></li>
 </ul>
 <p>果然，在只有813个对象的情况下，DirecByteBuffer的使用居然达到了2.4G，平均每个对象达到了3M。观察一段时间，发现DBB的增长和NMT里Internal部分的增长基本一致，和pmap里增多的几十M的内存段的总和也能对上。</p>
 <ul>
 <li>第四步，比对正常机器的DBB。
-<img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/FFA5B19A-2A16-491A-A610-A39AE017F9A1.png" alt="9a2da78abb4c57901d26a50af1329afd.png"></li>
+<img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/FFA5B19A-2A16-491A-A610-A39AE017F9A1.png" alt="9a2da78abb4c57901d26a50af1329afd.png"></li>
 </ul>
 <p>发现正常机器DBB的占用内存量比问题机器的占用量小很多，且基本保持稳定，有问题的机器的DBB内存占用量还在持续上涨，<!-- raw HTML omitted -->到这里基本可以确定是由于DBB的内存占用导致的问题<!-- raw HTML omitted -->。</p>
 <h4 id="5-分析directbytebuffer的使用情况">5. 分析DirectByteBuffer的使用情况</h4>
 <p>定位到DBB的问题后，接下来需要确定具体是哪里导致DBB的内存占用量飙涨。这里先普及一下DirectByteBuffer。</p>
 <p>DirectByteBuffer是JDK提供的一个缓冲池类，通常被用于通信框架中，如netty，mina等。DirectByteBuffer在创建的时候会通过Unsafe的native方法来直接使用malloc分配一块堆外内存。注意：由于这块内存真正的分配并不在Java堆中（堆中只有一个很小的对象引用，因此也被称为冰山对象），这种方式能减轻GC的压力；另外，对于堆内对象，如果要进行IO操作（Socket、文件读写）时，需要先把对象拷贝一份到堆外直接内存，然后再写入Socket或者文件，但由于DirectByteBuffer本身就是在堆外内存分配，因此进行IO时不需要再做那一次从堆内拷贝到堆外的操作，性能上会更好。值得注意的是：由于java堆内存是预申请好的，对于堆内对象的内存分配性能很好，相比较，DirectByteBuffer这种用时才通过malloc、free向操作系统临时申请内存的方式性能会慢一些，因此类似Netty这种IO框架，会对DirectByteBuffer进行池化管理，多次复用，避免每次都需要向操作系统申请和释放内存的开销。</p>
-<p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/AEFE1D50-57B6-4C3E-A882-81FC54C58074.png" alt="426aadda4f909523554ad54cc712da8b.png"></p>
+<p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/AEFE1D50-57B6-4C3E-A882-81FC54C58074.png" alt="426aadda4f909523554ad54cc712da8b.png"></p>
 <h5 id="directbytebuffer的内存分配和回收">DirectByteBuffer的内存分配和回收</h5>
 <p><em>基本流程：</em> 先通过Bits.reserveMemory申请内存额度，Bits类维护了一个全局的totalCapacity用于记录已分配的全部DirectByteBuffer的总大小，jVM提供了一个-XX:MaxDirectMemorySize的设置（默认等于Xmx的大小），用来限制可以分配的总的DirectByteBuffer的内存大小，如果没有超限，就调用native的Unsafe.allocateMemory去执行真正的内存分配（实际就是调用malloc)；如果额度已满，就先调用tryHandlePendingReference尝试进行非阻塞的堆外内存回收，如果还是分配不到，就会通过System.gc进行一次Full GC，再尝试几次分配，如果还是不成功就抛出一个DirectByteBuffer的OOME。</p>
 <p>每个DirectByteBuffer在生成时会绑定一个Cleaner对象，这个Cleaner对象是一个PhantomReference（具体啥是幻象应用请自行搜索），当JVM GC时发现那些除了Cleaner幻象引用外已没有其他引用的DirectByteBuffer时，就会把这些Cleaner对象放到Reference这个类的pending列表里，Reference类维护了一条ReferenceHandler的高优先级线程，这条线程会不断去轮询待处理的pending列表，如果是Cleaner对象就调用这个对象的clean方法进行清理，clean方法里其实是调用初始化Cleaner时绑定的Deallocator间接使用unsafe.freeMemory来进行堆外内存的释放和Bits里全局堆外内存使用量的更新。</p>
@@ -601,15 +601,15 @@ JVM启动时加上：</li>
 由于线上并没有MaxDirectMemorySize的设置（默认和Xmx大小一样），因此基本不会触发超额的问题。这里尝试进行一次手动Full GC，看下ReferenceHandler线程能回收多少堆外内存。</p>
 <pre tabindex="0"><code>jmap -histo:live pid
 </code></pre><p>将线上服务暂停处理，然后手动强制进行Full GC，一段时间后通过JMC发现占用的堆外内存数量和大小居然都没有减少，这个有点意外，因为ReferenceHandler线程是最高优先级的，一般不会出啥问题，只能说明DirectByteBuffer的堆外内存不能被回收是因为除了Cleaner这个幻象引用还有其他引用。</p>
-<p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/90199E37-2728-4B44-9666-7B6132BAF7E6.png" alt="136018057c2010558d412939cd241098.png"></p>
+<p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/90199E37-2728-4B44-9666-7B6132BAF7E6.png" alt="136018057c2010558d412939cd241098.png"></p>
 <hr>
-<p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/2C239F52-6666-4C1E-822C-23152DC2FD26.png" alt="564e4178dd1191506b6525d8c5734d51.png"></p>
+<p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/2C239F52-6666-4C1E-822C-23152DC2FD26.png" alt="564e4178dd1191506b6525d8c5734d51.png"></p>
 <p>进一步确认，接着尝试JVM进程启动时设置-XX:MaxDirectMemorySize=800m，查看gc log，发现堆外内存到达800M时，确实抛出了OOME也触发了System GC，但却没有能回收到堆外内存。</p>
-<p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/DDF4B3BB-8B8D-4D7F-966A-AA595918EBA9.png" alt="4674c21e22010d7926e1da9968b1c367.png"></p>
+<p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/DDF4B3BB-8B8D-4D7F-966A-AA595918EBA9.png" alt="4674c21e22010d7926e1da9968b1c367.png"></p>
 <hr>
-<p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/334BECE0-4AE2-40CB-BD71-83DA0A0DC4B6.png" alt="2a4e4178b9c60ffbef9019645df3224b.png"></p>
+<p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/334BECE0-4AE2-40CB-BD71-83DA0A0DC4B6.png" alt="2a4e4178b9c60ffbef9019645df3224b.png"></p>
 <hr>
-<p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/53A273C8-238B-4FF5-B317-92F48B2C1224.png" alt="2860ccce57a44eb4b629f50ee79686bb.png"></p>
+<p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/53A273C8-238B-4FF5-B317-92F48B2C1224.png" alt="2860ccce57a44eb4b629f50ee79686bb.png"></p>
 <h4 id="7-分析不能被回收的directbytebuffer的引用">7. 分析不能被回收的DirectByteBuffer的引用</h4>
 <pre tabindex="0"><code>jmap -dump:live,file=199.bin 12
 </code></pre><p><!-- raw HTML omitted -->这里堆dump的时候通过live在dump前进行一次Full GC，这样只会保留不能被GC的对象，降低干扰，方便问题排查。然后使用MAT对堆dump进行分析。<!-- raw HTML omitted --></p>
@@ -618,11 +618,11 @@ JVM启动时加上：</li>
 </ul>
 <pre tabindex="0"><code>SELECT k, k.capacity, k.limit FROM java.nio.DirectByteBuffer k WHERE (inbounds(k).size() &gt; 1)
 </code></pre><p>将DirectByteBuffer按capacity进行排序，发现最大的DirectByteBuffer占用内存达到了40多M，粗略把这些DirectByteBuffer的capacity累加，基本和增长的堆外内存大小差不多。</p>
-<p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/1EF96237-D2E1-4190-8C30-25071370BA6B.png" alt="3b25cd9cfe0d0158f94d483d133900ab.png"></p>
+<p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/1EF96237-D2E1-4190-8C30-25071370BA6B.png" alt="3b25cd9cfe0d0158f94d483d133900ab.png"></p>
 <p>通过Merge Shortest Paths to GC ROOTs或者List Objects-&gt;with incoming references看一下这些DirectByteBuffer不能被回收的引用路径，并排除掉幻象引用、弱引用、软引用这些实际可以回收的对象。
-<img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/1DE69363-87CC-44EA-936F-B62C47D94DF1.png" alt="2d14ad251f87e209c700ac3ac7980fb4.png"></p>
+<img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/1DE69363-87CC-44EA-936F-B62C47D94DF1.png" alt="2d14ad251f87e209c700ac3ac7980fb4.png"></p>
 <p>确认这些不能被回收的DirectByteBuffer是被Tomcat的worker线程的ThreadLocal引用。但没有具体调用栈，看不出什么场景被引用上的，接下来用BTrace来跟踪一下具体DirectByteBuffer申请的调用链路。
-<img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/031C43EE-ACAA-4CDF-8B59-45C77055DC21.png" alt="e272ee50f2abb9b5d929a88239bbc34b.png"></p>
+<img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/031C43EE-ACAA-4CDF-8B59-45C77055DC21.png" alt="e272ee50f2abb9b5d929a88239bbc34b.png"></p>
 <h4 id="8-btrace跟踪directbytebuffer的堆外内存申请路径">8. Btrace跟踪DirectByteBuffer的堆外内存申请路径</h4>
 <p>当有申请请求时，通过btrace把线程栈打出来，定位调用源头。btrace的使用方法在这里不细说，可以参考之前写的关于btrace的文章<a href="https://coldwalker.github.io/2018/03//troubleshooter_btrace01/">问题排查利器之-JVM动态追踪工具BTrace</a>。</p>
 <pre tabindex="0"><code>import com.sun.btrace.annotations.*;
@@ -638,7 +638,7 @@ public class TraceDirectAlloc {
 }
 </code></pre><pre tabindex="0"><code>sh bin/btrace 12 TraceDirectAlloc.java &gt; alloc.log
 </code></pre><p>和没有问题的服务的btrace比较，发现较多这种线程栈，看方法名应该是往ehcache磁盘缓存写数据时会用到DirectByteBuffer，进一步分析。</p>
-<p><img src="https://coldwalker.github.io/post/images/troubleshooter_directbytebuffer_memory_issue/66305209-39FE-4169-A1C2-C85E7B53233F.png" alt="c6979b0bec54699c7e1a50cc00fc73b0.png"></p>
+<p><img src="https://coldwalker.github.io/images/troubleshooter_directbytebuffer_memory_issue/66305209-39FE-4169-A1C2-C85E7B53233F.png" alt="c6979b0bec54699c7e1a50cc00fc73b0.png"></p>
 <h4 id="9-ehcache的磁盘缓存写文件分析">9. Ehcache的磁盘缓存写文件分析</h4>
 <p>当有文件需要暂存到ehcache的磁盘缓存时，使用到了NIO中的FileChannel来读取文件，默认ehcache使用了堆内的HeapByteBuffer来给FileChannel作为读取文件的缓冲，FileChannel读取文件使用的IOUtil的read方法，针对HeapByteBuffer底层还用到一个临时的DirectByteBuffer来和操作系统进行直接的交互。</p>
 <p>ehcache使用HeapByteBuffer作为读文件缓冲:</p>
@@ -788,7 +788,7 @@ public class TraceDirectAlloc {
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://coldwalker.github.io/post/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+          <li><a href="https://coldwalker.github.io/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
           
         </ul>
       </div>
@@ -803,11 +803,11 @@ public class TraceDirectAlloc {
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://coldwalker.github.io/post/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">问题排查</a></li>
+          <li><a href="https://coldwalker.github.io/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">问题排查</a></li>
           
-          <li><a href="https://coldwalker.github.io/post/tags/java/">Java</a></li>
+          <li><a href="https://coldwalker.github.io/tags/java/">Java</a></li>
           
-          <li><a href="https://coldwalker.github.io/post/tags/jvm/">JVM</a></li>
+          <li><a href="https://coldwalker.github.io/tags/jvm/">JVM</a></li>
           
         </ul>
       </div>
@@ -823,7 +823,7 @@ public class TraceDirectAlloc {
       <div id="cyReward" role="cylabs" data-use="reward"></div>
       <script src="//changyan.itc.cn/js/lib/jquery.js"></script>
       <script src="//changyan.sohu.com/js/changyan.labs.https.js?appid=cytwFfxww"></script>
-      <div id="SOHUCS" sid="https://coldwalker.github.io/post/2018/12/troubleshooter_directbytebuffer_memory_issue/" ></div>
+      <div id="SOHUCS" sid="https://coldwalker.github.io/2018/12/troubleshooter_directbytebuffer_memory_issue/" ></div>
       <script>
       (function(){
       var appid = 'cytwFfxww';
@@ -847,25 +847,25 @@ public class TraceDirectAlloc {
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/post/2024/05/mtu_probe_details/" class="list-group-item">关于MTU探测的一些细节</a>
+      <a href="https://coldwalker.github.io/2024/05/mtu_probe_details/" class="list-group-item">关于MTU探测的一些细节</a>
       
-      <a href="https://coldwalker.github.io/post/2020/01/log4j-thread-blocked-issue/" class="list-group-item">记log4j打印异常日志导致线程阻塞的问题排查</a>
+      <a href="https://coldwalker.github.io/2020/01/log4j-thread-blocked-issue/" class="list-group-item">记log4j打印异常日志导致线程阻塞的问题排查</a>
       
-      <a href="https://coldwalker.github.io/post/2019/02/gc_problem_resolve/" class="list-group-item">Java垃圾回收浅析(4)-GC常见问题分析</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_problem_resolve/" class="list-group-item">Java垃圾回收浅析(4)-GC常见问题分析</a>
       
-      <a href="https://coldwalker.github.io/post/2019/02/gc_log_analyze/" class="list-group-item">Java垃圾回收浅析(3)-GC日志分析</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_log_analyze/" class="list-group-item">Java垃圾回收浅析(3)-GC日志分析</a>
       
-      <a href="https://coldwalker.github.io/post/2019/02/gc_intro/" class="list-group-item">Java垃圾回收浅析(2)-GC方式介绍</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_intro/" class="list-group-item">Java垃圾回收浅析(2)-GC方式介绍</a>
       
-      <a href="https://coldwalker.github.io/post/2019/02/gc_object_alloc_process/" class="list-group-item">Java垃圾回收浅析(1)-对象内存申请</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_object_alloc_process/" class="list-group-item">Java垃圾回收浅析(1)-对象内存申请</a>
       
-      <a href="https://coldwalker.github.io/post/2018/12/troubleshooter_directbytebuffer_memory_issue/" class="list-group-item">DirectByteBuffer堆外内存溢出问题排查</a>
+      <a href="https://coldwalker.github.io/2018/12/troubleshooter_directbytebuffer_memory_issue/" class="list-group-item">DirectByteBuffer堆外内存溢出问题排查</a>
       
-      <a href="https://coldwalker.github.io/post/2018/08/troubleshooter_native_memory_increase/" class="list-group-item">Java堆外内存增长问题排查Case</a>
+      <a href="https://coldwalker.github.io/2018/08/troubleshooter_native_memory_increase/" class="list-group-item">Java堆外内存增长问题排查Case</a>
       
-      <a href="https://coldwalker.github.io/post/2018/03/troubleshooter_stackoverflowerror/" class="list-group-item">StackOverFlowError问题引出的JVM栈内存管理</a>
+      <a href="https://coldwalker.github.io/2018/03/troubleshooter_stackoverflowerror/" class="list-group-item">StackOverFlowError问题引出的JVM栈内存管理</a>
       
-      <a href="https://coldwalker.github.io/post/2018/03/robust-service_hystrix/" class="list-group-item">服务稳定性提升之-熔断组件Hystrix</a>
+      <a href="https://coldwalker.github.io/2018/03/robust-service_hystrix/" class="list-group-item">服务稳定性提升之-熔断组件Hystrix</a>
       
     </div>
   </section>
@@ -877,11 +877,11 @@ public class TraceDirectAlloc {
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/post/categories/%E6%8A%80%E6%9C%AF" class="list-group-item">技术(11)</a>
+      <a href="https://coldwalker.github.io/categories/%E6%8A%80%E6%9C%AF" class="list-group-item">技术(11)</a>
       
-      <a href="https://coldwalker.github.io/post/categories/%E6%84%9F%E6%82%9F" class="list-group-item">感悟(1)</a>
+      <a href="https://coldwalker.github.io/categories/%E6%84%9F%E6%82%9F" class="list-group-item">感悟(1)</a>
       
-      <a href="https://coldwalker.github.io/post/categories/%E7%94%9F%E6%B4%BB" class="list-group-item">生活(1)</a>
+      <a href="https://coldwalker.github.io/categories/%E7%94%9F%E6%B4%BB" class="list-group-item">生活(1)</a>
       
     </div>
   </section>
@@ -893,23 +893,23 @@ public class TraceDirectAlloc {
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/post/tags/java" class="list-group-item">Java(10)</a>
+      <a href="https://coldwalker.github.io/tags/java" class="list-group-item">Java(10)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5" class="list-group-item">问题排查(5)</a>
+      <a href="https://coldwalker.github.io/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5" class="list-group-item">问题排查(5)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/gc" class="list-group-item">Gc(4)</a>
+      <a href="https://coldwalker.github.io/tags/gc" class="list-group-item">Gc(4)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/jvm" class="list-group-item">Jvm(3)</a>
+      <a href="https://coldwalker.github.io/tags/jvm" class="list-group-item">Jvm(3)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/netflix" class="list-group-item">Netflix(1)</a>
+      <a href="https://coldwalker.github.io/tags/netflix" class="list-group-item">Netflix(1)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E5%86%85%E6%A0%B8" class="list-group-item">内核(1)</a>
+      <a href="https://coldwalker.github.io/tags/%E5%86%85%E6%A0%B8" class="list-group-item">内核(1)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6" class="list-group-item">开源组件(1)</a>
+      <a href="https://coldwalker.github.io/tags/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6" class="list-group-item">开源组件(1)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E6%9C%8D%E5%8A%A1%E7%A8%B3%E5%AE%9A%E6%80%A7" class="list-group-item">服务稳定性(1)</a>
+      <a href="https://coldwalker.github.io/tags/%E6%9C%8D%E5%8A%A1%E7%A8%B3%E5%AE%9A%E6%80%A7" class="list-group-item">服务稳定性(1)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E7%BD%91%E7%BB%9C" class="list-group-item">网络(1)</a>
+      <a href="https://coldwalker.github.io/tags/%E7%BD%91%E7%BB%9C" class="list-group-item">网络(1)</a>
       
     </div>
   </section>
@@ -923,27 +923,27 @@ public class TraceDirectAlloc {
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2024-05" class="list-group-item">2024-05(2)</a>
+      <a href="https://coldwalker.github.io/post/#2024-05" class="list-group-item">2024-05(2)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2020-01" class="list-group-item">2020-01(1)</a>
+      <a href="https://coldwalker.github.io/post/#2020-01" class="list-group-item">2020-01(1)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2019-02" class="list-group-item">2019-02(4)</a>
+      <a href="https://coldwalker.github.io/post/#2019-02" class="list-group-item">2019-02(4)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2018-12" class="list-group-item">2018-12(1)</a>
+      <a href="https://coldwalker.github.io/post/#2018-12" class="list-group-item">2018-12(1)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2018-08" class="list-group-item">2018-08(1)</a>
+      <a href="https://coldwalker.github.io/post/#2018-08" class="list-group-item">2018-08(1)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2018-03" class="list-group-item">2018-03(4)</a>
+      <a href="https://coldwalker.github.io/post/#2018-03" class="list-group-item">2018-03(4)</a>
     
     </div>
   </section>

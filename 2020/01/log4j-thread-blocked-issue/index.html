@@ -8,25 +8,25 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <link rel="stylesheet" href="https://coldwalker.github.io/post/css/search.css" />
+    <link rel="stylesheet" href="https://coldwalker.github.io/css/search.css" />
     <title>记log4j打印异常日志导致线程阻塞的问题排查 - 凛冬夜行</title>
     
 <meta name="description" content="最近线上一个服务偶发单机接口耗时飙升的现象，伴随着内存使用增长并出现吃swap的情况，16核的系统load也飙升到50以上，IOUtil接近">
 
 <meta property="og:title" content="记log4j打印异常日志导致线程阻塞的问题排查 - 凛冬夜行">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://coldwalker.github.io/post/2020/01/log4j-thread-blocked-issue/">
-<meta property="og:image" content="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/chaoyanggongyuan001.jpg">
+<meta property="og:url" content="https://coldwalker.github.io/2020/01/log4j-thread-blocked-issue/">
+<meta property="og:image" content="https://coldwalker.github.io/images/log4j_thread_blocked_issue/chaoyanggongyuan001.jpg">
 <meta property="og:site_name" content="凛冬夜行">
 <meta property="og:description" content="最近线上一个服务偶发单机接口耗时飙升的现象，伴随着内存使用增长并出现吃swap的情况，16核的系统load也飙升到50以上，IOUtil接近">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="凛冬夜行">
-<meta name="twitter:url" content="https://coldwalker.github.io/post/2020/01/log4j-thread-blocked-issue/">
+<meta name="twitter:url" content="https://coldwalker.github.io/2020/01/log4j-thread-blocked-issue/">
 <meta name="twitter:title" content="记log4j打印异常日志导致线程阻塞的问题排查 - 凛冬夜行">
 <meta name="twitter:description" content="最近线上一个服务偶发单机接口耗时飙升的现象，伴随着内存使用增长并出现吃swap的情况，16核的系统load也飙升到50以上，IOUtil接近">
-<meta name="twitter:image" content="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/chaoyanggongyuan001.jpg">
+<meta name="twitter:image" content="https://coldwalker.github.io/images/log4j_thread_blocked_issue/chaoyanggongyuan001.jpg">
 
 
 <script type="application/ld+json">
@@ -35,12 +35,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https:\/\/coldwalker.github.io\/post\/"
+      "@id":"https:\/\/coldwalker.github.io\/"
     },
     "headline": "记log4j打印异常日志导致线程阻塞的问题排查 - 凛冬夜行",
     "image": {
       "@type": "ImageObject",
-      "url": "https:\/\/coldwalker.github.io\/post\/images\/log4j_thread_blocked_issue\/chaoyanggongyuan001.jpg",
+      "url": "https:\/\/coldwalker.github.io\/images\/log4j_thread_blocked_issue\/chaoyanggongyuan001.jpg",
       "height": 800,
       "width": 800
     },
@@ -55,7 +55,7 @@
       "name": "凛冬夜行",
       "logo": {
         "@type": "ImageObject",
-        "url": "https:\/\/coldwalker.github.io\/post\/images/logo.png",
+        "url": "https:\/\/coldwalker.github.io\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -65,7 +65,7 @@
 </script>
 
 
-    <link href="https://coldwalker.github.io/post/css/styles.css" rel="stylesheet">
+    <link href="https://coldwalker.github.io/css/styles.css" rel="stylesheet">
     
 
   </head>
@@ -110,7 +110,7 @@ if (!doNotTrack) {
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://coldwalker.github.io/post/">凛冬夜行</a>
+            <a class="navbar-brand" href="https://coldwalker.github.io/">凛冬夜行</a>
           </div>
 
           
@@ -119,7 +119,7 @@ if (!doNotTrack) {
             <ul class="nav navbar-nav navbar-right">
               
               
-              <li><a href="https://coldwalker.github.io/post/2018/03/about/">about Me</a></li>
+              <li><a href="https://coldwalker.github.io/2018/03/about/">about Me</a></li>
               
               
               
@@ -168,7 +168,7 @@ autocomplete('#aa-search-input',
             if(postMonth < 10)
             postMonth = "0" + postMonth;
             var title = suggestion.objectID.split("/", 2)[1];            
-            return '<span>' + '<a href="https://coldwalker.github.io/post/' + postYear + "/" + postMonth + "/" + title + '">' +
+            return '<span>' + '<a href="https://coldwalker.github.io/' + postYear + "/" + postMonth + "/" + title + '">' +
             suggestion._highlightResult.title.value + '</a></span>';
         }
     }
@@ -194,9 +194,9 @@ autocomplete('#aa-search-input',
 
     <nav class="p-crumb">
       <ol class="breadcrumb">
-        <li><a href="https://coldwalker.github.io/post/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        <li><a href="https://coldwalker.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         
-        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://coldwalker.github.io/post/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://coldwalker.github.io/post/" itemprop="url"><span itemprop="title">post</span></a></li>
         
         <li class="active">记log4j打印异常日志导致线程阻塞的问题排查</li>
       </ol>
@@ -206,14 +206,14 @@ autocomplete('#aa-search-input',
   <header>
     <ul class="p-facts">
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-01-22T12:00:00JST">2020-01-22</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://coldwalker.github.io/post/post/">post</a></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://coldwalker.github.io/post/">post</a></li>
       
     </ul>
 
     <h1 class="title">记log4j打印异常日志导致线程阻塞的问题排查</h1>
   </header>
 
-  <div class="thumb" style="background-image: url(https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/chaoyanggongyuan001.jpg);"></div>
+  <div class="thumb" style="background-image: url(https://coldwalker.github.io/images/log4j_thread_blocked_issue/chaoyanggongyuan001.jpg);"></div>
 
   <div class="article-body"><p>最近线上一个服务偶发单机接口耗时飙升的现象，伴随着内存使用增长并出现吃swap的情况，16核的系统load也飙升到50以上，IOUtil接近100%。而且大部分出现问题的机器在接口耗时飙升一段时间后能逐步恢复正常。起初以为是发生了FullGC导致业务线程暂停，通过GC日志查看，出现问题期间GC比较正常，除了有一些类似下图中由于吃swap导致系统整体变慢的GC情况外，堆内本身内存使用并没有啥大问题，内存的增长应该是堆外内存引起的。</p>
 <pre tabindex="0"><code>2019-12-16T13:21:02.774+0800: 132066.554: [GC (Allocation Failure) 2019-12-16T13:21:02.787+0800: 132066.568: [ParNew
@@ -234,7 +234,7 @@ java.lang.Thread.State: TIMED_WAITING (sleeping) 938
 java.lang.Thread.State: BLOCKED (on object monitor) 3409
 java.lang.Thread.State: RUNNABLE 174
 </code></pre><p>进一步排查被BLOCK的的线程，发现基本上都是在等一个锁（- waiting to lock &lt;0x00000006c0001128&gt; (a org.apache.catalina.loader.WebappClassLoader)。</p>
-<p><img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/block-thread.png" alt="dbdf095329703aa36cb9240d0b8bd21c.png"></p>
+<p><img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/block-thread.png" alt="dbdf095329703aa36cb9240d0b8bd21c.png"></p>
 <p>再查下这个锁被另一个线程所持有，从线程栈看，当前这个线程当前状态是在进行类加载从而读取jar包，从线程调用栈看应该是log4j在打印异常日志时触发了类加载。</p>
 <p><em>这里的有几个问题：</em></p>
 <ol>
@@ -247,9 +247,9 @@ java.lang.Thread.State: RUNNABLE 174
 <p>顺着源码查了一下，原来log4j在打印异常日志的时候，默认会把异常栈中每一个涉及到的类的代码行、所在包名、包的版本这些信息都打印出来，目的是方便用户通过异常栈的这些信息快速定位问题（异常栈发生在哪些jar包的哪个类的哪一行），因为这些异常栈可能会在多个JVM或者不同的ClassLoader间传递（比如RPC等网络传输）。比如RPC的Server端抛了一个异常，Client端把这个异常对应的异常栈log下来，这个时候有可能这个Server端的异常栈携带的这些包信息啥的在当前Client端的JVM里不能被正确识别：比如Server端传递过来的异常栈上某一个类所在的jar包的版本和jar包名在当前Client端的JVM里不一样，所以在当前Client端的JVM里把这个异常栈打印出来的时候就需要替换成当前JVM里的这个类所在的jar包名和版本。</p>
 <p><!-- raw HTML omitted -->比如下面的示例，RPC的client端调用Server端时，Server端抛出了异常，但是由于Server异常栈里依赖的guava版本是18.0，而Client的依赖里只有guava的21.0版本，所以这里在Client端的展示上就会显示成21.0的本地依赖版本（这里注意：虽然这里进行了版本替换，但是出错的代码行并不会进行修正）。<!-- raw HTML omitted --></p>
 <p><em>Server端</em>
-<img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/15792492766861.jpg" alt="1a62f4dfbd1453bf6d895609592b52f6.jpeg"></p>
+<img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/15792492766861.jpg" alt="1a62f4dfbd1453bf6d895609592b52f6.jpeg"></p>
 <p><em>Client端</em>
-<img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/15792493309089.jpg" alt="efd4075fec30ff3fe05494b4930c0498.jpeg"></p>
+<img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/15792493309089.jpg" alt="efd4075fec30ff3fe05494b4930c0498.jpeg"></p>
 <p>log4j在实现上是通过ThrowableProxy这个类来对异常进行包装的。官方API对ThrowableProxy的介绍如下：</p>
 <pre tabindex="0"><code>Wraps a Throwable to add packaging information about each stack trace element.
 A proxy is used to represent a throwable that may not exist in a different class loader or JVM. When an application deserializes a ThrowableProxy, the throwable may not be set, but the throwable&#39;s information is preserved in other fields of the proxy like the message and stack trace.
@@ -395,7 +395,7 @@ A proxy is used to represent a throwable that may not exist in a different class
 </li>
 </ol>
 <p><em>贴一张网上流传广泛的ClassLoader的体系架构图：</em>
-<img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/v2-b8ea45c146ec66f09033110df16ae703_hd.png" alt="338ff813d58d1656baa51bae3508e341.png"></p>
+<img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/v2-b8ea45c146ec66f09033110df16ae703_hd.png" alt="338ff813d58d1656baa51bae3508e341.png"></p>
 <p>如果lastLoader通过“双亲委托”方式没有成功加载到这个类，那么会继续通过 LoaderUtil.loadClass(className) 来再次尝试，LoaderUtil.loadClass加载类的实现如下:</p>
 <pre tabindex="0"><code>public static Class&lt;?&gt; loadClass(final String className) throws ClassNotFoundException {
        if (isIgnoreTccl()) {
@@ -418,7 +418,7 @@ A proxy is used to represent a throwable that may not exist in a different class
     }
 </code></pre><p><em>如果这一步仍然失败，那么最终就会catch住异常，返回null。如果返回null，那么最终这些”扩展类信息“会使用”？“来占位打印。</em></p>
 <p>通过对以上3步的分析，log4j针对异常栈中类的加载流程基本理清了，我们再根据当时jstack下来的持有锁的线程的线程栈信息来进一步分析，长时间hang住的地方是在ClassLoader类的这个同步锁synchronized (getClassLoadingLock(name)) 这里，而且同步块中当前正在进行jar包读取。
-<img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/jstack-lock-position.png" alt="7581e17840ad93e08e84846843c5d37b.png"></p>
+<img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/jstack-lock-position.png" alt="7581e17840ad93e08e84846843c5d37b.png"></p>
 <p>对应的锁的位置在抽象类ClassLoader里对应的源码如下：</p>
 <pre tabindex="0"><code>protected Class&lt;?&gt; loadClass(String name, boolean resolve)
         throws ClassNotFoundException
@@ -461,10 +461,10 @@ A proxy is used to represent a throwable that may not exist in a different class
 具体这一块的源码就不贴了，有兴趣的可以看：<a href="https://github.com/apache/tomcat/blob/master/java/org/apache/catalina/loader/WebappClassLoaderBase.java">这里</a></p>
 <p><!-- raw HTML omitted -->从log4j针对异常栈中类的加载流程来看，对于没有被加载过的目标类，会通过findClass来尝试从classpath下的jar包和.class文件来进行加载，经过”双亲委托“和”自定义ClassLoader“各自的jar包路径查找，整个查找过程是很长而且比较慢的，如果这个时候同时有其它线程需要进行类加载，那么就会被全局的ClassLoader类的同步锁block住，如果这种”需要读取jar包获取类信息“的情况并发较高，就会导致大部分并发请求都被block，从而拖慢业务线程。<!-- raw HTML omitted --></p>
 <p>这里不难得出，如果是JVM刚启动的时候，由于JVM对类的“lazy load”机制，是比较容易出现很多类出现同时需要“通过jar包加载类”来完成加载的情况，会出现由于同步锁拖慢业务线程的情况。但是从线上出现问题的时间点来看，实际上出问题时并不是JVM刚启动，而是比较随机的出现在运行一段时间后，理论上这个时候该加载的类应该都已经加载完了，不应该出现大量类miss了findLoadedClass而需要“通过jar包加载”的情况。而且，同一个JVM多次jstack抓下来的线程栈看，这个锁被不同的线程所持有，但当时log4j打印出来的对应的业务异常栈却基本都是一样的。也就是说：log4j打印的这些重复的异常栈所涉及的类里，存在”第一次从jar包加载完，第二次又需要重新从jar包来加载“的情况。如下图：
-<img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/jstack-locked-thread1.png" alt="aed6dbaf562861f5b03547fa454d7b3f.png">
-<img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/jstack-locked-thread2.png" alt="afbab56fa13f6eb328d026f1ecb7f0aa.png"></p>
+<img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/jstack-locked-thread1.png" alt="aed6dbaf562861f5b03547fa454d7b3f.png">
+<img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/jstack-locked-thread2.png" alt="afbab56fa13f6eb328d026f1ecb7f0aa.png"></p>
 <p><em>这两次抓到的线程栈都是在从jar包获取类信息，但当时log4j打印的业务异常栈刷的错误日志基本都是同样的异常栈信息。</em></p>
-<p><img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/biz-exception-stack.png" alt="b5b99f776b861f6f9db935de0040397a.png"></p>
+<p><img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/biz-exception-stack.png" alt="b5b99f776b861f6f9db935de0040397a.png"></p>
 <p>再仔细分析下这个log4j打印的异常栈，发现其中存在两个比较奇怪的类：sun.reflect.GeneratedMethodAccessor233和sun.reflect.GeneratedMethodAccessor215，从包命名和类命名上来，这两个类应该是java反射自动生成的类。
 针对性的了解了一下这两个类，实际上在JDK源码中并不存在这两个类，这两个类是JVM运行态在反射调用时自动生成的类。</p>
 <h3 id="java反射机制">java反射机制</h3>
@@ -588,7 +588,7 @@ public class TestCallee {
 
 &lt;/Configuration&gt;
 </code></pre><p>运行TestReflectionClassLoad类，并通过参数-Dsun.reflect.noInflation=true来强制使用java动态类方式的反射。发现，确实只有GeneratedMethodAccessor<!-- raw HTML omitted -->这个动态类不管log4j使用哪个ClassLoader都没有办法加载到，导致每次碰到这个类都需要遍历所有的classpath下的jar包来进行搜索，而且每次都还是空手而归。其他类在第一次加载完成后，后续都能通过findLoadedClass从已加载的ClassLoader中快速再加载到。</p>
-<p><img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/15795148926423.jpg" alt="1a83a918becb2a3d7d592ee25e4f2939.jpeg"></p>
+<p><img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/15795148926423.jpg" alt="1a83a918becb2a3d7d592ee25e4f2939.jpeg"></p>
 <h4 id="压测验证">压测验证</h4>
 <p>为了验证下线程block和接口耗时飙升确实是由于这个动态类多次加载导致的，我们来简单进行一下压测。</p>
 <ol>
@@ -604,7 +604,7 @@ public class TestCallee {
 </ol>
 <pre tabindex="0"><code>   &lt;Pattern&gt;%level{length=1} %d{HH:mm:ss SSS} [%p] %c{1} %m %ex %n&lt;/Pattern&gt;
 </code></pre><p>对比之下2和1、3的性能差距巨大，于是在默认的反射策略过程中进行堆栈抓包，果然和之前线上的线程栈表现一致，其他9个线程都在加载类的过程中被BLOCK住了。
-<img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/15795198023023.jpg" alt="e6aee06e3076f1842b5b1a46a10eb1af.jpeg"></p>
+<img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/15795198023023.jpg" alt="e6aee06e3076f1842b5b1a46a10eb1af.jpeg"></p>
 <h3 id="水落石出">水落石出</h3>
 <p><em>到这里基本就结案了，结合业务的异常日志我们分析下原因：</em>
 <!-- raw HTML omitted -->由于我们这个业务首先是作为RPC的Server，对外提供服务，在RPC Server的实现里，RPC框架就是通过反射的方式来invoke具体RPC方法的真实调用；其次在流程中还引用了第三方的熔断组件（Sentinel），通过AOP切面拦截和反射来实现”被保护方法“的熔断和调用。因此整个业务逻辑的调用栈里会多次生成GeneratedMethodAccessor<!-- raw HTML omitted -->这种动态类，因此当业务异常较多的情况，默认log4j2的”扩展异常栈信息“在加载GeneratedMethodAccessor<!-- raw HTML omitted -->类的时候，由于需要多个ClassLoader遍历各自负责的classpath下的jar和.class文件来进行搜索，整个搜索的过程会通过一个JVM全局级的锁来进行保护，由于整个搜索过程耗时较长，当这种异常并发较多时，就非常容易出现其他需要打印类似异常栈的业务线程被BLOCK住，从而影响业务接口的整体性能。<!-- raw HTML omitted --></p>
@@ -613,19 +613,19 @@ public class TestCallee {
 <em>动态生成的GeneratedMethodAccessor<!-- raw HTML omitted -->类也是由JVM的ClassLoader加载的，为啥log4j却加载不到呢？</em></p>
 <p>要回答这个问题，我们必须得先了解下sun.reflect.GeneratedMethodAccessor<!-- raw HTML omitted -->类的生成过程，java反射核心的逻辑在“获取到Method后通过invoke来进行调用”，我们主要看下这里的代码：</p>
 <p>Method类的invoke方法：
-<img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/15795891379253.jpg" alt="a56cc49b1e183bc1333d7568b4f2e6b3.jpeg"></p>
-<p><img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/15795903376901.jpg" alt="2e9b47fee3f3172a1e2a1c5dfaef5b97.jpeg"></p>
+<img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/15795891379253.jpg" alt="a56cc49b1e183bc1333d7568b4f2e6b3.jpeg"></p>
+<p><img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/15795903376901.jpg" alt="2e9b47fee3f3172a1e2a1c5dfaef5b97.jpeg"></p>
 <p>这里主要通过MethodAccessor这个接口的实现类进执行真正的invoke调用，accquireMethodAccessor的主要逻辑是：如果这个Method之前被缓存过，就先从缓存的Method里获取通过MethodAccessor，否则通过会ReflectionFactory来新创建一个MethodAccessor。新创建的核心逻辑代码在这：</p>
-<p><img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/15795920010305.jpg" alt="68f350866d3e6419d7307f1546bdb4fa.jpeg"></p>
+<p><img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/15795920010305.jpg" alt="68f350866d3e6419d7307f1546bdb4fa.jpeg"></p>
 <p><em>这里的逻辑大概如下：</em>
 如果不满足膨胀条件同时当前类不是JDK内部匿名类时，会使用MethodAccessorGenerator来生成MethodAccessor，如果达到inflationThreshold(默认15)的条件、同时noInflation是默认的false，那么在15次之后会封装一个NativeMethodAccessorImpl的MethodAccessor来返回。noInflation(默认false)和inflationThreshold(默认15)，这两个设置在checkInitted方法里会读取-Dsun.reflect.inflationThreshold=xxx和-Dsun.reflect.noInflation=true的JVM参数来重新设置。</p>
 <p>MethodAccessorGenerator.generateMethod方法通过asm字节码工具生成MethodAccessorImpl对象时，会在内存中生成对应类的字节码，并调用ClassDefiner.defineClass创建对应的GeneratedMethodAccessor<!-- raw HTML omitted -->类。
-<img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/15795948363242.jpg" alt="fa9714a28db9be0a1f2d76e8c767b2c4.jpeg"></p>
+<img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/15795948363242.jpg" alt="fa9714a28db9be0a1f2d76e8c767b2c4.jpeg"></p>
 <p>这里的generatedName就是自动生成的GeneratedMethodAccessor<!-- raw HTML omitted -->的自增类名：
-<img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/15795949169504.jpg" alt="628cafe9656c8b4a3ba8e3aed785220b.jpeg"></p>
+<img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/15795949169504.jpg" alt="628cafe9656c8b4a3ba8e3aed785220b.jpeg"></p>
 <p>自动生成的这个GeneratedMethodAccessor<!-- raw HTML omitted -->类是抽象类MethodAccessorImpl的子类，MethodAccessorImpl是MethodAccessor的抽象实现类，GeneratedMethodAccessor<!-- raw HTML omitted -->实现的invoke方法里就是直接调用目标对象的具体方法。</p>
 <p>关键的地方在GeneratedMethodAccessor<!-- raw HTML omitted -->类的生成定义这里，注意这里用于装载GeneratedMethodAccessor<!-- raw HTML omitted -->这个类的ClassLoader是用一个新创建的DelegatingClassLoader，见ClassDefiner的defineClass代码：</p>
-<p><img src="https://coldwalker.github.io/post/images/log4j_thread_blocked_issue/15796016330774.jpg" alt="e540e3d2d28f9982c6dbce84a1c5f6af.jpeg"></p>
+<p><img src="https://coldwalker.github.io/images/log4j_thread_blocked_issue/15796016330774.jpg" alt="e540e3d2d28f9982c6dbce84a1c5f6af.jpeg"></p>
 <p><em>那么为什么每次要用一个新的DelegatingClassLoader来加载生成的动态类呢？</em>
 之所以每次生成GeneratedMethodAccessor<!-- raw HTML omitted -->类都使用一个新的DelegatingClassLoader来装载主要是出于性能考虑，JVM认为这些动态生成的临时类在方法调用结束后并不希望长期在内存中占有系统内存，因此，每次都使用新的ClassLoader来进行装载就能够让这些类能够被卸载掉，因为类的卸载前提是对应的ClassLoader可以被GC回收，如果使用业务应用的ClassLoader来加载，可能会导致这些动态生成的类无法卸载，从而浪费系统内存。而正是由于这个原因，导致log4j通过应用的ClassLoader无法查找到这些动态类，导致需要一次次遍历classpath下的各种jar包和.class文件来进行无用且耗时的遍历。这个也能通过JVM自带的PerfCounter能看出差异。</p>
 <h4 id="线上再次验证">线上再次验证</h4>
@@ -660,7 +660,7 @@ sun.zip.zipFiles=6841778
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://coldwalker.github.io/post/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+          <li><a href="https://coldwalker.github.io/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
           
         </ul>
       </div>
@@ -675,9 +675,9 @@ sun.zip.zipFiles=6841778
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://coldwalker.github.io/post/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">问题排查</a></li>
+          <li><a href="https://coldwalker.github.io/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/">问题排查</a></li>
           
-          <li><a href="https://coldwalker.github.io/post/tags/java/">Java</a></li>
+          <li><a href="https://coldwalker.github.io/tags/java/">Java</a></li>
           
         </ul>
       </div>
@@ -693,7 +693,7 @@ sun.zip.zipFiles=6841778
       <div id="cyReward" role="cylabs" data-use="reward"></div>
       <script src="//changyan.itc.cn/js/lib/jquery.js"></script>
       <script src="//changyan.sohu.com/js/changyan.labs.https.js?appid=cytwFfxww"></script>
-      <div id="SOHUCS" sid="https://coldwalker.github.io/post/2020/01/log4j-thread-blocked-issue/" ></div>
+      <div id="SOHUCS" sid="https://coldwalker.github.io/2020/01/log4j-thread-blocked-issue/" ></div>
       <script>
       (function(){
       var appid = 'cytwFfxww';
@@ -717,25 +717,25 @@ sun.zip.zipFiles=6841778
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/post/2024/05/mtu_probe_details/" class="list-group-item">关于MTU探测的一些细节</a>
+      <a href="https://coldwalker.github.io/2024/05/mtu_probe_details/" class="list-group-item">关于MTU探测的一些细节</a>
       
-      <a href="https://coldwalker.github.io/post/2020/01/log4j-thread-blocked-issue/" class="list-group-item">记log4j打印异常日志导致线程阻塞的问题排查</a>
+      <a href="https://coldwalker.github.io/2020/01/log4j-thread-blocked-issue/" class="list-group-item">记log4j打印异常日志导致线程阻塞的问题排查</a>
       
-      <a href="https://coldwalker.github.io/post/2019/02/gc_problem_resolve/" class="list-group-item">Java垃圾回收浅析(4)-GC常见问题分析</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_problem_resolve/" class="list-group-item">Java垃圾回收浅析(4)-GC常见问题分析</a>
       
-      <a href="https://coldwalker.github.io/post/2019/02/gc_log_analyze/" class="list-group-item">Java垃圾回收浅析(3)-GC日志分析</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_log_analyze/" class="list-group-item">Java垃圾回收浅析(3)-GC日志分析</a>
       
-      <a href="https://coldwalker.github.io/post/2019/02/gc_intro/" class="list-group-item">Java垃圾回收浅析(2)-GC方式介绍</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_intro/" class="list-group-item">Java垃圾回收浅析(2)-GC方式介绍</a>
       
-      <a href="https://coldwalker.github.io/post/2019/02/gc_object_alloc_process/" class="list-group-item">Java垃圾回收浅析(1)-对象内存申请</a>
+      <a href="https://coldwalker.github.io/2019/02/gc_object_alloc_process/" class="list-group-item">Java垃圾回收浅析(1)-对象内存申请</a>
       
-      <a href="https://coldwalker.github.io/post/2018/12/troubleshooter_directbytebuffer_memory_issue/" class="list-group-item">DirectByteBuffer堆外内存溢出问题排查</a>
+      <a href="https://coldwalker.github.io/2018/12/troubleshooter_directbytebuffer_memory_issue/" class="list-group-item">DirectByteBuffer堆外内存溢出问题排查</a>
       
-      <a href="https://coldwalker.github.io/post/2018/08/troubleshooter_native_memory_increase/" class="list-group-item">Java堆外内存增长问题排查Case</a>
+      <a href="https://coldwalker.github.io/2018/08/troubleshooter_native_memory_increase/" class="list-group-item">Java堆外内存增长问题排查Case</a>
       
-      <a href="https://coldwalker.github.io/post/2018/03/troubleshooter_stackoverflowerror/" class="list-group-item">StackOverFlowError问题引出的JVM栈内存管理</a>
+      <a href="https://coldwalker.github.io/2018/03/troubleshooter_stackoverflowerror/" class="list-group-item">StackOverFlowError问题引出的JVM栈内存管理</a>
       
-      <a href="https://coldwalker.github.io/post/2018/03/robust-service_hystrix/" class="list-group-item">服务稳定性提升之-熔断组件Hystrix</a>
+      <a href="https://coldwalker.github.io/2018/03/robust-service_hystrix/" class="list-group-item">服务稳定性提升之-熔断组件Hystrix</a>
       
     </div>
   </section>
@@ -747,11 +747,11 @@ sun.zip.zipFiles=6841778
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/post/categories/%E6%8A%80%E6%9C%AF" class="list-group-item">技术(11)</a>
+      <a href="https://coldwalker.github.io/categories/%E6%8A%80%E6%9C%AF" class="list-group-item">技术(11)</a>
       
-      <a href="https://coldwalker.github.io/post/categories/%E6%84%9F%E6%82%9F" class="list-group-item">感悟(1)</a>
+      <a href="https://coldwalker.github.io/categories/%E6%84%9F%E6%82%9F" class="list-group-item">感悟(1)</a>
       
-      <a href="https://coldwalker.github.io/post/categories/%E7%94%9F%E6%B4%BB" class="list-group-item">生活(1)</a>
+      <a href="https://coldwalker.github.io/categories/%E7%94%9F%E6%B4%BB" class="list-group-item">生活(1)</a>
       
     </div>
   </section>
@@ -763,23 +763,23 @@ sun.zip.zipFiles=6841778
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/post/tags/java" class="list-group-item">Java(10)</a>
+      <a href="https://coldwalker.github.io/tags/java" class="list-group-item">Java(10)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5" class="list-group-item">问题排查(5)</a>
+      <a href="https://coldwalker.github.io/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5" class="list-group-item">问题排查(5)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/gc" class="list-group-item">Gc(4)</a>
+      <a href="https://coldwalker.github.io/tags/gc" class="list-group-item">Gc(4)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/jvm" class="list-group-item">Jvm(3)</a>
+      <a href="https://coldwalker.github.io/tags/jvm" class="list-group-item">Jvm(3)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/netflix" class="list-group-item">Netflix(1)</a>
+      <a href="https://coldwalker.github.io/tags/netflix" class="list-group-item">Netflix(1)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E5%86%85%E6%A0%B8" class="list-group-item">内核(1)</a>
+      <a href="https://coldwalker.github.io/tags/%E5%86%85%E6%A0%B8" class="list-group-item">内核(1)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6" class="list-group-item">开源组件(1)</a>
+      <a href="https://coldwalker.github.io/tags/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6" class="list-group-item">开源组件(1)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E6%9C%8D%E5%8A%A1%E7%A8%B3%E5%AE%9A%E6%80%A7" class="list-group-item">服务稳定性(1)</a>
+      <a href="https://coldwalker.github.io/tags/%E6%9C%8D%E5%8A%A1%E7%A8%B3%E5%AE%9A%E6%80%A7" class="list-group-item">服务稳定性(1)</a>
       
-      <a href="https://coldwalker.github.io/post/tags/%E7%BD%91%E7%BB%9C" class="list-group-item">网络(1)</a>
+      <a href="https://coldwalker.github.io/tags/%E7%BD%91%E7%BB%9C" class="list-group-item">网络(1)</a>
       
     </div>
   </section>
@@ -793,27 +793,27 @@ sun.zip.zipFiles=6841778
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2024-05" class="list-group-item">2024-05(2)</a>
+      <a href="https://coldwalker.github.io/post/#2024-05" class="list-group-item">2024-05(2)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2020-01" class="list-group-item">2020-01(1)</a>
+      <a href="https://coldwalker.github.io/post/#2020-01" class="list-group-item">2020-01(1)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2019-02" class="list-group-item">2019-02(4)</a>
+      <a href="https://coldwalker.github.io/post/#2019-02" class="list-group-item">2019-02(4)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2018-12" class="list-group-item">2018-12(1)</a>
+      <a href="https://coldwalker.github.io/post/#2018-12" class="list-group-item">2018-12(1)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2018-08" class="list-group-item">2018-08(1)</a>
+      <a href="https://coldwalker.github.io/post/#2018-08" class="list-group-item">2018-08(1)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/post/#2018-03" class="list-group-item">2018-03(4)</a>
+      <a href="https://coldwalker.github.io/post/#2018-03" class="list-group-item">2018-03(4)</a>
     
     </div>
   </section>
