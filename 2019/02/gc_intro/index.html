@@ -8,25 +8,25 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <link rel="stylesheet" href="https://coldwalker.github.io/css/search.css" />
+    <link rel="stylesheet" href="https://coldwalker.github.io/post/css/search.css" />
     <title>Java垃圾回收浅析(2)-GC方式介绍 - 凛冬夜行</title>
     
 <meta name="description" content="为什么需要GC？ 当程序创建对象、数组等引用类型实体时，系统都会在堆内存中为之分配一块内存区，对象就保存在这块内存区中，当这块内存不再被任何引">
 
 <meta property="og:title" content="Java垃圾回收浅析(2)-GC方式介绍 - 凛冬夜行">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://coldwalker.github.io/2019/02/gc_intro/">
-<meta property="og:image" content="https://coldwalker.github.io/images/gc_intro/changlonghaiyangwangguoyanhua.jpg">
+<meta property="og:url" content="https://coldwalker.github.io/post/2019/02/gc_intro/">
+<meta property="og:image" content="https://coldwalker.github.io/post/images/gc_intro/changlonghaiyangwangguoyanhua.jpg">
 <meta property="og:site_name" content="凛冬夜行">
 <meta property="og:description" content="为什么需要GC？ 当程序创建对象、数组等引用类型实体时，系统都会在堆内存中为之分配一块内存区，对象就保存在这块内存区中，当这块内存不再被任何引">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="凛冬夜行">
-<meta name="twitter:url" content="https://coldwalker.github.io/2019/02/gc_intro/">
+<meta name="twitter:url" content="https://coldwalker.github.io/post/2019/02/gc_intro/">
 <meta name="twitter:title" content="Java垃圾回收浅析(2)-GC方式介绍 - 凛冬夜行">
 <meta name="twitter:description" content="为什么需要GC？ 当程序创建对象、数组等引用类型实体时，系统都会在堆内存中为之分配一块内存区，对象就保存在这块内存区中，当这块内存不再被任何引">
-<meta name="twitter:image" content="https://coldwalker.github.io/images/gc_intro/changlonghaiyangwangguoyanhua.jpg">
+<meta name="twitter:image" content="https://coldwalker.github.io/post/images/gc_intro/changlonghaiyangwangguoyanhua.jpg">
 
 
 <script type="application/ld+json">
@@ -35,12 +35,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https:\/\/coldwalker.github.io\/"
+      "@id":"https:\/\/coldwalker.github.io\/post\/"
     },
     "headline": "Java垃圾回收浅析(2)-GC方式介绍 - 凛冬夜行",
     "image": {
       "@type": "ImageObject",
-      "url": "https:\/\/coldwalker.github.io\/images\/gc_intro\/changlonghaiyangwangguoyanhua.jpg",
+      "url": "https:\/\/coldwalker.github.io\/post\/images\/gc_intro\/changlonghaiyangwangguoyanhua.jpg",
       "height": 800,
       "width": 800
     },
@@ -55,7 +55,7 @@
       "name": "凛冬夜行",
       "logo": {
         "@type": "ImageObject",
-        "url": "https:\/\/coldwalker.github.io\/images/logo.png",
+        "url": "https:\/\/coldwalker.github.io\/post\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -65,7 +65,7 @@
 </script>
 
 
-    <link href="https://coldwalker.github.io/css/styles.css" rel="stylesheet">
+    <link href="https://coldwalker.github.io/post/css/styles.css" rel="stylesheet">
     
 
   </head>
@@ -110,7 +110,7 @@ if (!doNotTrack) {
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://coldwalker.github.io/">凛冬夜行</a>
+            <a class="navbar-brand" href="https://coldwalker.github.io/post/">凛冬夜行</a>
           </div>
 
           
@@ -119,7 +119,7 @@ if (!doNotTrack) {
             <ul class="nav navbar-nav navbar-right">
               
               
-              <li><a href="https://coldwalker.github.io/2018/03/about/">about Me</a></li>
+              <li><a href="https://coldwalker.github.io/post/2018/03/about/">about Me</a></li>
               
               
               
@@ -168,7 +168,7 @@ autocomplete('#aa-search-input',
             if(postMonth < 10)
             postMonth = "0" + postMonth;
             var title = suggestion.objectID.split("/", 2)[1];            
-            return '<span>' + '<a href="https://coldwalker.github.io/' + postYear + "/" + postMonth + "/" + title + '">' +
+            return '<span>' + '<a href="https://coldwalker.github.io/post/' + postYear + "/" + postMonth + "/" + title + '">' +
             suggestion._highlightResult.title.value + '</a></span>';
         }
     }
@@ -194,9 +194,9 @@ autocomplete('#aa-search-input',
 
     <nav class="p-crumb">
       <ol class="breadcrumb">
-        <li><a href="https://coldwalker.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        <li><a href="https://coldwalker.github.io/post/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         
-        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://coldwalker.github.io/post/" itemprop="url"><span itemprop="title">post</span></a></li>
+        <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://coldwalker.github.io/post/post/" itemprop="url"><span itemprop="title">post</span></a></li>
         
         <li class="active">Java垃圾回收浅析(2)-GC方式介绍</li>
       </ol>
@@ -206,14 +206,14 @@ autocomplete('#aa-search-input',
   <header>
     <ul class="p-facts">
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-02-19T17:00:00JST">2019-02-19</time></li>
-      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://coldwalker.github.io/post/">post</a></li>
+      <li><i class="fa fa-bookmark" aria-hidden="true"></i><a href="https://coldwalker.github.io/post/post/">post</a></li>
       
     </ul>
 
     <h1 class="title">Java垃圾回收浅析(2)-GC方式介绍</h1>
   </header>
 
-  <div class="thumb" style="background-image: url(https://coldwalker.github.io/images/gc_intro/changlonghaiyangwangguoyanhua.jpg);"></div>
+  <div class="thumb" style="background-image: url(https://coldwalker.github.io/post/images/gc_intro/changlonghaiyangwangguoyanhua.jpg);"></div>
 
   <div class="article-body"><h3 id="为什么需要gc">为什么需要GC？</h3>
 <p>当程序创建对象、数组等引用类型实体时，系统都会在堆内存中为之分配一块内存区，对象就保存在这块内存区中，当这块内存不再被任何引用变量引用时，这块内存就变成垃圾，等待垃圾回收机制进行回收。在C和C++中，垃圾的回收是由程序员来手动执行，虽然实时性比较好，但由于内存分配和回收代码繁琐，较容易出错，内存泄露问题比较常见。于是一些语言如Java、python、Go等，通过程序实现了自动化内存管理来解决垃圾回收问题，从而降低了在这些语言中内存使用的门槛。另外，由于GC有一定的滞后性，在一些实时性较高或者内存吃紧的（单片机开发）软件中，还是有不少采用人工回收垃圾的案例。</p>
@@ -226,7 +226,7 @@ autocomplete('#aa-search-input',
 <h3 id="gc实现的两种常见方式">GC实现的两种常见方式</h3>
 <h4 id="引用计数reference-counting">引用计数（Reference Counting）</h4>
 <p>引用计数的实现比较简单，核心就是给每一个对象增加一个引用计数器，当另一个对象引用当前对象时就给当前对象的引用计数+1，当有对象不再引用当前对象时，就将引用计数-1，当前对象的引用计数变成0时，递归地将该对象引用的子对象的引用计数-1，并把当前对象使用的内存区域释放到空闲链表中。
-<img src="https://coldwalker.github.io/images/gc_intro/refcount.gif" alt="6efac91db597f7d968d53f68c99e32d4.gif"></p>
+<img src="https://coldwalker.github.io/post/images/gc_intro/refcount.gif" alt="6efac91db597f7d968d53f68c99e32d4.gif"></p>
 <p><em>引用计数算法的优点：</em></p>
 <ol>
 <li>引用归0时可立即回收垃圾，实时性好。</li>
@@ -249,7 +249,7 @@ autocomplete('#aa-search-input',
 <ol>
 <li>第一阶段，从GC ROOTS开始进行遍历，标记所有可直达或间接到达的对象为“使用中”。</li>
 <li>第二阶段，扫描整体内存，对上一阶段标记的“使用中”的对象进行回收。
-<img src="https://coldwalker.github.io/images/gc_intro/A73996FF-5E0A-42D5-AE6B-73D25A1FD000.jpg" alt="3ded3d0575a91f8dfde31dc446642d56.jpeg"></li>
+<img src="https://coldwalker.github.io/post/images/gc_intro/A73996FF-5E0A-42D5-AE6B-73D25A1FD000.jpg" alt="3ded3d0575a91f8dfde31dc446642d56.jpeg"></li>
 </ol>
 <p>原始的标记-清除算法有不少问题，比如：</p>
 <ol>
@@ -266,7 +266,7 @@ autocomplete('#aa-search-input',
 <p>a. 先在mark阶段标记存活对象。
 b. 遍历heap计算出存活对象将要移动到的新位置。
 c. 将存活对象真正移动到新位置并更新存活对象中被指向移动对象的指针。
-<img src="https://coldwalker.github.io/images/gc_intro/CD89A12E-1A37-4269-B102-66ADB27404BB.jpg" alt="a0da00148bc1a9638f5ea4256f3c0b1e.jpeg"></p>
+<img src="https://coldwalker.github.io/post/images/gc_intro/CD89A12E-1A37-4269-B102-66ADB27404BB.jpg" alt="a0da00148bc1a9638f5ea4256f3c0b1e.jpeg"></p>
 <p>由过程可知，标记-整理算法的compact阶段的耗时是和存活对象的多少成正比的。而且虽然解决了碎片的问题，但实际需要多次遍历heap、移动对象、更新指针，所以耗时上会比标记-清除算法要更长一些。所以默认情况下一些垃圾回收器CMS并不直接使用mark-compact算法，而是当由于存在碎片导致发生Full GC时才会使用基于mark-compact算法来进行内存整理。</p>
 <blockquote>
 <p>PS：当然从另一个方面看，mark-compact阶段由于解决了内存碎片问题，在应用线程申请内存的时候就可以用“指针碰撞”（pointer bumping）方式来快速完成内存分配，如果碎片较多，“指针碰撞”就会较大概率导致多次指针挪动，就不适合了，这样就只能使用分配速度更慢的类似freelist的方式来进行内存的管理和分配。</p>
@@ -278,7 +278,7 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 <li>同一时刻只有from space会被使用。</li>
 <li>GC时，将from space内存活的对象拷贝到to space</li>
 <li>拷贝完成后，from space和to space交换身份
-<img src="https://coldwalker.github.io/images/gc_intro/E583CCB7-47DF-4CE4-8945-8AC2E8135706.jpg" alt="1290c3eb4092bd52de293fbe1be152cb.jpeg"></li>
+<img src="https://coldwalker.github.io/post/images/gc_intro/E583CCB7-47DF-4CE4-8945-8AC2E8135706.jpg" alt="1290c3eb4092bd52de293fbe1be152cb.jpeg"></li>
 </ol>
 <blockquote>
 <p>由“复制-收集”算法的实现可知，虽然这种算法比较简单高效，而且没有碎片问题。但一个比较明显的代价就是：应用程序实际可用的内存会被减半。另外，“复制-收集”算法很大一部分工作在于将存活对象移动到to space，因此它的时间开销和存活对象的数量成正比。</p>
@@ -287,7 +287,7 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 <hr>
 <h5 id="垃圾回收器">垃圾回收器</h5>
 <p>GC算法是内存回收的方法论，垃圾收集器是内存回收的具体实现。新生代垃圾收集器有Serial、ParNew、Parallel Scavenge、G1，属于老年代的垃圾收集器有CMS、Serial Old、Parallel Old和G1。其中的G1是一种既可以对新生代对象也可以对老年代对象进行回收的垃圾收集器。大部分垃圾回收器之间能相互配合来发挥各自的优势。</p>
-<p><img src="https://coldwalker.github.io/images/gc_intro/6073827-904b301be72b9f5a.jpg.png" alt="85a94c88d8d3662165484268f0449723.png"></p>
+<p><img src="https://coldwalker.github.io/post/images/gc_intro/6073827-904b301be72b9f5a.jpg.png" alt="85a94c88d8d3662165484268f0449723.png"></p>
 <h6 id="serial收集器">Serial收集器</h6>
 <p>Serial收集器是最古老、最基本的一种垃圾回收器，采用单线程来进行垃圾回收。新生代回收采用复制算法，回收的整个过程会暂停业务线程（STW）。</p>
 <blockquote>
@@ -298,7 +298,7 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 应用：Client模式下的默认新生代收集器
 参数控制：-XX:+UseSerialGC</p>
 </blockquote>
-<p><img src="https://coldwalker.github.io/images/gc_intro/6073827-42feae7608310929.png" alt="56c88d3322821a6d6af5909213e888a5.png"></p>
+<p><img src="https://coldwalker.github.io/post/images/gc_intro/6073827-42feae7608310929.png" alt="56c88d3322821a6d6af5909213e888a5.png"></p>
 <h6 id="parnew收集器">ParNew收集器</h6>
 <p>ParNew收集器也是一个新生代垃圾回收器，可以看成是Serial收集器的多线程版本，也是采用复制算法来进行收集，回收整个过程也是暂停业务线程（STW）的，但由于是多线程并行执行的，所以在多CPU机器上一般会比Serial收集器快很多。</p>
 <blockquote>
@@ -311,7 +311,7 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 -XX:+UseParNewGC
 -XX:ParallelGCThreads (限制线程数量)</p>
 </blockquote>
-<p><img src="https://coldwalker.github.io/images/gc_intro/img_97ff89bcbbc18cd50ba5287850435f43.png" alt="97ff89bcbbc18cd50ba5287850435f43.png"></p>
+<p><img src="https://coldwalker.github.io/post/images/gc_intro/img_97ff89bcbbc18cd50ba5287850435f43.png" alt="97ff89bcbbc18cd50ba5287850435f43.png"></p>
 <h6 id="parallel-scavenge收集器">Parallel Scavenge收集器</h6>
 <p>和ParNew收集器类似，Parallel Scavenge收集器也是一个新生代垃圾回收器，但和ParNew收集器不同的是Parallel Scavenge收集器更多关注的是可控制的吞吐量，支持自适应调节策略。</p>
 <blockquote>
@@ -334,10 +334,10 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 </blockquote>
 <h6 id="serial-old收集器">Serial Old收集器</h6>
 <p>老年代的收集器，与上面的Serial一样是单线程回收，不同的是算法用的是标记-整理（Mark-Compact），整个过程和Serial收集器一样都会暂停业务线程。这个收集器的主要意义也是在于给Client模式下的虚拟机使用。
-<img src="https://coldwalker.github.io/images/gc_intro/serial-old.png" alt="0207d0a7741701cf070520c4f97f065e.png"></p>
+<img src="https://coldwalker.github.io/post/images/gc_intro/serial-old.png" alt="0207d0a7741701cf070520c4f97f065e.png"></p>
 <h6 id="parallel-old收集器">Parallel Old收集器</h6>
 <p>Parallel Old收集器是Parallel Scavenge收集器的老年代版本，JDK 1.6开始推出的，它使用多线程和“标记-整理”算法进行垃圾回收。通常与Parallel Scavenge收集器配合使用，“吞吐量优先”收集器是这个组合的特点，在注重吞吐量和CPU资源敏感的场合，都可以使用这个组合。
-<img src="https://coldwalker.github.io/images/gc_intro/parallel-old.png" alt="754b629778258dd09ede56a2a9f304b2.png"></p>
+<img src="https://coldwalker.github.io/post/images/gc_intro/parallel-old.png" alt="754b629778258dd09ede56a2a9f304b2.png"></p>
 <h6 id="cms收集器">CMS收集器</h6>
 <p>CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时间为目标的多线程并发收集器，基于“标记-清除”算法实现。CMS垃圾回收器将垃圾回收分成多个阶段，某些阶段可以和业务线程并发执行，这些并发阶段主要来做一些准备工作，这些准备工作能缩小最终的暂停阶段（Init-Mark和Remark）的时间，而且在暂停业务线程的两个阶段也由于多线程并行暂停时间控制也较好，是目前对用户响应时间敏感的且堆大小适中（太大、太小都不好）的应用广泛采用的年老代垃圾回收器。默认配合ParNew回收器作为新生代垃圾回收器。</p>
 <blockquote>
@@ -350,7 +350,7 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 并发清除（CMS concurrent sweep）
 并发重置（CMS concurrent-reset）</p>
 </blockquote>
-<p><img src="https://coldwalker.github.io/images/gc_intro/cms_process.jpg" alt="cms_process.png"></p>
+<p><img src="https://coldwalker.github.io/post/images/gc_intro/cms_process.jpg" alt="cms_process.png"></p>
 <p><!-- raw HTML omitted -->PS：这个盗的图稍微有点问题，从jdk 1.8开始，initial mark阶段也是多线程并行执行的，可以通过-XX:+CMSParallelInitialMarkEnabled参数控制。<!-- raw HTML omitted --></p>
 <blockquote>
 <p><em>CMS收集器的特性总结：</em>
@@ -382,7 +382,7 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 <li>G1的Stop The World(STW)更可控，G1在停顿时间上添加了预测机制，用户可以指定期望停顿时间。</li>
 </ul>
 <p>与前面介绍回收器只能工作在年轻代或者年老代不同的是，G1收集器将整个Java堆划分为多个大小相等的独立区域（Region），虽然还保留有新生代和老年代的概念，但新生代和老年代不再是物理隔阂了，它们都是一部分（可以不连续）Region的集合。G1的新生代收集跟ParNew类似，当新生代占用达到一定比例的时候，开始出发收集。和CMS类似，G1收集器收集老年代对象会有短暂停顿。</p>
-<p><img src="https://coldwalker.github.io/images/gc_intro/2184951-715388c6f6799bd9.png" alt="ba1807ea0d2b5304a7ad7ba2eb73f1f1.png"></p>
+<p><img src="https://coldwalker.github.io/post/images/gc_intro/2184951-715388c6f6799bd9.png" alt="ba1807ea0d2b5304a7ad7ba2eb73f1f1.png"></p>
 <blockquote>
 <p>每个Region被标记了E、S、O和H，说明每个Region在运行时都充当了一种角色，其中H是以往算法中没有的，它代表Humongous，这表示这些Region存储的是巨型对象（humongous object，H-obj），当新建对象大小超过Region大小一半时，直接在新的一个或多个连续Region中分配，并标记为H。</p>
 </blockquote>
@@ -474,7 +474,7 @@ c. 将存活对象真正移动到新位置并更新存活对象中被指向移�
 <h4 id="延伸知识点2如何识别垃圾对象">延伸知识点2：如何识别“垃圾对象”？</h4>
 <h5 id="为什么需要引用">为什么需要引用？</h5>
 <p>如前所述：在最早的JVM实现里，使用“跟踪回收”算法从GC ROOTS出发，按照广度或者深度方式遍历所有与GC ROOTS可达的对象，针对那些GC不可达的垃圾对象进行回收。但随着Java的演进，针对最早这种比较简单的GC方式逐渐暴露出一些不能覆盖的情景，比如：某些场景下使用方希望在回收具体对象的同时还能辅助回收这个对象绑定的一些资源（比如socket、堆外内存等）、某些场景下希望使用的堆内缓存组件能尽量缓存更多的数据但又不会导致OOM。考虑到上述类似的使用场景，从JDK 1.2开始，JDK引入了软引用（SoftReference）、弱引用（WeakReference）、幻象引用（PhantomReference）、Final引用（FinalReference）四种新的引用来支持一些新的特性。对象创建时，可以通过不同的引用来对对象进行封装，GC时，当真正的业务对象除了这个引用外没有其他GC ROOTS可达的时候，JVM会根据引用类型和GC类型（是否是Full GC）来对这个“真实对象”进行一些特殊处理，比如：回收这个对象绑定的其他资源、比如根据GC类型来觉得是否本次要把对象进行回收等。
-<img src="https://coldwalker.github.io/images/gc_intro/1119937-20190130111221088-1473128563.png" alt="a5b1bd167692a29a29d2e09a75211e0c.png"></p>
+<img src="https://coldwalker.github.io/post/images/gc_intro/1119937-20190130111221088-1473128563.png" alt="a5b1bd167692a29a29d2e09a75211e0c.png"></p>
 <h5 id="gc如何识别和处理引用">GC如何识别和处理引用？</h5>
 <p>“真实对象”创建时，可以通过Reference来对“真实对象”进行封装引用，然后通过一些方法保证这个引用GC ROOTS可达（比如封装完“真实对象”后将这个引用加入到一个静态链表中），JVM垃圾回收器硬编码识别SoftReference，WeakReference，PhantomReference，Final引用（FinalReference）等这些具体的类，GC过程中，识别查找到引用对象没有被其他强引用使用的Reference，然后添加到Reference类的pending链表，这个pending链表由GC来维护，通过Reference类的一个静态的pending变量（链表头）和一个实例变量discovered（链表下一节点）来实现；Reference有一个高优先级的ReferenceHandler线程，这个线程不停的从pending链表中取出待处理的Reference进行处理：有的放到Reference各自的ReferenceQueue队列里供使用者进行处理（如：PhantomReference和WeakReference）、有的直接调用固定的处理方法进行清理（如：Cleaner）。</p>
 <p><em>先看下Reference类的重要部分：</em></p>
@@ -1084,7 +1084,7 @@ if (_discovery_is_mt) {
       ...
     }
 </code></pre><h6 id="整个引用大致的处理流程懒得画盗个图">整个引用大致的处理流程（懒得画，盗个图）</h6>
-<p><img src="https://coldwalker.github.io/images/gc_intro/image-20180819185503111.png" alt="04dd63008299487f05620952f0bd5dff.png"></p>
+<p><img src="https://coldwalker.github.io/post/images/gc_intro/image-20180819185503111.png" alt="04dd63008299487f05620952f0bd5dff.png"></p>
 <hr>
 <p><em>参考：</em>
 <a href="http://120.52.51.16/www.cs.virginia.edu/~cs415/reading/bacon-garbage.pdf">垃圾回收统一理论</a>
@@ -1108,7 +1108,7 @@ if (_discovery_is_mt) {
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://coldwalker.github.io/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
+          <li><a href="https://coldwalker.github.io/post/categories/%E6%8A%80%E6%9C%AF/">技术</a></li>
           
         </ul>
       </div>
@@ -1123,9 +1123,9 @@ if (_discovery_is_mt) {
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://coldwalker.github.io/tags/gc/">GC</a></li>
+          <li><a href="https://coldwalker.github.io/post/tags/gc/">GC</a></li>
           
-          <li><a href="https://coldwalker.github.io/tags/java/">Java</a></li>
+          <li><a href="https://coldwalker.github.io/post/tags/java/">Java</a></li>
           
         </ul>
       </div>
@@ -1141,7 +1141,7 @@ if (_discovery_is_mt) {
       <div id="cyReward" role="cylabs" data-use="reward"></div>
       <script src="//changyan.itc.cn/js/lib/jquery.js"></script>
       <script src="//changyan.sohu.com/js/changyan.labs.https.js?appid=cytwFfxww"></script>
-      <div id="SOHUCS" sid="https://coldwalker.github.io/2019/02/gc_intro/" ></div>
+      <div id="SOHUCS" sid="https://coldwalker.github.io/post/2019/02/gc_intro/" ></div>
       <script>
       (function(){
       var appid = 'cytwFfxww';
@@ -1165,25 +1165,25 @@ if (_discovery_is_mt) {
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/2024/05/mtu_probe_details/" class="list-group-item">关于MTU探测的一些细节</a>
+      <a href="https://coldwalker.github.io/post/2024/05/mtu_probe_details/" class="list-group-item">关于MTU探测的一些细节</a>
       
-      <a href="https://coldwalker.github.io/2020/01/log4j-thread-blocked-issue/" class="list-group-item">记log4j打印异常日志导致线程阻塞的问题排查</a>
+      <a href="https://coldwalker.github.io/post/2020/01/log4j-thread-blocked-issue/" class="list-group-item">记log4j打印异常日志导致线程阻塞的问题排查</a>
       
-      <a href="https://coldwalker.github.io/2019/02/gc_problem_resolve/" class="list-group-item">Java垃圾回收浅析(4)-GC常见问题分析</a>
+      <a href="https://coldwalker.github.io/post/2019/02/gc_problem_resolve/" class="list-group-item">Java垃圾回收浅析(4)-GC常见问题分析</a>
       
-      <a href="https://coldwalker.github.io/2019/02/gc_log_analyze/" class="list-group-item">Java垃圾回收浅析(3)-GC日志分析</a>
+      <a href="https://coldwalker.github.io/post/2019/02/gc_log_analyze/" class="list-group-item">Java垃圾回收浅析(3)-GC日志分析</a>
       
-      <a href="https://coldwalker.github.io/2019/02/gc_intro/" class="list-group-item">Java垃圾回收浅析(2)-GC方式介绍</a>
+      <a href="https://coldwalker.github.io/post/2019/02/gc_intro/" class="list-group-item">Java垃圾回收浅析(2)-GC方式介绍</a>
       
-      <a href="https://coldwalker.github.io/2019/02/gc_object_alloc_process/" class="list-group-item">Java垃圾回收浅析(1)-对象内存申请</a>
+      <a href="https://coldwalker.github.io/post/2019/02/gc_object_alloc_process/" class="list-group-item">Java垃圾回收浅析(1)-对象内存申请</a>
       
-      <a href="https://coldwalker.github.io/2018/12/troubleshooter_directbytebuffer_memory_issue/" class="list-group-item">DirectByteBuffer堆外内存溢出问题排查</a>
+      <a href="https://coldwalker.github.io/post/2018/12/troubleshooter_directbytebuffer_memory_issue/" class="list-group-item">DirectByteBuffer堆外内存溢出问题排查</a>
       
-      <a href="https://coldwalker.github.io/2018/08/troubleshooter_native_memory_increase/" class="list-group-item">Java堆外内存增长问题排查Case</a>
+      <a href="https://coldwalker.github.io/post/2018/08/troubleshooter_native_memory_increase/" class="list-group-item">Java堆外内存增长问题排查Case</a>
       
-      <a href="https://coldwalker.github.io/2018/03/troubleshooter_stackoverflowerror/" class="list-group-item">StackOverFlowError问题引出的JVM栈内存管理</a>
+      <a href="https://coldwalker.github.io/post/2018/03/troubleshooter_stackoverflowerror/" class="list-group-item">StackOverFlowError问题引出的JVM栈内存管理</a>
       
-      <a href="https://coldwalker.github.io/2018/03/robust-service_hystrix/" class="list-group-item">服务稳定性提升之-熔断组件Hystrix</a>
+      <a href="https://coldwalker.github.io/post/2018/03/robust-service_hystrix/" class="list-group-item">服务稳定性提升之-熔断组件Hystrix</a>
       
     </div>
   </section>
@@ -1195,11 +1195,11 @@ if (_discovery_is_mt) {
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/categories/%E6%8A%80%E6%9C%AF" class="list-group-item">技术(11)</a>
+      <a href="https://coldwalker.github.io/post/categories/%E6%8A%80%E6%9C%AF" class="list-group-item">技术(11)</a>
       
-      <a href="https://coldwalker.github.io/categories/%E6%84%9F%E6%82%9F" class="list-group-item">感悟(1)</a>
+      <a href="https://coldwalker.github.io/post/categories/%E6%84%9F%E6%82%9F" class="list-group-item">感悟(1)</a>
       
-      <a href="https://coldwalker.github.io/categories/%E7%94%9F%E6%B4%BB" class="list-group-item">生活(1)</a>
+      <a href="https://coldwalker.github.io/post/categories/%E7%94%9F%E6%B4%BB" class="list-group-item">生活(1)</a>
       
     </div>
   </section>
@@ -1211,23 +1211,23 @@ if (_discovery_is_mt) {
     </div>
     <div class="list-group">
       
-      <a href="https://coldwalker.github.io/tags/java" class="list-group-item">Java(10)</a>
+      <a href="https://coldwalker.github.io/post/tags/java" class="list-group-item">Java(10)</a>
       
-      <a href="https://coldwalker.github.io/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5" class="list-group-item">问题排查(5)</a>
+      <a href="https://coldwalker.github.io/post/tags/%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5" class="list-group-item">问题排查(5)</a>
       
-      <a href="https://coldwalker.github.io/tags/gc" class="list-group-item">Gc(4)</a>
+      <a href="https://coldwalker.github.io/post/tags/gc" class="list-group-item">Gc(4)</a>
       
-      <a href="https://coldwalker.github.io/tags/jvm" class="list-group-item">Jvm(3)</a>
+      <a href="https://coldwalker.github.io/post/tags/jvm" class="list-group-item">Jvm(3)</a>
       
-      <a href="https://coldwalker.github.io/tags/netflix" class="list-group-item">Netflix(1)</a>
+      <a href="https://coldwalker.github.io/post/tags/netflix" class="list-group-item">Netflix(1)</a>
       
-      <a href="https://coldwalker.github.io/tags/%E5%86%85%E6%A0%B8" class="list-group-item">内核(1)</a>
+      <a href="https://coldwalker.github.io/post/tags/%E5%86%85%E6%A0%B8" class="list-group-item">内核(1)</a>
       
-      <a href="https://coldwalker.github.io/tags/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6" class="list-group-item">开源组件(1)</a>
+      <a href="https://coldwalker.github.io/post/tags/%E5%BC%80%E6%BA%90%E7%BB%84%E4%BB%B6" class="list-group-item">开源组件(1)</a>
       
-      <a href="https://coldwalker.github.io/tags/%E6%9C%8D%E5%8A%A1%E7%A8%B3%E5%AE%9A%E6%80%A7" class="list-group-item">服务稳定性(1)</a>
+      <a href="https://coldwalker.github.io/post/tags/%E6%9C%8D%E5%8A%A1%E7%A8%B3%E5%AE%9A%E6%80%A7" class="list-group-item">服务稳定性(1)</a>
       
-      <a href="https://coldwalker.github.io/tags/%E7%BD%91%E7%BB%9C" class="list-group-item">网络(1)</a>
+      <a href="https://coldwalker.github.io/post/tags/%E7%BD%91%E7%BB%9C" class="list-group-item">网络(1)</a>
       
     </div>
   </section>
@@ -1241,27 +1241,27 @@ if (_discovery_is_mt) {
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/#2024-05" class="list-group-item">2024-05(2)</a>
+      <a href="https://coldwalker.github.io/post/post/#2024-05" class="list-group-item">2024-05(2)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/#2020-01" class="list-group-item">2020-01(1)</a>
+      <a href="https://coldwalker.github.io/post/post/#2020-01" class="list-group-item">2020-01(1)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/#2019-02" class="list-group-item">2019-02(4)</a>
+      <a href="https://coldwalker.github.io/post/post/#2019-02" class="list-group-item">2019-02(4)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/#2018-12" class="list-group-item">2018-12(1)</a>
+      <a href="https://coldwalker.github.io/post/post/#2018-12" class="list-group-item">2018-12(1)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/#2018-08" class="list-group-item">2018-08(1)</a>
+      <a href="https://coldwalker.github.io/post/post/#2018-08" class="list-group-item">2018-08(1)</a>
     
       
     <div class="list-group">
-      <a href="https://coldwalker.github.io/post/#2018-03" class="list-group-item">2018-03(4)</a>
+      <a href="https://coldwalker.github.io/post/post/#2018-03" class="list-group-item">2018-03(4)</a>
     
     </div>
   </section>

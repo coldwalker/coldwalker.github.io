@@ -8,10 +8,10 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <link rel="stylesheet" href="https://coldwalker.github.io/css/search.css" />
+    <link rel="stylesheet" href="https://coldwalker.github.io/post/css/search.css" />
     <title>404 Page not found - 凛冬夜行</title>
     
-    <link href="https://coldwalker.github.io/css/styles.css" rel="stylesheet">
+    <link href="https://coldwalker.github.io/post/css/styles.css" rel="stylesheet">
     
 
   </head>
@@ -56,7 +56,7 @@ if (!doNotTrack) {
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://coldwalker.github.io/">凛冬夜行</a>
+            <a class="navbar-brand" href="https://coldwalker.github.io/post/">凛冬夜行</a>
           </div>
 
           
@@ -65,7 +65,7 @@ if (!doNotTrack) {
             <ul class="nav navbar-nav navbar-right">
               
               
-              <li><a href="https://coldwalker.github.io/2018/03/about/">about Me</a></li>
+              <li><a href="https://coldwalker.github.io/post/2018/03/about/">about Me</a></li>
               
               
               
@@ -114,7 +114,7 @@ autocomplete('#aa-search-input',
             if(postMonth < 10)
             postMonth = "0" + postMonth;
             var title = suggestion.objectID.split("/", 2)[1];            
-            return '<span>' + '<a href="https://coldwalker.github.io/' + postYear + "/" + postMonth + "/" + title + '">' +
+            return '<span>' + '<a href="https://coldwalker.github.io/post/' + postYear + "/" + postMonth + "/" + title + '">' +
             suggestion._highlightResult.title.value + '</a></span>';
         }
     }

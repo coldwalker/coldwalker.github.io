@@ -164,7 +164,7 @@ article .summary {
 }
 
 article.single .thumb {
-  height: 18rem;
+  height: 35rem;
 }
 
 @media (max-width:  768px)  {
